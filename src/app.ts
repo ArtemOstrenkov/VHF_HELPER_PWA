@@ -24,6 +24,7 @@ import {
   patchState,
 } from "./state";
 import { canSpeak, stopSpeak, toggleSpeak } from "./speak";
+import { fetchStats, noteProcess, noteVisit, statsBody, statsPanel } from "./stats";
 import { applyTheme, detectTheme, persistTheme, type Theme } from "./theme";
 import { ftToM, mToFt, parseNum } from "./units";
 import { DEFAULT_YACHT_ID, YACHTS, findYacht, yachtBuilders } from "./yachts";
@@ -92,6 +93,7 @@ export function mountApp(root: HTMLElement): void {
   let lang: Lang = detectLang();
   let theme: Theme = detectTheme();
   applyTheme(theme);
+  noteVisit();
   let screen: Screen = state.seenWelcome ? "home" : "welcome";
   const stack: Screen[] = [];
   let toastTimer = 0;
@@ -215,6 +217,7 @@ export function mountApp(root: HTMLElement): void {
   function openComposed(): void {
     const block = composeMessage(state, lang);
     state = patchState(state, { lastMessage: block.lines.join("\n") });
+    noteProcess();
     go("message");
   }
 
@@ -352,7 +355,10 @@ export function mountApp(root: HTMLElement): void {
           <p class="note">${esc(tr("welcomeNote"))}</p>
         </section>
       `,
-      footer: labeledButton("start", state.seenWelcome ? tr("home") : tr("start"), "wave", "primary"),
+      footer: `
+        ${labeledButton("start", state.seenWelcome ? tr("home") : tr("start"), "wave", "primary")}
+        ${statsPanel(esc(tr("statsTitle")), esc(tr("statsLoading")))}
+      `,
     });
   }
 
@@ -1127,6 +1133,29 @@ POSITION 'coordinates' AT 'time' UTC
     });
   }
 
+  function fillStats(): void {
+    const status = root.querySelector("#stats-status") as HTMLElement | null;
+    const body = root.querySelector("#stats-body") as HTMLElement | null;
+    if (!status || !body) return;
+    fetchStats()
+      .then((months) => {
+        if (!root.contains(status) || !root.contains(body)) return;
+        status.hidden = true;
+        body.innerHTML = statsBody(months, lang, {
+          visits: esc(tr("statsVisits")),
+          processes: esc(tr("statsProcesses")),
+          month: esc(tr("statsMonth")),
+          chart: esc(tr("statsChart")),
+          hint: esc(tr("statsHint")),
+        });
+      })
+      .catch(() => {
+        if (!root.contains(status)) return;
+        status.hidden = false;
+        status.textContent = tr("statsFailed");
+      });
+  }
+
   function render(): void {
     stopSpeak();
     unmountMap?.();
@@ -1153,6 +1182,7 @@ POSITION 'coordinates' AT 'time' UTC
     document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
     root.innerHTML = mapScreens[screen]();
     bind();
+    if (screen === "welcome") fillStats();
     if (screen === "map") {
       const el = root.querySelector<HTMLElement>("#osm-map");
       if (el) {

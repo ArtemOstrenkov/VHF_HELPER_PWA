@@ -12,8 +12,12 @@ if [[ ! -d "$DIST" ]]; then
   exit 1
 fi
 
-ssh "$HOST" "mkdir -p '$REMOTE_ROOT'"
+ssh "$HOST" "mkdir -p '$REMOTE_ROOT' /opt/vhf-helper /var/lib/vhf-helper && chown www-data:www-data /var/lib/vhf-helper"
 rsync -avz --delete "$DIST/" "$HOST:$REMOTE_ROOT/"
+
+scp "$ROOT_DIR/server/stats.py" "$HOST:/opt/vhf-helper/stats.py"
+scp "$ROOT_DIR/deploy/vhf-helper-stats.service" "$HOST:/etc/systemd/system/vhf-helper-stats.service"
+ssh "$HOST" "systemctl daemon-reload && systemctl enable --now vhf-helper-stats && systemctl restart vhf-helper-stats"
 
 scp "$ROOT_DIR/deploy/vhf-helper.nginx.conf" "$HOST:/etc/nginx/sites-available/vhf-helper"
 if ! ssh "$HOST" "test -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem && nginx -t"; then

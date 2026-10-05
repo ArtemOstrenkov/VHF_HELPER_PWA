@@ -111,6 +111,18 @@ const dict: Dict = {
   },
   themeLight: { en: "Light theme", ru: "Светлая тема", zh: "浅色主题" },
   themeDark: { en: "Dark theme", ru: "Тёмная тема", zh: "深色主题" },
+  statsTitle: { en: "Statistics", ru: "Статистика", zh: "统计" },
+  statsLoading: { en: "Loading…", ru: "Загрузка…", zh: "加载中…" },
+  statsFailed: { en: "Could not load statistics", ru: "Не удалось загрузить статистику", zh: "无法加载统计" },
+  statsVisits: { en: "Visits", ru: "Посещения", zh: "访问" },
+  statsProcesses: { en: "Calls", ru: "Вызовы", zh: "呼叫" },
+  statsMonth: { en: "Month", ru: "Месяц", zh: "月份" },
+  statsChart: { en: "Visits and calls by month", ru: "Посещения и вызовы по месяцам", zh: "按月的访问和呼叫" },
+  statsHint: {
+    en: "A visit is counted once per session. A call is each finished Seaspeak message.",
+    ru: "Посещение считается один раз за сеанс. Вызов — каждое готовое Seaspeak-сообщение.",
+    zh: "一次会话只计一次访问。每份完成的 Seaspeak 报文计为一次呼叫。",
+  },
 
   mayday: { en: "MAYDAY — life at risk", ru: "MAYDAY — жизнь в опасности", zh: "MAYDAY — 生命危险" },
   panpan: { en: "PANPAN — boat in danger", ru: "PANPAN — судно в опасности", zh: "PANPAN — 船舶遇险" },
