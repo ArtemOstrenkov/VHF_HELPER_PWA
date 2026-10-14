@@ -406,145 +406,318 @@ export const NAVIGATION_ARTICLES: KnowledgeArticle[] = [
     descKey: "colregsDesc",
     icon: "⚖️",
     order: 2,
-    content: [
-      {
-        type: "text",
-        content: "International Regulations for Preventing Collisions at Sea (COLREGS) - the 'rules of the road' on water.",
-      },
-      {
-        type: "accordion",
-        title: "Sailing Vessels vs Sailing Vessels",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Port tack gives way to starboard tack",
-              "Both on same tack: windward vessel gives way",
-              "Windward vessel unsure of other's tack: gives way",
-            ],
-          },
-          {
-            type: "note",
-            content: "Port tack = wind coming from port side. Starboard tack = wind from starboard.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Sailing vs Power",
-        children: [
-          {
-            type: "list",
-            items: [
-              "General rule: Power gives way to sail",
-              "EXCEPTIONS:",
-              "  - Sailboat overtaking power vessel: sailboat gives way",
-              "  - Vessel restricted in ability: sailboat gives way",
-              "  - Large vessel in narrow channel/fairway: sailboat gives way",
-            ],
-          },
-          {
-            type: "warning",
-            content: "In narrow channels, don't be 'technically right' - large ships CANNOT maneuver. Stay clear!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Power Vessels vs Power Vessels",
-        children: [
-          { type: "heading", content: "Head-on" },
-          {
-            type: "list",
-            items: [
-              "Both vessels alter course to starboard",
-              "Pass port-to-port (left to left)",
-            ],
-          },
-          { type: "heading", content: "Crossing" },
-          {
-            type: "list",
-            items: [
-              "Vessel with other on STARBOARD side gives way",
-              "'If to starboard Red appear, it is your duty to keep clear'",
-            ],
-          },
-          { type: "heading", content: "Overtaking" },
-          {
-            type: "list",
-            items: [
-              "Overtaking vessel ALWAYS gives way",
-              "Overtaking = approaching from more than 22.5° abaft the beam",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Narrow Channels & Fairways",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Stay to starboard (right) side of channel",
-              "Vessels < 20m or sailing: don't impede large vessels",
-              "Cross channels perpendicularly and quickly",
-              "Don't anchor in narrow channels",
-              "Sound signals: 1 short blast = altering course to starboard",
-              "                2 short blasts = altering course to port",
-              "                3 short blasts = operating astern (reversing)",
-            ],
-          },
-          {
-            type: "tip",
-            content: "When in doubt in a channel: monitor VHF Ch 13 and communicate your intentions!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Hierarchy (Who Gives Way)",
-        children: [
-          {
-            type: "text",
-            content: "In order of priority (top = most restricted, others must avoid):",
-          },
-          {
-            type: "list",
-            items: [
-              "1. Vessel not under command",
-              "2. Vessel restricted in ability to maneuver",
-              "3. Vessel constrained by draught (deep draft in shallow water)",
-              "4. Fishing vessel (actively fishing)",
-              "5. Sailing vessel",
-              "6. Power-driven vessel",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Lookout & Safe Speed",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Maintain proper lookout at ALL times (sight, hearing, ALL available means)",
-              "Proceed at safe speed (able to stop in time)",
-              "Safe speed depends on: visibility, traffic density, vessel maneuverability, sea state, proximity to hazards",
-            ],
-          },
-          {
-            type: "warning",
-            content: "Autopilot is NOT a lookout! Maintain visual watch, especially at night.",
-          },
-        ],
-      },
-      {
-        type: "note",
-        content: "Remember: Rules are for preventing collisions, but seamanship and common sense trump all. If unsure, communicate and give way!",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "text",
+          content: {
+            en: "International Regulations for Preventing Collisions at Sea (COLREGS) - the 'rules of the road' on water.",
+            ru: "Международные правила предупреждения столкновений судов в море (МППСС) - 'правила дорожного движения' на воде.",
+            zh: "国际海上避碰规则（COLREGS）- 水上的'交通规则'。",
+          }[l] as string,
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Sailing Vessels vs Sailing Vessels",
+            ru: "Парусное судно против парусного",
+            zh: "帆船对帆船",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Port tack gives way to starboard tack",
+                  "Both on same tack: windward vessel gives way",
+                  "Windward vessel unsure of other's tack: gives way",
+                ],
+                ru: [
+                  "Левый галс уступает правому галсу",
+                  "Оба на одном галсе: наветренное судно уступает",
+                  "Наветренное судно не уверено в галсе другого: уступает",
+                ],
+                zh: [
+                  "左舷受风让路给右舷受风",
+                  "同舷受风：上风船让路",
+                  "上风船不确定对方舷位：让路",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Port tack = wind coming from port side. Starboard tack = wind from starboard.",
+                ru: "Левый галс = ветер с левого борта. Правый галс = ветер с правого борта.",
+                zh: "左舷受风 = 风从左舷来。右舷受风 = 风从右舷来。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Sailing vs Power",
+            ru: "Парусное против моторного",
+            zh: "帆船对动力船",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "General rule: Power gives way to sail",
+                  "EXCEPTIONS:",
+                  "  - Sailboat overtaking power vessel: sailboat gives way",
+                  "  - Vessel restricted in ability: sailboat gives way",
+                  "  - Large vessel in narrow channel/fairway: sailboat gives way",
+                ],
+                ru: [
+                  "Общее правило: Моторное уступает парусному",
+                  "ИСКЛЮЧЕНИЯ:",
+                  "  - Парусное обгоняет моторное: парусное уступает",
+                  "  - Судно ограничено в маневре: парусное уступает",
+                  "  - Большое судно в узком канале/фарватере: парусное уступает",
+                ],
+                zh: [
+                  "一般规则：动力船让帆船",
+                  "例外：",
+                  "  - 帆船超越动力船：帆船让路",
+                  "  - 操纵受限船：帆船让路",
+                  "  - 大船在狭窄水道/航道：帆船让路",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "In narrow channels, don't be 'technically right' - large ships CANNOT maneuver. Stay clear!",
+                ru: "В узких каналах не будьте 'формально правы' - большие суда НЕ МОГУТ маневрировать. Держитесь в стороне!",
+                zh: "在狭窄水道中，不要'技术上正确' - 大船无法机动。请避让！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Power Vessels vs Power Vessels",
+            ru: "Моторное против моторного",
+            zh: "动力船对动力船",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Head-on", ru: "Встречный курс", zh: "对遇" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Both vessels alter course to starboard",
+                  "Pass port-to-port (left to left)",
+                ],
+                ru: [
+                  "Оба судна изменяют курс вправо",
+                  "Расходятся левыми бортами",
+                ],
+                zh: [
+                  "两船均向右转向",
+                  "左舷对左舷通过",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Crossing", ru: "Пересекающиеся курсы", zh: "交叉" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Vessel with other on STARBOARD side gives way",
+                  "'If to starboard Red appear, it is your duty to keep clear'",
+                ],
+                ru: [
+                  "Судно, видящее другое справа, уступает",
+                  "'Если справа красный - твой долг уступить'",
+                ],
+                zh: [
+                  "右侧见到他船的船只让路",
+                  "'右侧红灯现，有责让路先'",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Overtaking", ru: "Обгон", zh: "追越" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Overtaking vessel ALWAYS gives way",
+                  "Overtaking = approaching from more than 22.5° abaft the beam",
+                ],
+                ru: [
+                  "Обгоняющее судно ВСЕГДА уступает",
+                  "Обгон = подход под углом более 22.5° от траверза к корме",
+                ],
+                zh: [
+                  "追越船只总是让路",
+                  "追越 = 从正横后22.5°以上接近",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Narrow Channels & Fairways",
+            ru: "Узкие каналы и фарватеры",
+            zh: "狭窄水道与航道",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Stay to starboard (right) side of channel",
+                  "Vessels < 20m or sailing: don't impede large vessels",
+                  "Cross channels perpendicularly and quickly",
+                  "Don't anchor in narrow channels",
+                  "Sound signals: 1 short blast = altering course to starboard",
+                  "                2 short blasts = altering course to port",
+                  "                3 short blasts = operating astern (reversing)",
+                ],
+                ru: [
+                  "Держитесь правого (правого борта) края канала",
+                  "Суда < 20м или парусные: не мешайте большим судам",
+                  "Пересекайте каналы перпендикулярно и быстро",
+                  "Не становитесь на якорь в узких каналах",
+                  "Звуковые сигналы: 1 короткий = изменяю курс вправо",
+                  "                  2 коротких = изменяю курс влево",
+                  "                  3 коротких = работаю задним ходом",
+                ],
+                zh: [
+                  "保持在航道右侧（右舷）",
+                  "船长<20米或帆船：不得妨碍大船",
+                  "垂直快速穿越航道",
+                  "不要在狭窄水道锚泊",
+                  "声号：1短声 = 向右转向",
+                  "      2短声 = 向左转向",
+                  "      3短声 = 倒车",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "When in doubt in a channel: monitor VHF Ch 13 and communicate your intentions!",
+                ru: "При сомнении в канале: слушайте VHF 13 канал и сообщайте свои намерения!",
+                zh: "在水道中如有疑问：监听VHF 13频道并通报你的意图！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Hierarchy (Who Gives Way)",
+            ru: "Иерархия (Кто уступает)",
+            zh: "优先级（谁让路）",
+          }[l] as string,
+          children: [
+            {
+              type: "text",
+              content: {
+                en: "In order of priority (top = most restricted, others must avoid):",
+                ru: "В порядке приоритета (сверху = наиболее ограничен, остальные обязаны уступить):",
+                zh: "优先顺序（顶部=最受限，其他船避让）：",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. Vessel not under command",
+                  "2. Vessel restricted in ability to maneuver",
+                  "3. Vessel constrained by draught (deep draft in shallow water)",
+                  "4. Fishing vessel (actively fishing)",
+                  "5. Sailing vessel",
+                  "6. Power-driven vessel",
+                ],
+                ru: [
+                  "1. Судно, лишённое возможности управляться",
+                  "2. Судно, ограниченное в манёвре",
+                  "3. Судно, стеснённое осадкой (глубокая осадка на мелководье)",
+                  "4. Рыболовное судно (активно ловит рыбу)",
+                  "5. Парусное судно",
+                  "6. Судно с механическим двигателем",
+                ],
+                zh: [
+                  "1. 失控船",
+                  "2. 操纵受限船",
+                  "3. 吃水受限船（浅水中的深吃水船）",
+                  "4. 捕鱼船（正在作业）",
+                  "5. 帆船",
+                  "6. 机动船",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Lookout & Safe Speed",
+            ru: "Наблюдение и безопасная скорость",
+            zh: "瞭望与安全航速",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Maintain proper lookout at ALL times (sight, hearing, ALL available means)",
+                  "Proceed at safe speed (able to stop in time)",
+                  "Safe speed depends on: visibility, traffic density, vessel maneuverability, sea state, proximity to hazards",
+                ],
+                ru: [
+                  "Поддерживайте надлежащее наблюдение ВСЕГДА (зрением, слухом, ВСЕМИ доступными средствами)",
+                  "Двигайтесь на безопасной скорости (способность остановиться вовремя)",
+                  "Безопасная скорость зависит от: видимости, плотности движения, маневренности судна, состояния моря, близости опасностей",
+                ],
+                zh: [
+                  "始终保持正规瞭望（视觉、听觉、所有可用手段）",
+                  "以安全航速行驶（能及时停船）",
+                  "安全航速取决于：能见度、交通密度、船舶操纵性、海况、距危险物的距离",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "Autopilot is NOT a lookout! Maintain visual watch, especially at night.",
+                ru: "Автопилот НЕ наблюдатель! Ведите визуальную вахту, особенно ночью.",
+                zh: "自动驾驶不是瞭望！保持目视观察，特别是夜间。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "note",
+          content: {
+            en: "Remember: Rules are for preventing collisions, but seamanship and common sense trump all. If unsure, communicate and give way!",
+            ru: "Помните: Правила для предотвращения столкновений, но морская практика и здравый смысл важнее всего. При сомнении - общайтесь и уступайте!",
+            zh: "记住：规则是为了防止碰撞，但航海技术和常识高于一切。如有疑问，通信并让路！",
+          }[l] as string,
+        },
+      ];
+    },
   },
   {
     id: "buoys-marks",
