@@ -1,9 +1,15 @@
 import { fixFromDms, fixFromLatLon, requestGps, type GpsFix } from "./gps";
 import { icon, type IconName } from "./icons";
 import {
+  LANGS,
+  LANG_META,
   MONTHS,
   MONTHS_RADIO,
+  PRIMARY_LANGS,
+  comicSrc,
   detectLang,
+  htmlLang,
+  isLang,
   persistLang,
   t,
   type Lang,
@@ -91,6 +97,7 @@ function labeledButton(kind: string, label: string, iconName: IconName, extra = 
 export function mountApp(root: HTMLElement): void {
   let state = loadState();
   let lang: Lang = detectLang();
+  let langMenuOpen = false;
   let theme: Theme = detectTheme();
   applyTheme(theme);
   noteVisit();
@@ -132,12 +139,14 @@ export function mountApp(root: HTMLElement): void {
   }
 
   function go(next: Screen): void {
+    langMenuOpen = false;
     stack.push(screen);
     screen = next;
     render();
   }
 
   function back(): void {
+    langMenuOpen = false;
     unmountMap?.();
     unmountMap = null;
     if (screen === "marine" && marineStep === 2) {
@@ -155,6 +164,7 @@ export function mountApp(root: HTMLElement): void {
   }
 
   function home(): void {
+    langMenuOpen = false;
     stack.length = 0;
     screen = "home";
     render();
@@ -162,8 +172,9 @@ export function mountApp(root: HTMLElement): void {
 
   function setLang(next: Lang): void {
     lang = next;
+    langMenuOpen = false;
     persistLang(lang);
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+    document.documentElement.lang = htmlLang(lang);
     render();
   }
 
@@ -222,11 +233,37 @@ export function mountApp(root: HTMLElement): void {
   }
 
   function langSwitch(): string {
+    const extra = !PRIMARY_LANGS.includes(lang);
+    const moreLabel = extra ? LANG_META[lang].code : "⋯";
+    const menu = langMenuOpen
+      ? `<div class="lang-menu" role="listbox">
+          ${LANGS.map((code) => {
+            const meta = LANG_META[code];
+            return `<button type="button" class="lang-menu-item ${
+              lang === code ? "is-active" : ""
+            }" data-lang="${code}" role="option" aria-selected="${lang === code}">
+              <span class="lang-menu-code">${esc(meta.code)}</span>
+              <span>${esc(meta.name)}</span>
+            </button>`;
+          }).join("")}
+        </div>`
+      : "";
     return `
       <div class="lang-switch">
-        <button type="button" class="lang-btn ${lang === "en" ? "is-active" : ""}" data-lang="en">EN</button>
-        <button type="button" class="lang-btn ${lang === "ru" ? "is-active" : ""}" data-lang="ru">RU</button>
-        <button type="button" class="lang-btn ${lang === "zh" ? "is-active" : ""}" data-lang="zh">中</button>
+        ${PRIMARY_LANGS.map(
+          (code) =>
+            `<button type="button" class="lang-btn ${
+              lang === code ? "is-active" : ""
+            }" data-lang="${code}">${esc(LANG_META[code].code)}</button>`,
+        ).join("")}
+        <div class="lang-more">
+          <button type="button" class="lang-btn lang-more-btn ${
+            extra ? "is-active" : ""
+          } ${langMenuOpen ? "is-open" : ""}" data-act="lang-more" aria-haspopup="listbox" aria-expanded="${
+            langMenuOpen ? "true" : "false"
+          }" aria-label="${esc(tr("moreLanguages"))}">${esc(moreLabel)}</button>
+          ${menu}
+        </div>
       </div>
     `;
   }
@@ -342,7 +379,7 @@ export function mountApp(root: HTMLElement): void {
       title: tr("appName"),
       onBack: state.seenWelcome,
       body: `
-        <img class="comic" src="/comic/${lang}.jpg" alt="${esc(tr("comicAlt"))}" />
+        <img class="comic" src="${esc(comicSrc(lang))}" alt="${esc(tr("comicAlt"))}" />
         <section class="welcome-hero glass">
           <h1>${esc(tr("welcomeTitle"))}</h1>
           <p class="lead">${esc(tr("welcomeLead"))}</p>
@@ -847,8 +884,29 @@ POSITION 'coordinates' AT 'time' UTC
 
   function bind(): void {
     root.querySelectorAll<HTMLButtonElement>("[data-lang]").forEach((btn) => {
-      btn.addEventListener("click", () => setLang(btn.dataset.lang as Lang));
+      btn.addEventListener("click", () => {
+        const next = btn.dataset.lang;
+        if (isLang(next)) setLang(next);
+      });
     });
+    root.querySelector("[data-act=lang-more]")?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      langMenuOpen = !langMenuOpen;
+      render();
+    });
+    if (langMenuOpen) {
+      requestAnimationFrame(() => {
+        document.addEventListener(
+          "click",
+          () => {
+            if (!langMenuOpen) return;
+            langMenuOpen = false;
+            render();
+          },
+          { once: true },
+        );
+      });
+    }
     root.querySelector("[data-act=back]")?.addEventListener("click", () => {
       if (screen === "boat") persistBoat();
       back();
@@ -1179,7 +1237,7 @@ POSITION 'coordinates' AT 'time' UTC
       last: () => renderMessage(true),
       manual: renderManual,
     };
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+    document.documentElement.lang = htmlLang(lang);
     root.innerHTML = mapScreens[screen]();
     bind();
     if (screen === "welcome") fillStats();

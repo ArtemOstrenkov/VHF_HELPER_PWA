@@ -1,4 +1,4 @@
-import type { Lang } from "./i18n";
+import { htmlLang, type Lang } from "./i18n";
 
 export type MonthPoint = {
   month: string;
@@ -53,9 +53,7 @@ export function statsPanel(title: string, loading: string): string {
 }
 
 function locale(lang: Lang): string {
-  if (lang === "zh") return "zh-CN";
-  if (lang === "en") return "en";
-  return "ru";
+  return htmlLang(lang);
 }
 
 function monthLabel(iso: string, lang: Lang, withYear: boolean): string {

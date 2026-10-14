@@ -1,6 +1,43 @@
-export type Lang = "en" | "ru" | "zh";
+import { EXTRA_LANGS, extraDict, type ExtraLang } from "./i18n-extra";
+
+export type CoreLang = "en" | "ru" | "zh";
+export type Lang = CoreLang | ExtraLang;
+
+export const LANGS: Lang[] = ["en", "ru", "zh", ...EXTRA_LANGS];
+export const PRIMARY_LANGS: Lang[] = ["en", "ru", "zh"];
+
+export const LANG_META: Record<Lang, { code: string; name: string }> = {
+  en: { code: "EN", name: "English" },
+  ru: { code: "RU", name: "Русский" },
+  zh: { code: "中", name: "中文" },
+  de: { code: "DE", name: "Deutsch" },
+  es: { code: "ES", name: "Español" },
+  fr: { code: "FR", name: "Français" },
+  it: { code: "IT", name: "Italiano" },
+  nl: { code: "NL", name: "Nederlands" },
+  sv: { code: "SV", name: "Svenska" },
+  no: { code: "NO", name: "Norsk" },
+  hr: { code: "HR", name: "Hrvatski" },
+  cs: { code: "CZ", name: "Čeština" },
+};
 
 const LANG_KEY = "vhf-panic-lang";
+const COMIC_LANGS: Lang[] = ["en", "ru", "zh"];
+
+const LOCALE: Record<Lang, string> = {
+  en: "en",
+  ru: "ru",
+  zh: "zh-CN",
+  de: "de",
+  es: "es",
+  fr: "fr",
+  it: "it",
+  nl: "nl",
+  sv: "sv",
+  no: "nb",
+  hr: "hr",
+  cs: "cs",
+};
 
 type Dict = Record<string, { en: string; ru: string; zh: string }>;
 
@@ -100,9 +137,9 @@ const dict: Dict = {
     zh: "在 VHF 上缓慢、冷静、大声读出生成的报文。",
   },
   welcomeNote: {
-    en: "Radio phrases stay in English — that is the language of VHF. The rest of the app can be Chinese, Russian or English.",
-    ru: "Фразы для рации остаются на английском — так принято на VHF. Интерфейс можно переключить на китайский, русский или английский.",
-    zh: "电台用语保持英语——这是 VHF 的语言。界面可选中文、俄语或英语。",
+    en: "Radio phrases stay in English — that is the language of VHF. The rest of the app can be switched to your language.",
+    ru: "Фразы для рации остаются на английском — так принято на VHF. Интерфейс можно переключить на ваш язык.",
+    zh: "电台用语保持英语——这是 VHF 的语言。界面可切换为你的语言。",
   },
   comicAlt: {
     en: "Seven-panel comic: a yacht crew hopes they will not need the radio, then a cargo ship appears and they call with VHF Panic.",
@@ -111,6 +148,7 @@ const dict: Dict = {
   },
   themeLight: { en: "Light theme", ru: "Светлая тема", zh: "浅色主题" },
   themeDark: { en: "Dark theme", ru: "Тёмная тема", zh: "深色主题" },
+  moreLanguages: { en: "More languages", ru: "Другие языки", zh: "更多语言" },
   statsTitle: { en: "Statistics", ru: "Статистика", zh: "统计" },
   statsLoading: { en: "Loading…", ru: "Загрузка…", zh: "加载中…" },
   statsFailed: { en: "Could not load statistics", ru: "Не удалось загрузить статистику", zh: "无法加载统计" },
@@ -256,16 +294,31 @@ const dict: Dict = {
   },
 };
 
+export function isLang(value: string | undefined | null): value is Lang {
+  return Boolean(value && (LANGS as string[]).includes(value));
+}
+
+export function htmlLang(lang: Lang): string {
+  return LOCALE[lang];
+}
+
+export function comicSrc(lang: Lang): string {
+  const file = COMIC_LANGS.includes(lang) ? lang : "en";
+  return `/comic/${file}.jpg`;
+}
+
 export function detectLang(): Lang {
   try {
     const saved = localStorage.getItem(LANG_KEY);
-    if (saved === "ru" || saved === "en" || saved === "zh") return saved;
+    if (isLang(saved)) return saved;
   } catch {
     /* ignore */
   }
   const nav = navigator.language.toLowerCase();
-  if (nav.startsWith("ru")) return "ru";
-  if (nav.startsWith("zh")) return "zh";
+  const prefix = nav.slice(0, 2);
+  if (prefix === "nb" || prefix === "nn") return "no";
+  if (prefix === "cz") return "cs";
+  if (isLang(prefix)) return prefix;
   return "en";
 }
 
@@ -274,8 +327,13 @@ export function persistLang(lang: Lang): void {
 }
 
 export function t(lang: Lang, key: string, vars?: Record<string, string>): string {
-  const row = dict[key];
-  let out = row ? row[lang] || row.en : key;
+  let out: string;
+  if (lang === "en" || lang === "ru" || lang === "zh") {
+    const row = dict[key];
+    out = row ? row[lang] || row.en : key;
+  } else {
+    out = extraDict[key]?.[lang] || dict[key]?.en || key;
+  }
   if (vars) {
     for (const [name, value] of Object.entries(vars)) {
       out = out.replaceAll(`{${name}}`, value);
@@ -284,7 +342,7 @@ export function t(lang: Lang, key: string, vars?: Record<string, string>): strin
   return out;
 }
 
-export const MONTHS: Record<Lang, string[]> = {
+const CORE_MONTHS: Record<CoreLang, string[]> = {
   en: [
     "January",
     "February",
@@ -315,6 +373,19 @@ export const MONTHS: Record<Lang, string[]> = {
   ],
   zh: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
 };
+
+export function monthNames(lang: Lang): string[] {
+  if (lang === "en" || lang === "ru" || lang === "zh") return CORE_MONTHS[lang];
+  return Array.from({ length: 12 }, (_, i) =>
+    new Intl.DateTimeFormat(htmlLang(lang), { month: "long" }).format(new Date(2020, i, 1)),
+  );
+}
+
+export const MONTHS = new Proxy({} as Record<Lang, string[]>, {
+  get(_target, prop: string) {
+    return isLang(prop) ? monthNames(prop) : undefined;
+  },
+});
 
 export const MONTHS_RADIO = [
   "January",
