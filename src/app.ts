@@ -874,7 +874,7 @@ POSITION 'coordinates' AT 'time' UTC
     const articles = getArticlesByCategory(currentCategory);
     const catMeta = getCategoriesWithCounts().find((c) => c.id === currentCategory);
     return shell({
-      title: catMeta ? tr(catMeta.titleKey) : "Knowledge",
+      title: catMeta ? tr(catMeta.titleKey) : tr("knowledge"),
       body: `
         <div class="knowledge-list">
           ${articles.map((art) => renderArticleCard(art, lang)).join("")}

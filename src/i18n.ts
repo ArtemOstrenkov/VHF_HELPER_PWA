@@ -107,6 +107,11 @@ const dict: Dict = {
   vesselInfo: { en: "Vessel info", ru: "О судне", zh: "船舶资料" },
   lastMessage: { en: "Message", ru: "Сообщение", zh: "报文" },
   vhfManual: { en: "Phonetic alphabet", ru: "Фонетический алфавит", zh: "音标字母" },
+  vhfManualDesc: {
+    en: "Spell names and call signs clearly",
+    ru: "Как чётко произносить имена и позывные",
+    zh: "清晰拼读船名与呼号",
+  },
 
   welcomeTitle: {
     en: "A calm voice on Channel 16",
@@ -114,9 +119,9 @@ const dict: Dict = {
     zh: "16 频道上的冷静声音",
   },
   welcomeLead: {
-    en: "VHF Panic is a pocket prompt for new skippers: it helps you say the right words on the radio in Seaspeak when it matters.",
-    ru: "VHF Panic — подсказка для новых шкиперов приложение помогает сказать правильные слова в рацию на Seaspeak, когда это важно.",
-    zh: "VHF Panic 是给新船长的口袋提示：在关键时刻帮你用 Seaspeak 在电台上说出正确的话。",
+    en: "Skipper's Companion is a pocket guide for new skippers: it helps you say the right words on the radio in Seaspeak when it matters.",
+    ru: "Справочник Шкипера — подсказка для новых шкиперов: приложение помогает сказать правильные слова в рацию на Seaspeak, когда это важно.",
+    zh: "船长指南是给新船长的口袋提示：在关键时刻帮你用 Seaspeak 在电台上说出正确的话。",
   },
   speak: { en: "Speak", ru: "Озвучить", zh: "朗读" },
   speaking: { en: "Stop", ru: "Стоп", zh: "停止" },
@@ -142,9 +147,9 @@ const dict: Dict = {
     zh: "电台用语保持英语——这是 VHF 的语言。界面可切换为你的语言。",
   },
   comicAlt: {
-    en: "Seven-panel comic: a yacht crew hopes they will not need the radio, then a cargo ship appears and they call with VHF Panic.",
-    ru: "Комикс из семи кадров: экипаж яхты надеется, что по рации говорить не придётся, затем появляется сухогруз и они вызывают его через VHF Panic.",
-    zh: "七格漫画：游艇船员希望不必用电台，随后货轮出现，他们用 VHF Panic 呼叫。",
+    en: "Seven-panel comic: a yacht crew hopes they will not need the radio, then a cargo ship appears and they call with Skipper's Companion.",
+    ru: "Комикс из семи кадров: экипаж яхты надеется, что по рации говорить не придётся, затем появляется сухогруз и они вызывают его через Справочник Шкипера.",
+    zh: "七格漫画：游艇船员希望不必用电台，随后货轮出现，他们用船长指南呼叫。",
   },
   themeLight: { en: "Light theme", ru: "Светлая тема", zh: "浅色主题" },
   themeDark: { en: "Dark theme", ru: "Тёмная тема", zh: "深色主题" },
