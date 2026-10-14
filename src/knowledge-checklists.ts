@@ -728,44 +728,96 @@ export const CHECKLIST_ARTICLES: KnowledgeArticle[] = [
     descKey: "dailyChecksDesc",
     icon: "🌅",
     order: 3,
-    content: [
-      {
-        type: "accordion",
-        title: "Morning",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Weather forecast update",
-              "☐ Engine oil level",
-              "☐ Bilge check (dry?)",
-              "☐ Battery voltage",
-              "☐ Navigation lights test (if night passage)",
-              "☐ Plan the day (route, ETA, fuel)",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Evening (At Anchor)",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Anchor holding (bearing check)",
-              "☐ Weather check (night, tomorrow)",
-              "☐ Navigation lights ON",
-              "☐ Anchor light ON",
-              "☐ Batteries charging",
-              "☐ Bilge check",
-              "☐ Secure loose items (wind increase forecast?)",
-              "☐ Emergency grab bag ready (if storm expected)",
-            ],
-          },
-        ],
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "accordion",
+          title: {
+            en: "Morning",
+            ru: "Утро",
+            zh: "早上",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Weather forecast update",
+                  "☐ Engine oil level",
+                  "☐ Bilge check (dry?)",
+                  "☐ Battery voltage",
+                  "☐ Navigation lights test (if night passage)",
+                  "☐ Plan the day (route, ETA, fuel)",
+                ],
+                ru: [
+                  "☐ Обновление прогноза погоды",
+                  "☐ Уровень масла двигателя",
+                  "☐ Проверка трюма (сухой?)",
+                  "☐ Напряжение батареи",
+                  "☐ Тест навигационных огней (если ночной переход)",
+                  "☐ План на день (маршрут, ETA, топливо)",
+                ],
+                zh: [
+                  "☐ 天气预报更新",
+                  "☐ 发动机机油量",
+                  "☐ 舱底检查（干燥？）",
+                  "☐ 电池电压",
+                  "☐ 航行灯测试（如夜航）",
+                  "☐ 计划当天（航线、预计到达、燃油）",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Evening (At Anchor)",
+            ru: "Вечер (На якоре)",
+            zh: "傍晚（锚泊）",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Anchor holding (bearing check)",
+                  "☐ Weather check (night, tomorrow)",
+                  "☐ Navigation lights ON",
+                  "☐ Anchor light ON",
+                  "☐ Batteries charging",
+                  "☐ Bilge check",
+                  "☐ Secure loose items (wind increase forecast?)",
+                  "☐ Emergency grab bag ready (if storm expected)",
+                ],
+                ru: [
+                  "☐ Якорь держит (проверка пеленга)",
+                  "☐ Проверка погоды (ночь, завтра)",
+                  "☐ Навигационные огни ВКЛ",
+                  "☐ Якорный огонь ВКЛ",
+                  "☐ Батареи заряжаются",
+                  "☐ Проверка трюма",
+                  "☐ Закрепите незакреплённое (прогноз усиления ветра?)",
+                  "☐ Аварийная сумка готова (если ожидается шторм)",
+                ],
+                zh: [
+                  "☐ 锚抓牢（方位检查）",
+                  "☐ 天气检查（夜间、明天）",
+                  "☐ 航行灯开启",
+                  "☐ 锚灯开启",
+                  "☐ 电池充电中",
+                  "☐ 舱底检查",
+                  "☐ 固定松散物品（预报风力增加？）",
+                  "☐ 应急包准备（如预报风暴）",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+      ];
+    },
   },
   {
     id: "emergency-bag",
