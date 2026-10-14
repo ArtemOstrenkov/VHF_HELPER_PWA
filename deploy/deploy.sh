@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-HOST="${DEPLOY_HOST:-root@155.212.141.54}"
+HOST="${DEPLOY_HOST:-deploy-server}"
 REMOTE_ROOT="/var/www/vhf-helper"
-DOMAIN="vhf.p4e1.ru"
+DOMAIN="skipper.p4e1.ru"
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT_DIR/dist"
 
