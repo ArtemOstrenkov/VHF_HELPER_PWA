@@ -21,6 +21,12 @@ export const SEAMANSHIP_ARTICLES: KnowledgeArticle[] = [
             type: "text",
             content: "The 'King of Knots' - creates a fixed loop that won't slip or jam.",
           },
+          {
+            type: "illustration",
+            src: "/knowledge/illustrations/knot-bowline.jpg",
+            alt: "Bowline knot step-by-step diagram",
+            caption: "Rabbit comes out of hole, around tree, back down hole",
+          },
           { type: "heading", content: "Uses" },
           {
             type: "list",
@@ -60,6 +66,12 @@ export const SEAMANSHIP_ARTICLES: KnowledgeArticle[] = [
             type: "text",
             content: "Proper way to secure a line to a cleat (horn-shaped fitting).",
           },
+          {
+            type: "illustration",
+            src: "/knowledge/illustrations/knot-cleat-hitch.jpg",
+            alt: "Cleat hitch step-by-step diagram",
+            caption: "Full turn, figure-8s, then locking turn",
+          },
           { type: "heading", content: "How to Tie" },
           {
             type: "list",
@@ -87,6 +99,12 @@ export const SEAMANSHIP_ARTICLES: KnowledgeArticle[] = [
           {
             type: "text",
             content: "Stopper knot - prevents line from running through blocks, cleats.",
+          },
+          {
+            type: "illustration",
+            src: "/knowledge/illustrations/knot-figure-eight.jpg",
+            alt: "Figure eight knot step-by-step diagram",
+            caption: "Forms a figure-8 shape when tightened",
           },
           { type: "heading", content: "Uses" },
           {
