@@ -782,258 +782,639 @@ export const NAVIGATION_ARTICLES: KnowledgeArticle[] = [
     descKey: "emergenciesDesc",
     icon: "🆘",
     order: 4,
-    content: [
-      {
-        type: "accordion",
-        title: "Man Overboard (MOB)",
-        children: [
-          { type: "heading", content: "Immediate Actions" },
-          {
-            type: "list",
-            items: [
-              "1. SHOUT 'Man Overboard!' + side (port/starboard)",
-              "2. Throw life ring + dan buoy (smoke/light)",
-              "3. Assign spotter (NEVER lose visual contact!)",
-              "4. Press MOB button on chartplotter/GPS",
-              "5. Note time and position",
-              "6. Begin recovery maneuver",
-            ],
-          },
-          { type: "heading", content: "Recovery Maneuvers" },
-          {
-            type: "text",
-            content: "Sailboat - Quick Stop:",
-          },
-          {
-            type: "list",
-            items: [
-              "Immediately head up into wind",
-              "Drop headsail (jib/genoa)",
-              "Hold mainsail in tight reach position",
-              "Circle back to MOB",
-              "Approach into wind, person to windward",
-            ],
-          },
-          {
-            type: "text",
-            content: "Power Vessel - Williamson Turn:",
-          },
-          {
-            type: "list",
-            items: [
-              "Full turn 60° away from MOB side",
-              "Then hard over to opposite direction",
-              "When heading 180° from original: straighten course",
-              "Approach MOB slowly from downwind",
-            ],
-          },
-          {
-            type: "warning",
-            content: "Engine in neutral when person is near prop! Many MOB fatalities are from propeller strikes during rescue.",
-          },
-          { type: "heading", content: "Getting Person Aboard" },
-          {
-            type: "list",
-            items: [
-              "Use swim ladder if available",
-              "Throw line with loop for person to hold",
-              "Use halyard + winch to hoist if exhausted",
-              "Consider cutting away lifelines if needed",
-              "Check for hypothermia, injuries",
-            ],
-          },
-          { type: "heading", content: "VHF MAYDAY" },
-          {
-            type: "text",
-            content: "If cannot recover quickly or person injured:",
-          },
-          {
-            type: "code",
-            content: `"MAYDAY, MAYDAY, MAYDAY
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "accordion",
+          title: {
+            en: "Man Overboard (MOB)",
+            ru: "Человек за бортом (ЧЗБ)",
+            zh: "落水人员（MOB）",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Immediate Actions", ru: "Немедленные действия", zh: "立即行动" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. SHOUT 'Man Overboard!' + side (port/starboard)",
+                  "2. Throw life ring + dan buoy (smoke/light)",
+                  "3. Assign spotter (NEVER lose visual contact!)",
+                  "4. Press MOB button on chartplotter/GPS",
+                  "5. Note time and position",
+                  "6. Begin recovery maneuver",
+                ],
+                ru: [
+                  "1. КРИЧИТЕ 'Человек за бортом!' + борт (левый/правый)",
+                  "2. Бросьте спасательный круг + буй (дым/свет)",
+                  "3. Назначьте наблюдателя (НИКОГДА не теряйте визуальный контакт!)",
+                  "4. Нажмите кнопку MOB на плоттере/GPS",
+                  "5. Отметьте время и позицию",
+                  "6. Начните манёвр спасения",
+                ],
+                zh: [
+                  "1. 大喊'落水人员！' + 方位（左舷/右舷）",
+                  "2. 投掷救生圈 + 浮标（烟雾/灯光）",
+                  "3. 指派观察员（绝不能失去目视！）",
+                  "4. 按海图仪/GPS上的MOB按钮",
+                  "5. 记录时间和位置",
+                  "6. 开始救援机动",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Recovery Maneuvers", ru: "Манёвры спасения", zh: "救援机动" }[l] as string,
+            },
+            {
+              type: "text",
+              content: {
+                en: "Sailboat - Quick Stop:",
+                ru: "Парусная яхта - Быстрая остановка:",
+                zh: "帆船 - 快速停止：",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Immediately head up into wind",
+                  "Drop headsail (jib/genoa)",
+                  "Hold mainsail in tight reach position",
+                  "Circle back to MOB",
+                  "Approach into wind, person to windward",
+                ],
+                ru: [
+                  "Немедленно привестись к ветру",
+                  "Спустите передний парус (стаксель/генуя)",
+                  "Удерживайте грот в положении крутой галфвинд",
+                  "Развернитесь к ЧЗБ",
+                  "Подходите против ветра, человек с наветренного борта",
+                ],
+                zh: [
+                  "立即迎风转向",
+                  "放下前帆（艏帆/热那亚帆）",
+                  "主帆保持紧迎风位置",
+                  "绕回落水者",
+                  "迎风接近，人在上风侧",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "text",
+              content: {
+                en: "Power Vessel - Williamson Turn:",
+                ru: "Моторное судно - Поворот Уильямсона:",
+                zh: "动力船 - 威廉姆森转向：",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Full turn 60° away from MOB side",
+                  "Then hard over to opposite direction",
+                  "When heading 180° from original: straighten course",
+                  "Approach MOB slowly from downwind",
+                ],
+                ru: [
+                  "Полный поворот на 60° от борта ЧЗБ",
+                  "Затем перекладка руля в противоположную сторону",
+                  "Когда курс 180° от исходного: выпрямите курс",
+                  "Подходите к ЧЗБ медленно с подветренной стороны",
+                ],
+                zh: [
+                  "从落水侧全速转向60°",
+                  "然后硬转向相反方向",
+                  "当航向与原航向相差180°时：摆正航向",
+                  "从下风侧缓慢接近落水者",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "Engine in neutral when person is near prop! Many MOB fatalities are from propeller strikes during rescue.",
+                ru: "Двигатель на нейтраль, когда человек рядом с винтом! Многие случаи гибели ЧЗБ - от ударов винтом при спасении.",
+                zh: "人接近螺旋桨时发动机挂空档！许多落水死亡事故是救援时被螺旋桨打伤。",
+              }[l] as string,
+            },
+            { 
+              type: "heading", 
+              content: { en: "Getting Person Aboard", ru: "Подъём человека на борт", zh: "将人救上船" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Use swim ladder if available",
+                  "Throw line with loop for person to hold",
+                  "Use halyard + winch to hoist if exhausted",
+                  "Consider cutting away lifelines if needed",
+                  "Check for hypothermia, injuries",
+                ],
+                ru: [
+                  "Используйте трап, если есть",
+                  "Бросьте конец с петлёй для человека",
+                  "Используйте фал + лебёдку для подъёма, если истощён",
+                  "Рассмотрите перерезание леера, если нужно",
+                  "Проверьте на гипотермию, травмы",
+                ],
+                zh: [
+                  "如有游泳梯请使用",
+                  "投掷带环的绳索给落水者抓",
+                  "如筋疲力尽，用升降索+绞盘吊起",
+                  "必要时考虑割断救生索",
+                  "检查低体温、伤情",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "VHF MAYDAY", ru: "VHF MAYDAY", zh: "VHF求救" }[l] as string,
+            },
+            {
+              type: "text",
+              content: {
+                en: "If cannot recover quickly or person injured:",
+                ru: "Если не можете быстро спасти или человек ранен:",
+                zh: "如无法快速救援或人员受伤：",
+              }[l] as string,
+            },
+            {
+              type: "code",
+              content: {
+                en: `"MAYDAY, MAYDAY, MAYDAY
 ALL SHIPS, ALL SHIPS, ALL SHIPS
 This is [VESSEL NAME] x3
 MAN OVERBOARD
 Position: [GPS]
 [NUMBER] person in water
 Over"`,
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Grounding",
-        children: [
-          { type: "heading", content: "Immediate Actions" },
-          {
-            type: "list",
-            items: [
-              "1. DON'T immediately shut off engine!",
-              "2. Check for hull damage / leaks",
-              "3. Sound bilges (any water ingress?)",
-              "4. Note tide state (rising or falling?)",
-              "5. Note wind/wave direction",
-            ],
-          },
-          { type: "heading", content: "Soft Grounding (sand/mud)" },
-          {
-            type: "list",
-            items: [
-              "Try gentle reverse (don't dig in deeper)",
-              "Heel boat to reduce draft (crew to one side / boom out)",
-              "If tide rising: wait (kedge anchor if drifting)",
-              "If tide falling: prepare to stay grounded until next tide",
-            ],
-          },
-          { type: "heading", content: "Hard Grounding (rock)" },
-          {
-            type: "list",
-            items: [
-              "Do NOT try to power off (may damage hull more)",
-              "Check for damage immediately",
-              "Pump bilges continuously if leaking",
-              "Kedge anchor technique: row anchor out, winch boat off",
-              "Wait for high tide if not critical",
-              "Consider calling for tow assistance",
-            ],
-          },
-          { type: "heading", content: "Kedge Anchor Technique" },
-          {
-            type: "list",
-            items: [
-              "Load kedge anchor in dinghy",
-              "Row out perpendicular to direction you want to pull",
-              "Drop anchor 100-200m away",
-              "Return to yacht",
-              "Winch on anchor line (halyard winch for power)",
-              "May need to heel boat simultaneously",
-            ],
-          },
-          {
-            type: "warning",
-            content: "If holed and leaking badly, DON'T pull off until temporary patch applied! Grounding may be only thing preventing sinking.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Fire",
-        children: [
-          { type: "heading", content: "Immediate Actions" },
-          {
-            type: "list",
-            items: [
-              "1. SHOUT 'Fire!'",
-              "2. Turn off gas + electrical systems (if source)",
-              "3. Close hatches/doors (starve oxygen)",
-              "4. Grab fire extinguisher",
-              "5. Don life jackets (prepare to abandon)",
-            ],
-          },
-          { type: "heading", content: "Fighting Fire" },
-          {
-            type: "list",
-            items: [
-              "Use correct extinguisher type:",
-              "  - A: Wood, paper, cloth (water OK)",
-              "  - B: Fuel, oil, grease (foam/CO2, NO WATER!)",
-              "  - C: Electrical (CO2, NO WATER!)",
-              "Aim at BASE of flames, sweep side-to-side",
-              "Stay low (smoke rises)",
-              "Approach from upwind if possible",
-              "Have escape route",
-            ],
-          },
-          {
-            type: "warning",
-            content: "If engine fire: don't open engine compartment! Oxygen rush can cause explosion. Use CO2 system if installed.",
-          },
-          { type: "heading", content: "When to Abandon" },
-          {
-            type: "list",
-            items: [
-              "Fire out of control (entire cabin involved)",
-              "Fuel/gas lines threatened",
-              "Smoke too thick to breathe",
-              "Explosive materials nearby",
-            ],
-          },
-          {
-            type: "note",
-            content: "Stay with vessel as long as safe - it's bigger, more visible than life raft. Abandon only when necessary.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Flooding",
-        children: [
-          { type: "heading", content: "Immediate Actions" },
-          {
-            type: "list",
-            items: [
-              "1. Locate source of water",
-              "2. Start ALL bilge pumps (manual + electric)",
-              "3. All hands bail (buckets, pots, anything!)",
-              "4. Try to reduce inflow",
-            ],
-          },
-          { type: "heading", content: "Reducing Inflow" },
-          {
-            type: "list",
-            items: [
-              "Through-hull damage: push cushion/mattress against hole",
-              "Seacock failure: stuff rags, wedge wood, apply collision mat",
-              "Hose failure: clamp, tape, or cut and plug seacock",
-              "Deck leak: tarps, duct tape, anything to cover",
-            ],
-          },
-          { type: "heading", content: "Temporary Patches" },
-          {
-            type: "list",
-            items: [
-              "Collision mat (canvas + lines): drape over hole from outside, water pressure holds it",
-              "Pillows/cushions tied with lines: push into hole",
-              "Wood + underwater epoxy: if you have time",
-              "Duct tape: surprisingly effective on small holes",
-            ],
-          },
-          {
-            type: "warning",
-            content: "If water ingress exceeds pump capacity and can't be stopped: prepare to abandon. Send MAYDAY before electrical systems fail!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Medical Emergencies",
-        children: [
-          { type: "heading", content: "Severe Injury / Illness" },
-          {
-            type: "list",
-            items: [
-              "Assess: Breathing? Bleeding? Conscious?",
-              "Stabilize: Stop bleeding, secure airway, CPR if needed",
-              "Radio for advice: VHF Ch 16 → Coast Guard → Medical consultation",
-              "Consider evacuation: PAN-PAN MEDICO or MAYDAY if life-threatening",
-            ],
-          },
-          { type: "heading", content: "When to Call for Evacuation" },
-          {
-            type: "list",
-            items: [
-              "Unconsciousness (not seasickness)",
-              "Severe bleeding (can't control)",
-              "Chest pain (potential heart attack)",
-              "Difficulty breathing (not asthma with inhaler working)",
-              "Suspected stroke (facial droop, arm weakness, speech difficulty)",
-              "Severe burns (>10% body or face/hands)",
-              "Spinal injury (don't move person!)",
-            ],
-          },
-          { type: "heading", content: "Radio Call" },
-          {
-            type: "code",
-            content: `PAN-PAN MEDICO (urgency):
+                ru: `"MAYDAY, MAYDAY, MAYDAY
+ALL SHIPS, ALL SHIPS, ALL SHIPS
+This is [ИМЯ СУДНА] x3
+MAN OVERBOARD (ЧЕЛОВЕК ЗА БОРТОМ)
+Position: [GPS]
+[ЧИСЛО] человек в воде
+Over"`,
+                zh: `"MAYDAY, MAYDAY, MAYDAY
+ALL SHIPS, ALL SHIPS, ALL SHIPS
+This is [船名] x3
+MAN OVERBOARD (落水人员)
+Position: [GPS]
+[人数] 人在水中
+Over"`,
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Grounding",
+            ru: "Посадка на мель",
+            zh: "搁浅",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Immediate Actions", ru: "Немедленные действия", zh: "立即行动" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. DON'T immediately shut off engine!",
+                  "2. Check for hull damage / leaks",
+                  "3. Sound bilges (any water ingress?)",
+                  "4. Note tide state (rising or falling?)",
+                  "5. Note wind/wave direction",
+                ],
+                ru: [
+                  "1. НЕ глушите двигатель сразу!",
+                  "2. Проверьте повреждения корпуса / протечки",
+                  "3. Проверьте трюм (есть ли поступление воды?)",
+                  "4. Отметьте состояние прилива (прибывает или отливает?)",
+                  "5. Отметьте направление ветра/волн",
+                ],
+                zh: [
+                  "1. 不要立即关闭发动机！",
+                  "2. 检查船体损坏/漏水",
+                  "3. 探测舱底（有进水吗？）",
+                  "4. 注意潮汐状态（涨潮还是退潮？）",
+                  "5. 注意风浪方向",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Soft Grounding (sand/mud)", ru: "Мягкая посадка (песок/ил)", zh: "软搁浅（沙/泥）" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Try gentle reverse (don't dig in deeper)",
+                  "Heel boat to reduce draft (crew to one side / boom out)",
+                  "If tide rising: wait (kedge anchor if drifting)",
+                  "If tide falling: prepare to stay grounded until next tide",
+                ],
+                ru: [
+                  "Попробуйте мягкий задний ход (не закапывайтесь глубже)",
+                  "Накрените яхту для уменьшения осадки (экипаж на один борт / вынос гика)",
+                  "Если прилив прибывает: ждите (завезите якорь, если сносит)",
+                  "Если прилив отливает: готовьтесь оставаться на мели до следующего прилива",
+                ],
+                zh: [
+                  "尝试轻柔倒车（不要陷得更深）",
+                  "让船倾侧以减少吃水（船员移向一侧/桁外伸）",
+                  "如涨潮：等待（如漂移则抛锚）",
+                  "如退潮：准备搁浅至下次涨潮",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Hard Grounding (rock)", ru: "Жёсткая посадка (скала)", zh: "硬搁浅（岩石）" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Do NOT try to power off (may damage hull more)",
+                  "Check for damage immediately",
+                  "Pump bilges continuously if leaking",
+                  "Kedge anchor technique: row anchor out, winch boat off",
+                  "Wait for high tide if not critical",
+                  "Consider calling for tow assistance",
+                ],
+                ru: [
+                  "НЕ пытайтесь сняться силой (может ещё больше повредить корпус)",
+                  "Немедленно проверьте повреждения",
+                  "Откачивайте трюм непрерывно, если течёт",
+                  "Техника верпования: завезите якорь, выбирайтесь на лебёдке",
+                  "Ждите высокой воды, если не критично",
+                  "Рассмотрите вызов буксира",
+                ],
+                zh: [
+                  "不要试图强行脱离（可能造成更大损坏）",
+                  "立即检查损坏",
+                  "如漏水持续抽舱底",
+                  "抛锚技术：划船运锚，用绞盘拉船",
+                  "如非紧急等待高潮",
+                  "考虑呼叫拖带协助",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Kedge Anchor Technique", ru: "Техника верпования", zh: "抛锚技术" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Load kedge anchor in dinghy",
+                  "Row out perpendicular to direction you want to pull",
+                  "Drop anchor 100-200m away",
+                  "Return to yacht",
+                  "Winch on anchor line (halyard winch for power)",
+                  "May need to heel boat simultaneously",
+                ],
+                ru: [
+                  "Загрузите верп в динги",
+                  "Выгребайте перпендикулярно направлению, в котором хотите тянуть",
+                  "Отдайте якорь в 100-200м",
+                  "Вернитесь на яхту",
+                  "Выбирайте якорный канат на лебёдке (фаловая лебёдка для мощности)",
+                  "Может потребоваться одновременный крен",
+                ],
+                zh: [
+                  "在橡皮艇装载锚",
+                  "划向垂直于拉力方向",
+                  "在100-200米处抛锚",
+                  "返回游艇",
+                  "用绞盘收锚链（升降索绞盘更有力）",
+                  "可能需要同时让船倾侧",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "If holed and leaking badly, DON'T pull off until temporary patch applied! Grounding may be only thing preventing sinking.",
+                ru: "Если пробоина и сильная течь, НЕ снимайтесь, пока не поставите временную заплатку! Посадка на мель может быть единственным, что не даёт затонуть.",
+                zh: "如破洞严重漏水，不要在临时修补前脱离！搁浅可能是防止沉船的唯一方法。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Fire",
+            ru: "Пожар",
+            zh: "火灾",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Immediate Actions", ru: "Немедленные действия", zh: "立即行动" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. SHOUT 'Fire!'",
+                  "2. Turn off gas + electrical systems (if source)",
+                  "3. Close hatches/doors (starve oxygen)",
+                  "4. Grab fire extinguisher",
+                  "5. Don life jackets (prepare to abandon)",
+                ],
+                ru: [
+                  "1. КРИЧИТЕ 'Пожар!'",
+                  "2. Отключите газ + электросистемы (если источник)",
+                  "3. Закройте люки/двери (лишить кислорода)",
+                  "4. Хватайте огнетушитель",
+                  "5. Наденьте спасжилеты (готовьтесь покинуть судно)",
+                ],
+                zh: [
+                  "1. 大喊'着火！'",
+                  "2. 关闭燃气+电气系统（如是源头）",
+                  "3. 关闭舱口/门（隔绝氧气）",
+                  "4. 抓灭火器",
+                  "5. 穿上救生衣（准备弃船）",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Fighting Fire", ru: "Борьба с огнём", zh: "灭火" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Use correct extinguisher type:",
+                  "  - A: Wood, paper, cloth (water OK)",
+                  "  - B: Fuel, oil, grease (foam/CO2, NO WATER!)",
+                  "  - C: Electrical (CO2, NO WATER!)",
+                  "Aim at BASE of flames, sweep side-to-side",
+                  "Stay low (smoke rises)",
+                  "Approach from upwind if possible",
+                  "Have escape route",
+                ],
+                ru: [
+                  "Используйте правильный тип огнетушителя:",
+                  "  - A: Дерево, бумага, ткань (вода OK)",
+                  "  - B: Топливо, масло, жир (пена/CO2, БЕЗ ВОДЫ!)",
+                  "  - C: Электрика (CO2, БЕЗ ВОДЫ!)",
+                  "Целиться в ОСНОВАНИЕ пламени, подметать из стороны в сторону",
+                  "Держитесь низко (дым поднимается)",
+                  "Подходите с наветренной стороны, если возможно",
+                  "Имейте путь отхода",
+                ],
+                zh: [
+                  "使用正确的灭火器类型：",
+                  "  - A：木材、纸张、布（可用水）",
+                  "  - B：燃料、油、油脂（泡沫/CO2，禁用水！）",
+                  "  - C：电气（CO2，禁用水！）",
+                  "瞄准火焰底部，左右扫射",
+                  "保持低姿（烟雾上升）",
+                  "尽可能从上风侧接近",
+                  "保留逃生路线",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "If engine fire: don't open engine compartment! Oxygen rush can cause explosion. Use CO2 system if installed.",
+                ru: "Если пожар двигателя: не открывайте моторный отсек! Приток кислорода может вызвать взрыв. Используйте систему CO2, если установлена.",
+                zh: "如发动机着火：不要打开机舱！氧气涌入可能引起爆炸。如已安装请使用CO2系统。",
+              }[l] as string,
+            },
+            { 
+              type: "heading", 
+              content: { en: "When to Abandon", ru: "Когда покидать судно", zh: "何时弃船" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Fire out of control (entire cabin involved)",
+                  "Fuel/gas lines threatened",
+                  "Smoke too thick to breathe",
+                  "Explosive materials nearby",
+                ],
+                ru: [
+                  "Пожар вышел из-под контроля (охвачена вся каюта)",
+                  "Под угрозой топливные/газовые магистрали",
+                  "Дым слишком густой для дыхания",
+                  "Взрывоопасные материалы рядом",
+                ],
+                zh: [
+                  "火势失控（整个舱室着火）",
+                  "燃料/燃气管路受威胁",
+                  "烟雾太浓无法呼吸",
+                  "附近有爆炸物",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Stay with vessel as long as safe - it's bigger, more visible than life raft. Abandon only when necessary.",
+                ru: "Оставайтесь с судном, пока безопасно - оно больше и заметнее спасплота. Покидайте только когда необходимо.",
+                zh: "只要安全就留在船上 - 它比救生筏更大、更显眼。只在必要时弃船。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Flooding",
+            ru: "Затопление",
+            zh: "进水",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Immediate Actions", ru: "Немедленные действия", zh: "立即行动" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. Locate source of water",
+                  "2. Start ALL bilge pumps (manual + electric)",
+                  "3. All hands bail (buckets, pots, anything!)",
+                  "4. Try to reduce inflow",
+                ],
+                ru: [
+                  "1. Найдите источник воды",
+                  "2. Запустите ВСЕ осушительные помпы (ручные + электрические)",
+                  "3. Все вычерпывают (ведра, кастрюли, всё что есть!)",
+                  "4. Попытайтесь уменьшить поток",
+                ],
+                zh: [
+                  "1. 找到进水源",
+                  "2. 启动所有舱底泵（手动+电动）",
+                  "3. 全员舀水（桶、锅、任何东西！）",
+                  "4. 试图减少进水",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Reducing Inflow", ru: "Уменьшение потока", zh: "减少进水" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Through-hull damage: push cushion/mattress against hole",
+                  "Seacock failure: stuff rags, wedge wood, apply collision mat",
+                  "Hose failure: clamp, tape, or cut and plug seacock",
+                  "Deck leak: tarps, duct tape, anything to cover",
+                ],
+                ru: [
+                  "Повреждение корпуса: прижмите подушку/матрас к пробоине",
+                  "Поломка кингстона: затолкайте тряпки, вбейте дерево, приложите пластырь",
+                  "Разрыв шланга: зажмите, обмотайте, или обрежьте и заглушите кингстон",
+                  "Течь с палубы: брезент, скотч, чем угодно закройте",
+                ],
+                zh: [
+                  "穿孔损坏：用垫子/床垫堵住破洞",
+                  "海底阀失效：塞破布、楔木头、敷碰撞垫",
+                  "软管破裂：夹紧、胶带或割断并堵海底阀",
+                  "甲板漏水：篷布、胶带、任何东西覆盖",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Temporary Patches", ru: "Временные заплатки", zh: "临时修补" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Collision mat (canvas + lines): drape over hole from outside, water pressure holds it",
+                  "Pillows/cushions tied with lines: push into hole",
+                  "Wood + underwater epoxy: if you have time",
+                  "Duct tape: surprisingly effective on small holes",
+                ],
+                ru: [
+                  "Пластырь (брезент + концы): накиньте на пробоину снаружи, давление воды прижмёт",
+                  "Подушки/матрацы привязанные концами: втолкните в пробоину",
+                  "Дерево + подводная эпоксидка: если есть время",
+                  "Скотч: удивительно эффективен на небольших пробоинах",
+                ],
+                zh: [
+                  "碰撞垫（帆布+绳索）：从外侧盖住破洞，水压会压住",
+                  "枕头/垫子用绳绑：塞进破洞",
+                  "木头+水下环氧树脂：如有时间",
+                  "胶带：对小洞出奇有效",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "If water ingress exceeds pump capacity and can't be stopped: prepare to abandon. Send MAYDAY before electrical systems fail!",
+                ru: "Если поток воды превышает мощность помп и не может быть остановлен: готовьтесь к покиданию. Отправьте MAYDAY до отказа электросистем!",
+                zh: "如进水超过泵能力且无法阻止：准备弃船。在电气系统失效前发送求救！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Medical Emergencies",
+            ru: "Медицинские чрезвычайные ситуации",
+            zh: "医疗紧急情况",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Severe Injury / Illness", ru: "Тяжёлая травма / Болезнь", zh: "严重伤病" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Assess: Breathing? Bleeding? Conscious?",
+                  "Stabilize: Stop bleeding, secure airway, CPR if needed",
+                  "Radio for advice: VHF Ch 16 → Coast Guard → Medical consultation",
+                  "Consider evacuation: PAN-PAN MEDICO or MAYDAY if life-threatening",
+                ],
+                ru: [
+                  "Оцените: Дышит? Кровотечение? В сознании?",
+                  "Стабилизируйте: Остановите кровотечение, обеспечьте дыхательные пути, СЛР если нужно",
+                  "Вызовите по радио консультацию: VHF 16 канал → Береговая охрана → Медицинская консультация",
+                  "Рассмотрите эвакуацию: PAN-PAN MEDICO или MAYDAY, если угрожает жизни",
+                ],
+                zh: [
+                  "评估：呼吸？出血？有意识？",
+                  "稳定：止血、确保气道、必要时CPR",
+                  "无线电求助：VHF 16频道 → 海岸警卫队 → 医疗咨询",
+                  "考虑疏散：PAN-PAN MEDICO或危及生命时MAYDAY",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "When to Call for Evacuation", ru: "Когда вызывать эвакуацию", zh: "何时呼叫疏散" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Unconsciousness (not seasickness)",
+                  "Severe bleeding (can't control)",
+                  "Chest pain (potential heart attack)",
+                  "Difficulty breathing (not asthma with inhaler working)",
+                  "Suspected stroke (facial droop, arm weakness, speech difficulty)",
+                  "Severe burns (>10% body or face/hands)",
+                  "Spinal injury (don't move person!)",
+                ],
+                ru: [
+                  "Потеря сознания (не морская болезнь)",
+                  "Сильное кровотечение (не можете остановить)",
+                  "Боль в груди (возможный инфаркт)",
+                  "Затруднённое дыхание (не астма с работающим ингалятором)",
+                  "Подозрение на инсульт (опущение лица, слабость руки, проблемы с речью)",
+                  "Тяжёлые ожоги (>10% тела или лицо/руки)",
+                  "Травма позвоночника (не двигайте человека!)",
+                ],
+                zh: [
+                  "失去意识（非晕船）",
+                  "严重出血（无法控制）",
+                  "胸痛（可能心脏病发作）",
+                  "呼吸困难（非哮喘吸入剂有效）",
+                  "疑似中风（面部下垂、手臂无力、言语困难）",
+                  "严重烧伤（>10%身体或脸/手）",
+                  "脊柱损伤（不要移动患者！）",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Radio Call", ru: "Радиовызов", zh: "无线电呼叫" }[l] as string,
+            },
+            {
+              type: "code",
+              content: {
+                en: `PAN-PAN MEDICO (urgency):
 "PAN-PAN, PAN-PAN, PAN-PAN
 ALL SHIPS, ALL SHIPS, ALL SHIPS
 This is [VESSEL] x3
@@ -1047,13 +1428,47 @@ MAYDAY (life-threatening):
 "MAYDAY, MAYDAY, MAYDAY
 Medical evacuation required
 [Details]"`,
-          },
-          {
-            type: "tip",
-            content: "Coast Guard can patch you through to doctors for remote consultation. Have patient details ready: age, symptoms, vital signs, medications.",
-          },
-        ],
-      },
-    ],
+                ru: `PAN-PAN MEDICO (срочность):
+"PAN-PAN, PAN-PAN, PAN-PAN
+ALL SHIPS, ALL SHIPS, ALL SHIPS
+This is [СУДНО] x3
+Position: [GPS]
+Medical emergency (Медицинская чрезвычайная ситуация)
+[Краткое описание: без сознания, боль в груди и т.д.]
+Requesting medical advice
+Over"
+
+MAYDAY (угрожает жизни):
+"MAYDAY, MAYDAY, MAYDAY
+Medical evacuation required
+[Детали]"`,
+                zh: `PAN-PAN MEDICO（紧急）：
+"PAN-PAN, PAN-PAN, PAN-PAN
+ALL SHIPS, ALL SHIPS, ALL SHIPS
+This is [船舶] x3
+Position: [GPS]
+Medical emergency（医疗紧急情况）
+[简要描述：船员昏迷、胸痛等]
+Requesting medical advice
+Over"
+
+MAYDAY（危及生命）：
+"MAYDAY, MAYDAY, MAYDAY
+Medical evacuation required
+[详情]"`,
+              }[l] as string,
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Coast Guard can patch you through to doctors for remote consultation. Have patient details ready: age, symptoms, vital signs, medications.",
+                ru: "Береговая охрана может соединить вас с врачами для дистанционной консультации. Подготовьте данные пациента: возраст, симптомы, жизненные показатели, лекарства.",
+                zh: "海岸警卫队可以为您接通医生进行远程咨询。准备好患者详情：年龄、症状、生命体征、用药。",
+              }[l] as string,
+            },
+          ],
+        },
+      ];
+    },
   },
 ];
