@@ -68,7 +68,7 @@ function renderContentBlock(block: ContentBlock, lang: Lang, level = 0): string 
 
     case "accordion":
       return `
-        <details class="content-accordion" ${level === 0 ? "open" : ""}>
+        <details class="content-accordion">
           <summary>${esc(block.title || "")}</summary>
           <div class="accordion-content">
             ${(block.children || []).map((child) => renderContentBlock(child, lang, level + 1)).join("")}
@@ -95,15 +95,27 @@ function renderContentBlock(block: ContentBlock, lang: Lang, level = 0): string 
         </table>
       `;
 
+    case "illustration":
+      if (block.src) {
+        return `<figure class="content-illustration">
+          <div class="illustration-box">${block.src}</div>
+          ${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ""}
+        </figure>`;
+      }
+      return "";
+
     default:
       return "";
   }
 }
 
 export function renderArticleContent(article: KnowledgeArticle, lang: Lang): string {
+  // Use dynamic content if available, otherwise fallback to static content
+  const contentBlocks = article.getContent ? article.getContent(lang) : article.content;
+  
   return `
     <article class="knowledge-content">
-      ${article.content.map((block) => renderContentBlock(block, lang)).join("")}
+      ${contentBlocks.map((block) => renderContentBlock(block, lang)).join("")}
     </article>
   `;
 }

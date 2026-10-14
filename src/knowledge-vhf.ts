@@ -1,4 +1,142 @@
-import type { KnowledgeArticle } from "./knowledge-types";
+import type { KnowledgeArticle, ContentBlock } from "./knowledge-types";
+import type { Lang } from "./i18n";
+
+// Multilingual content helper
+function getContent(lang: Lang, contentMap: Record<string, ContentBlock[]>): ContentBlock[] {
+  return contentMap[lang] || contentMap["en"] || [];
+}
+
+const vhfChannelsContent: Record<string, ContentBlock[]> = {
+  en: [
+    { type: "heading", content: "Distress & Safety" },
+    {
+      type: "list",
+      items: [
+        "Ch 16: Emergency, DSC alerts, initial contact (Monitor ALWAYS!)",
+        "Ch 13: Bridge-to-bridge (bridges, locks, large vessels)",
+        "Ch 70: DSC digital calls only",
+      ],
+    },
+    { type: "heading", content: "Working Channels" },
+    {
+      type: "list",
+      items: [
+        "Ch 06: Ship-to-ship (after initial contact on Ch 16)",
+        "Ch 08: Ship-to-ship (commercial)",
+        "Ch 09: Ship-to-ship / Port operations",
+        "Ch 72: Ship-to-ship (recreational)",
+        "Ch 77: Ship-to-ship (recreational)",
+      ],
+    },
+    { type: "heading", content: "Marina & Harbor" },
+    {
+      type: "list",
+      items: [
+        "Ch 09: Marinas, docks (USA)",
+        "Ch 12, 14: Harbormasters (varies by country)",
+        "Ch 80-87: UK marinas",
+      ],
+    },
+    { type: "heading", content: "Weather" },
+    {
+      type: "list",
+      items: [
+        "WX1-WX7: NOAA Weather (USA) - receive only!",
+        "Ch 67, 68: Small craft (local)",
+      ],
+    },
+    {
+      type: "tip",
+      content: "Always listen before transmitting. Channel 16 is for emergencies and initial contact only - then switch to a working channel!",
+    },
+  ],
+  ru: [
+    { type: "heading", content: "Бедствие и безопасность" },
+    {
+      type: "list",
+      items: [
+        "Канал 16: Аварийная связь, DSC сигналы, первый контакт (Слушать ВСЕГДА!)",
+        "Канал 13: Мостик-мостик (мосты, шлюзы, крупные суда)",
+        "Канал 70: Только DSC цифровые вызовы",
+      ],
+    },
+    { type: "heading", content: "Рабочие каналы" },
+    {
+      type: "list",
+      items: [
+        "Канал 06: Судно-судно (после первого контакта на 16)",
+        "Канал 08: Судно-судно (коммерческие)",
+        "Канал 09: Судно-судно / Портовые операции",
+        "Канал 72: Судно-судно (прогулочные)",
+        "Канал 77: Судно-судно (прогулочные)",
+      ],
+    },
+    { type: "heading", content: "Марины и гавани" },
+    {
+      type: "list",
+      items: [
+        "Канал 09: Марины, доки (США)",
+        "Каналы 12, 14: Капитаны портов (зависит от страны)",
+        "Каналы 80-87: Марины Великобритании",
+      ],
+    },
+    { type: "heading", content: "Погода" },
+    {
+      type: "list",
+      items: [
+        "WX1-WX7: Погода NOAA (США) - только приём!",
+        "Каналы 67, 68: Малые суда (местное)",
+      ],
+    },
+    {
+      type: "tip",
+      content: "Всегда слушайте перед передачей. Канал 16 только для чрезвычайных ситуаций и первого контакта - затем переходите на рабочий канал!",
+    },
+  ],
+  zh: [
+    { type: "heading", content: "遇险与安全" },
+    {
+      type: "list",
+      items: [
+        "第16频道：紧急情况、DSC警报、初次联系（务必监听！）",
+        "第13频道：驾驶台间通信（桥梁、船闸、大型船舶）",
+        "第70频道：仅DSC数字呼叫",
+      ],
+    },
+    { type: "heading", content: "工作频道" },
+    {
+      type: "list",
+      items: [
+        "第06频道：船对船（16频道初次联系后）",
+        "第08频道：船对船（商业）",
+        "第09频道：船对船/港口作业",
+        "第72频道：船对船（娱乐用）",
+        "第77频道：船对船（娱乐用）",
+      ],
+    },
+    { type: "heading", content: "码头与港口" },
+    {
+      type: "list",
+      items: [
+        "第09频道：码头、停泊区（美国）",
+        "第12、14频道：港务长（因国家而异）",
+        "第80-87频道：英国码头",
+      ],
+    },
+    { type: "heading", content: "天气" },
+    {
+      type: "list",
+      items: [
+        "WX1-WX7：NOAA天气（美国）- 仅接收！",
+        "第67、68频道：小型船艇（本地）",
+      ],
+    },
+    {
+      type: "tip",
+      content: "发送前务必先收听。第16频道仅用于紧急情况和初次联系 - 然后切换到工作频道！",
+    },
+  ],
+};
 
 export const VHF_ARTICLES: KnowledgeArticle[] = [
   {
@@ -8,49 +146,8 @@ export const VHF_ARTICLES: KnowledgeArticle[] = [
     descKey: "vhfChannelsDesc",
     icon: "📻",
     order: 1,
-    content: [
-      { type: "heading", content: "Distress & Safety" },
-      {
-        type: "list",
-        items: [
-          "Ch 16: Emergency, DSC alerts, initial contact (Monitor ALWAYS!)",
-          "Ch 13: Bridge-to-bridge (bridges, locks, large vessels)",
-          "Ch 70: DSC digital calls only",
-        ],
-      },
-      { type: "heading", content: "Working Channels" },
-      {
-        type: "list",
-        items: [
-          "Ch 06: Ship-to-ship (after initial contact on Ch 16)",
-          "Ch 08: Ship-to-ship (commercial)",
-          "Ch 09: Ship-to-ship / Port operations",
-          "Ch 72: Ship-to-ship (recreational)",
-          "Ch 77: Ship-to-ship (recreational)",
-        ],
-      },
-      { type: "heading", content: "Marina & Harbor" },
-      {
-        type: "list",
-        items: [
-          "Ch 09: Marinas, docks (USA)",
-          "Ch 12, 14: Harbormasters (varies by country)",
-          "Ch 80-87: UK marinas",
-        ],
-      },
-      { type: "heading", content: "Weather" },
-      {
-        type: "list",
-        items: [
-          "WX1-WX7: NOAA Weather (USA) - receive only!",
-          "Ch 67, 68: Small craft (local)",
-        ],
-      },
-      {
-        type: "tip",
-        content: "Always listen before transmitting. Channel 16 is for emergencies and initial contact only - then switch to a working channel!",
-      },
-    ],
+    content: [], // Will be populated dynamically
+    getContent: (lang: Lang) => getContent(lang, vhfChannelsContent),
   },
   {
     id: "vhf-dsc",

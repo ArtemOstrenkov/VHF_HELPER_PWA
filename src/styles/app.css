@@ -1173,3 +1173,56 @@ input.dms-in.w3 {
     font-size: 0.8125rem;
   }
 }
+
+/* Illustrations */
+.content-illustration {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.illustration-box {
+  background: var(--glass);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-s);
+  padding: 1.5rem;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  white-space: pre;
+  overflow-x: auto;
+  text-align: left;
+  color: var(--text);
+  min-height: auto;
+  display: block;
+}
+
+.content-illustration figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* List icons */
+.content-list li {
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.content-list li::before {
+  content: '▸';
+  position: absolute;
+  left: -1rem;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* Checklist styling */
+.content-list li:has(input[type="checkbox"]) {
+  list-style: none;
+  padding-left: 0;
+}
+
+.content-list li:has(input[type="checkbox"])::before {
+  content: '';
+}
