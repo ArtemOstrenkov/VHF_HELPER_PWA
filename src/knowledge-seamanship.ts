@@ -1008,166 +1008,372 @@ export const SEAMANSHIP_ARTICLES: KnowledgeArticle[] = [
     descKey: "dockingDesc",
     icon: "🛥️",
     order: 3,
-    content: [
-      {
-        type: "text",
-        content: "Docking is often the most stressful part of sailing - but with preparation and practice, it becomes routine.",
-      },
-      {
-        type: "accordion",
-        title: "Preparation",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Fenders out (correct height for dock)",
-              "Lines ready (4 minimum: bow, stern, 2 springs)",
-              "Assign crew roles (who handles which line)",
-              "Brief the plan (which side, wind/current effect)",
-              "Slow down well before dock!",
-            ],
-          },
-          {
-            type: "tip",
-            content: "Prepare fenders and lines EARLY, while still offshore. Don't scramble at the last minute!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Alongside / Berthing",
-        children: [
-          { type: "heading", content: "Four Lines" },
-          {
-            type: "list",
-            items: [
-              "Bow line: forward from bow",
-              "Stern line: aft from stern",
-              "Forward spring: from bow leading aft",
-              "Aft spring: from stern leading forward",
-            ],
-          },
-          {
-            type: "note",
-            content: "Springs prevent fore/aft movement. Bow/stern lines prevent leaving dock.",
-          },
-          { type: "heading", content: "Approach" },
-          {
-            type: "list",
-            items: [
-              "1. Approach at 20-30° angle to dock",
-              "2. Into wind/current if possible",
-              "3. SLOW! Walking pace or less",
-              "4. Aim for mid-point of berth",
-              "5. Turn parallel just before reaching",
-              "6. Use reverse to stop forward motion",
-              "7. Spring line first (holds boat to dock)",
-              "8. Then bow, stern, remaining spring",
-            ],
-          },
-          {
-            type: "warning",
-            content: "Wind/current pushing you OFF dock: approach at steeper angle. ON to dock: shallower angle and use reverse early.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Mediterranean Mooring (Stern-to)",
-        children: [
-          {
-            type: "text",
-            content: "Anchoring bow, backing stern to dock. Common in Mediterranean marinas.",
-          },
-          { type: "heading", content: "Procedure" },
-          {
-            type: "list",
-            items: [
-              "1. Set anchor 3-4 boat lengths from dock",
-              "2. Pay out chain while reversing toward dock",
-              "3. Prepare stern lines (crew ready with lines)",
-              "4. Approach dock slowly in reverse",
-              "5. Pass stern lines to dock",
-              "6. Tension anchor chain to pull bow away",
-              "7. Adjust position with chain and stern lines",
-            ],
-          },
-          { type: "heading", content: "Wind/Current" },
-          {
-            type: "list",
-            items: [
-              "Side wind: anchor upwind, let wind blow stern to dock",
-              "Helps push you into position",
-            ],
-          },
-          {
-            type: "tip",
-            content: "Practice in empty spot first! Med mooring is hard. Many marinas have staff to help catch lines.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Prop Walk Effect",
-        children: [
-          {
-            type: "text",
-            content: "Right-hand prop (clockwise viewed from stern - most common):",
-          },
-          {
-            type: "list",
-            items: [
-              "Forward gear: stern pushes slightly to starboard",
-              "Reverse gear: stern pushes strongly to port",
-            ],
-          },
-          {
-            type: "note",
-            content: "Use this! Reverse into dock port-side-to, and prop walk helps push you in. Starboard-side-to fights you.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Wind & Current Strategy",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Wind off dock (pushing away): Approach at steeper angle, get line ashore FAST",
-              "Wind onto dock (pushing you in): Shallow angle, use reverse early to control",
-              "Wind along dock: Approach from downwind, let wind blow you in",
-              "Current: Face into it when possible, like wind",
-            ],
-          },
-          {
-            type: "tip",
-            content: "Can't dock nicely? Circle and try again. Better to repeat approach than crash!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Common Mistakes",
-        children: [
-          {
-            type: "list",
-            items: [
-              "❌ Coming in too fast (most common!)",
-              "❌ Not preparing lines/fenders early",
-              "❌ Wrong side (fenders on wrong side)",
-              "❌ Not briefing crew",
-              "❌ Ignoring wind/current",
-              "❌ Throttle panic (too much throttle when worried)",
-              "❌ Not using springs (boat moves fore/aft)",
-            ],
-          },
-        ],
-      },
-      {
-        type: "note",
-        content: "Remember: slow is smooth, smooth is fast. There's no prize for quick docking, but there's a penalty for crashing!",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "text",
+          content: {
+            en: "Docking is often the most stressful part of sailing - but with preparation and practice, it becomes routine.",
+            ru: "Швартовка часто самая стрессовая часть плавания - но с подготовкой и практикой она становится рутиной.",
+            zh: "停靠通常是航行中压力最大的部分 - 但通过准备和练习，会成为常规操作。",
+          }[l] as string,
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Preparation",
+            ru: "Подготовка",
+            zh: "准备",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Fenders out (correct height for dock)",
+                  "Lines ready (4 minimum: bow, stern, 2 springs)",
+                  "Assign crew roles (who handles which line)",
+                  "Brief the plan (which side, wind/current effect)",
+                  "Slow down well before dock!",
+                ],
+                ru: [
+                  "Кранцы выставлены (правильная высота для причала)",
+                  "Концы готовы (минимум 4: носовой, кормовой, 2 шпринга)",
+                  "Распределите роли экипажа (кто работает с каким концом)",
+                  "Проинструктируйте план (какой борт, влияние ветра/течения)",
+                  "Снизьте скорость задолго до причала!",
+                ],
+                zh: [
+                  "护舷已放出（适合码头高度）",
+                  "缆绳已准备（至少4根：首缆、尾缆、2根倒缆）",
+                  "分配船员角色（谁负责哪根缆）",
+                  "简述计划（哪侧、风流影响）",
+                  "提前减速！",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Prepare fenders and lines EARLY, while still offshore. Don't scramble at the last minute!",
+                ru: "Готовьте кранцы и концы ЗАРАНЕЕ, пока ещё в море. Не суетитесь в последний момент!",
+                zh: "提前准备护舷和缆绳，在海上时就做好。不要最后一刻手忙脚乱！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Alongside / Berthing",
+            ru: "Швартовка лагом",
+            zh: "横靠/系泊",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Four Lines", ru: "Четыре конца", zh: "四根缆绳" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Bow line: forward from bow",
+                  "Stern line: aft from stern",
+                  "Forward spring: from bow leading aft",
+                  "Aft spring: from stern leading forward",
+                ],
+                ru: [
+                  "Носовой конец: вперёд с носа",
+                  "Кормовой конец: назад с кормы",
+                  "Носовой шпринг: с носа к корме",
+                  "Кормовой шпринг: с кормы к носу",
+                ],
+                zh: [
+                  "首缆：从船首向前",
+                  "尾缆：从船尾向后",
+                  "前倒缆：从船首向后",
+                  "后倒缆：从船尾向前",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Springs prevent fore/aft movement. Bow/stern lines prevent leaving dock.",
+                ru: "Шпринги предотвращают движение вперёд/назад. Носовой/кормовой концы не дают отойти от причала.",
+                zh: "倒缆防止前后移动。首/尾缆防止离开码头。",
+              }[l] as string,
+            },
+            { 
+              type: "heading", 
+              content: { en: "Approach", ru: "Подход", zh: "进近" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. Approach at 20-30° angle to dock",
+                  "2. Into wind/current if possible",
+                  "3. SLOW! Walking pace or less",
+                  "4. Aim for mid-point of berth",
+                  "5. Turn parallel just before reaching",
+                  "6. Use reverse to stop forward motion",
+                  "7. Spring line first (holds boat to dock)",
+                  "8. Then bow, stern, remaining spring",
+                ],
+                ru: [
+                  "1. Подходите под углом 20-30° к причалу",
+                  "2. Против ветра/течения, если возможно",
+                  "3. МЕДЛЕННО! Скорость пешехода или меньше",
+                  "4. Целитесь в середину места",
+                  "5. Разворачивайтесь параллельно перед контактом",
+                  "6. Используйте задний ход для остановки",
+                  "7. Сначала шпринг (удерживает яхту у причала)",
+                  "8. Затем носовой, кормовой, оставшийся шпринг",
+                ],
+                zh: [
+                  "1. 以20-30°角接近码头",
+                  "2. 尽可能迎风/流",
+                  "3. 慢！步行速度或更慢",
+                  "4. 瞄准泊位中点",
+                  "5. 到达前转平行",
+                  "6. 用倒车停止前进",
+                  "7. 先上倒缆（固定船到码头）",
+                  "8. 然后首缆、尾缆、剩余倒缆",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "Wind/current pushing you OFF dock: approach at steeper angle. ON to dock: shallower angle and use reverse early.",
+                ru: "Ветер/течение отжимает ОТ причала: подходите под более крутым углом. К причалу: меньший угол и ранний задний ход.",
+                zh: "风流推离码头：陡角度接近。推向码头：浅角度并提前倒车。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Mediterranean Mooring (Stern-to)",
+            ru: "Средиземноморская швартовка (кормой)",
+            zh: "地中海式系泊（船尾靠泊）",
+          }[l] as string,
+          children: [
+            {
+              type: "text",
+              content: {
+                en: "Anchoring bow, backing stern to dock. Common in Mediterranean marinas.",
+                ru: "Якорь с носа, корма к причалу. Распространено в средиземноморских маринах.",
+                zh: "船首抛锚，船尾倒入码头。地中海码头常见。",
+              }[l] as string,
+            },
+            { 
+              type: "heading", 
+              content: { en: "Procedure", ru: "Процедура", zh: "程序" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. Set anchor 3-4 boat lengths from dock",
+                  "2. Pay out chain while reversing toward dock",
+                  "3. Prepare stern lines (crew ready with lines)",
+                  "4. Approach dock slowly in reverse",
+                  "5. Pass stern lines to dock",
+                  "6. Tension anchor chain to pull bow away",
+                  "7. Adjust position with chain and stern lines",
+                ],
+                ru: [
+                  "1. Отдайте якорь на 3-4 длины корпуса от причала",
+                  "2. Травите цепь, двигаясь назад к причалу",
+                  "3. Подготовьте кормовые концы (экипаж готов)",
+                  "4. Подходите к причалу медленно задним ходом",
+                  "5. Подайте кормовые концы на причал",
+                  "6. Натяните якорную цепь, оттягивая нос",
+                  "7. Отрегулируйте позицию цепью и кормовыми концами",
+                ],
+                zh: [
+                  "1. 在距码头3-4船长处抛锚",
+                  "2. 倒车向码头同时放锚链",
+                  "3. 准备尾缆（船员准备）",
+                  "4. 缓慢倒车靠码头",
+                  "5. 将尾缆递给码头",
+                  "6. 拉紧锚链使船首离开",
+                  "7. 用锚链和尾缆调整位置",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Wind/Current", ru: "Ветер/Течение", zh: "风流" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Side wind: anchor upwind, let wind blow stern to dock",
+                  "Helps push you into position",
+                ],
+                ru: [
+                  "Боковой ветер: якорь с наветренной стороны, пусть ветер сдувает корму к причалу",
+                  "Помогает прижаться к месту",
+                ],
+                zh: [
+                  "侧风：在上风侧抛锚，让风吹船尾向码头",
+                  "帮助推入位置",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Practice in empty spot first! Med mooring is hard. Many marinas have staff to help catch lines.",
+                ru: "Потренируйтесь на пустом месте сначала! Средиземноморская швартовка сложна. Во многих маринах есть персонал, помогающий принять концы.",
+                zh: "先在空位练习！地中海式系泊很难。许多码头有工作人员帮助接缆。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Prop Walk Effect",
+            ru: "Эффект шага винта",
+            zh: "螺旋桨侧推效应",
+          }[l] as string,
+          children: [
+            {
+              type: "text",
+              content: {
+                en: "Right-hand prop (clockwise viewed from stern - most common):",
+                ru: "Правый винт (по часовой стрелке со стороны кормы - наиболее распространённый):",
+                zh: "右旋螺旋桨（从船尾看顺时针 - 最常见）：",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Forward gear: stern pushes slightly to starboard",
+                  "Reverse gear: stern pushes strongly to port",
+                ],
+                ru: [
+                  "Передний ход: корму слегка тянет вправо",
+                  "Задний ход: корму сильно тянет влево",
+                ],
+                zh: [
+                  "前进：船尾略向右偏",
+                  "倒车：船尾强烈向左偏",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Use this! Reverse into dock port-side-to, and prop walk helps push you in. Starboard-side-to fights you.",
+                ru: "Используйте это! Задним ходом к причалу левым бортом - шаг винта помогает прижаться. Правым бортом - мешает.",
+                zh: "利用这点！倒车左舷靠泊，侧推帮你靠拢。右舷靠泊会阻碍。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Wind & Current Strategy",
+            ru: "Стратегия с ветром и течением",
+            zh: "风流策略",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Wind off dock (pushing away): Approach at steeper angle, get line ashore FAST",
+                  "Wind onto dock (pushing you in): Shallow angle, use reverse early to control",
+                  "Wind along dock: Approach from downwind, let wind blow you in",
+                  "Current: Face into it when possible, like wind",
+                ],
+                ru: [
+                  "Ветер от причала (отжимает): Подходите под более крутым углом, быстро подайте конец на берег",
+                  "Ветер на причал (прижимает): Меньший угол, используйте задний ход заранее",
+                  "Ветер вдоль причала: Подходите с подветренной стороны, пусть ветер вас прижмёт",
+                  "Течение: Идите против него, когда возможно, как с ветром",
+                ],
+                zh: [
+                  "风离码头（推开）：陡角度接近，快速上缆",
+                  "风向码头（推入）：浅角度，提前倒车控制",
+                  "风沿码头：从下风接近，让风吹你入泊",
+                  "流：尽可能迎流，如同迎风",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Can't dock nicely? Circle and try again. Better to repeat approach than crash!",
+                ru: "Не получается красиво пришвартоваться? Сделайте круг и повторите. Лучше повторить подход, чем врезаться!",
+                zh: "无法顺利停靠？绕圈重试。重复进近总比撞上好！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Common Mistakes",
+            ru: "Частые ошибки",
+            zh: "常见错误",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "❌ Coming in too fast (most common!)",
+                  "❌ Not preparing lines/fenders early",
+                  "❌ Wrong side (fenders on wrong side)",
+                  "❌ Not briefing crew",
+                  "❌ Ignoring wind/current",
+                  "❌ Throttle panic (too much throttle when worried)",
+                  "❌ Not using springs (boat moves fore/aft)",
+                ],
+                ru: [
+                  "❌ Слишком быстрый подход (самое частое!)",
+                  "❌ Не подготовили концы/кранцы заранее",
+                  "❌ Не тот борт (кранцы не на том борту)",
+                  "❌ Не проинструктировали экипаж",
+                  "❌ Игнорирование ветра/течения",
+                  "❌ Паника с газом (слишком много газа от волнения)",
+                  "❌ Не используют шпринги (яхта движется вперёд/назад)",
+                ],
+                zh: [
+                  "❌ 速度太快（最常见！）",
+                  "❌ 未提前准备缆绳/护舷",
+                  "❌ 错侧（护舷在错侧）",
+                  "❌ 未向船员简述",
+                  "❌ 忽视风流",
+                  "❌ 油门恐慌（紧张时油门过大）",
+                  "❌ 不用倒缆（船前后移动）",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "note",
+          content: {
+            en: "Remember: slow is smooth, smooth is fast. There's no prize for quick docking, but there's a penalty for crashing!",
+            ru: "Помните: медленно - значит плавно, плавно - значит быстро. Нет приза за быструю швартовку, но есть штраф за столкновение!",
+            zh: "记住：慢即顺，顺即快。快速停靠无奖励，撞击有惩罚！",
+          }[l] as string,
+        },
+      ];
+    },
   },
 ];
