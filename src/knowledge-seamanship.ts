@@ -596,176 +596,410 @@ export const SEAMANSHIP_ARTICLES: KnowledgeArticle[] = [
     descKey: "anchoringDesc",
     icon: "⚓",
     order: 2,
-    content: [
-      {
-        type: "accordion",
-        title: "Choosing an Anchorage",
-        children: [
-          { type: "heading", content: "Good Anchorage Has" },
-          {
-            type: "list",
-            items: [
-              "Protection from wind/swell (current forecast!)",
-              "Good holding ground (mud, sand, clay)",
-              "Adequate depth (check tide range!)",
-              "Swing room (360° radius = your rode + nearby boats)",
-              "Clear bottom (no cables, pipes, moorings)",
-              "Safe exit route if weather changes",
-            ],
-          },
-          { type: "heading", content: "Ground Types" },
-          {
-            type: "list",
-            items: [
-              "✅ Best: Mud (M), Clay (Cl)",
-              "✅ Good: Sand (S), Mixed (M/S)",
-              "⚠️ Poor: Rock (Rk), Gravel (G), Weed (Wd)",
-              "❌ Bad: Coral (Co) - also damages coral!",
-            ],
-          },
-          {
-            type: "note",
-            content: "Chart abbreviations show bottom type. Check before anchoring!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Scope Calculation",
-        children: [
-          {
-            type: "text",
-            content: "Scope = Ratio of rode length to depth. More scope = better holding.",
-          },
-          {
-            type: "list",
-            items: [
-              "Calm weather: 5:1 (e.g., 5m depth = 25m rode)",
-              "Normal conditions: 7:1",
-              "Strong wind/overnight: 10:1",
-              "Storm: 10-15:1 or more",
-            ],
-          },
-          { type: "heading", content: "Depth Calculation" },
-          {
-            type: "list",
-            items: [
-              "Water depth + tide rise + bow height above water",
-              "Example: 4m chart depth + 1m tide + 1m bow = 6m",
-              "For 7:1 scope: need 42m of rode",
-            ],
-          },
-          {
-            type: "tip",
-            content: "Mark your anchor chain every 5-10m (paint, cable ties, different color shackles) so you know how much you've let out.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Anchoring Procedure",
-        children: [
-          { type: "heading", content: "Preparation" },
-          {
-            type: "list",
-            items: [
-              "Prepare anchor (remove windlass brake)",
-              "Check rode (not tangled, clear to run)",
-              "Assign crew: helm, anchor, lookout",
-              "Brief crew on plan",
-            ],
-          },
-          { type: "heading", content: "Setting the Anchor" },
-          {
-            type: "list",
-            items: [
-              "1. Approach slowly into wind/current",
-              "2. Stop over chosen spot (use GPS or bearings)",
-              "3. Lower anchor (DON'T throw!)",
-              "4. Let boat drift back slowly",
-              "5. Pay out rode gradually as you drift",
-              "6. When desired scope reached, snub rode",
-              "7. Give short burst of reverse (engine or backing sail)",
-              "8. Check anchor is set (bearing, GPS track)",
-            ],
-          },
-          {
-            type: "warning",
-            content: "Never drop anchor while moving forward - chain can tangle in prop!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Checking if Anchor Holds",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Take compass bearings to 2-3 shore objects (90° apart)",
-              "Mark GPS position (anchor watch alarm)",
-              "Watch for 15-30 minutes",
-              "Signs of dragging:",
-              "  - Bearings change",
-              "  - GPS shows movement (> swing radius)",
-              "  - Chain vibrates / jerks (felt through hull)",
-              "  - You're closer to shore/other boats",
-            ],
-          },
-          { type: "heading", content: "If Dragging" },
-          {
-            type: "list",
-            items: [
-              "Let out more scope first",
-              "If still dragging: re-anchor in new spot",
-              "Don't drag onto rocks or other boats!",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Anchor Types",
-        children: [
-          {
-            type: "list",
-            items: [
-              "CQR / Plow: Universal, good in most bottoms",
-              "Bruce / Claw: Modern, strong holding",
-              "Danforth: Excellent in sand/mud, poor in rocks",
-              "Rocna / Manson: Premium, best all-round",
-              "Fortress: Aluminum, lightweight, good holding-to-weight",
-            ],
-          },
-          {
-            type: "note",
-            content: "Anchor size matters! Bigger = better holding. Check manufacturer's recommendations for your boat size.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Weighing Anchor",
-        children: [
-          {
-            type: "list",
-            items: [
-              "1. Start engine (for control)",
-              "2. Motor forward while crew hoists chain",
-              "3. Stop when boat is over anchor",
-              "4. Break anchor free (may need short reverse)",
-              "5. Hoist remaining rode",
-              "6. Check anchor is aboard and secured",
-              "7. Rinse chain if muddy",
-            ],
-          },
-          {
-            type: "tip",
-            content: "Hauling anchor into wind is easier - wind helps break it free. But watch for drift onto other boats!",
-          },
-        ],
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "accordion",
+          title: {
+            en: "Choosing an Anchorage",
+            ru: "Выбор якорной стоянки",
+            zh: "选择锚地",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Good Anchorage Has", ru: "Хорошая якорная стоянка имеет", zh: "良好锚地具备" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Protection from wind/swell (current forecast!)",
+                  "Good holding ground (mud, sand, clay)",
+                  "Adequate depth (check tide range!)",
+                  "Swing room (360° radius = your rode + nearby boats)",
+                  "Clear bottom (no cables, pipes, moorings)",
+                  "Safe exit route if weather changes",
+                ],
+                ru: [
+                  "Защита от ветра/волнения (проверьте прогноз!)",
+                  "Хороший грунт (ил, песок, глина)",
+                  "Достаточная глубина (проверьте прилив!)",
+                  "Место для циркуляции (радиус 360° = ваша цепь + соседние яхты)",
+                  "Чистое дно (нет кабелей, труб, бочек)",
+                  "Безопасный выход, если погода изменится",
+                ],
+                zh: [
+                  "避风/浪（查看预报！）",
+                  "良好抓底地质（泥、沙、粘土）",
+                  "足够深度（查潮汐范围！）",
+                  "摆动空间（360°半径 = 您的锚链 + 附近船只）",
+                  "底部干净（无电缆、管道、系泊浮标）",
+                  "天气变化时的安全出口",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Ground Types", ru: "Типы грунта", zh: "底质类型" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "✅ Best: Mud (M), Clay (Cl)",
+                  "✅ Good: Sand (S), Mixed (M/S)",
+                  "⚠️ Poor: Rock (Rk), Gravel (G), Weed (Wd)",
+                  "❌ Bad: Coral (Co) - also damages coral!",
+                ],
+                ru: [
+                  "✅ Лучший: Ил (M), Глина (Cl)",
+                  "✅ Хороший: Песок (S), Смешанный (M/S)",
+                  "⚠️ Плохой: Скала (Rk), Галька (G), Водоросли (Wd)",
+                  "❌ Ужасный: Коралл (Co) - также повреждает кораллы!",
+                ],
+                zh: [
+                  "✅ 最佳：泥（M）、粘土（Cl）",
+                  "✅ 良好：沙（S）、混合（M/S）",
+                  "⚠️ 差：岩石（Rk）、砾石（G）、水草（Wd）",
+                  "❌ 糟糕：珊瑚（Co）- 也会损坏珊瑚！",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Chart abbreviations show bottom type. Check before anchoring!",
+                ru: "Сокращения на картах показывают тип грунта. Проверьте перед постановкой на якорь!",
+                zh: "海图缩写显示底质类型。抛锚前请检查！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Scope Calculation",
+            ru: "Расчёт вытравленной цепи",
+            zh: "锚链长度计算",
+          }[l] as string,
+          children: [
+            {
+              type: "text",
+              content: {
+                en: "Scope = Ratio of rode length to depth. More scope = better holding.",
+                ru: "Вытравленная цепь = Соотношение длины якорного каната к глубине. Больше цепи = лучше держит.",
+                zh: "锚链比 = 锚链长度与深度的比率。更多锚链 = 更好抓力。",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Calm weather: 5:1 (e.g., 5m depth = 25m rode)",
+                  "Normal conditions: 7:1",
+                  "Strong wind/overnight: 10:1",
+                  "Storm: 10-15:1 or more",
+                ],
+                ru: [
+                  "Спокойная погода: 5:1 (например, 5м глубина = 25м цепи)",
+                  "Обычные условия: 7:1",
+                  "Сильный ветер/ночь: 10:1",
+                  "Шторм: 10-15:1 или больше",
+                ],
+                zh: [
+                  "平静天气：5:1（例如5米深 = 25米锚链）",
+                  "正常条件：7:1",
+                  "强风/过夜：10:1",
+                  "风暴：10-15:1或更多",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Depth Calculation", ru: "Расчёт глубины", zh: "深度计算" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Water depth + tide rise + bow height above water",
+                  "Example: 4m chart depth + 1m tide + 1m bow = 6m",
+                  "For 7:1 scope: need 42m of rode",
+                ],
+                ru: [
+                  "Глубина воды + прилив + высота носа над водой",
+                  "Пример: 4м на карте + 1м прилив + 1м нос = 6м",
+                  "Для соотношения 7:1: нужно 42м цепи",
+                ],
+                zh: [
+                  "水深 + 涨潮高度 + 船首高于水面",
+                  "例：海图深度4米 + 潮汐1米 + 船首1米 = 6米",
+                  "7:1锚链比：需要42米锚链",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Mark your anchor chain every 5-10m (paint, cable ties, different color shackles) so you know how much you've let out.",
+                ru: "Отмечайте якорную цепь каждые 5-10м (краска, хомуты, скобы разного цвета), чтобы знать, сколько вытравили.",
+                zh: "每5-10米标记您的锚链（油漆、扎带、不同颜色的卸扣），这样您就知道放出了多少。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Anchoring Procedure",
+            ru: "Процедура постановки на якорь",
+            zh: "抛锚程序",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: { en: "Preparation", ru: "Подготовка", zh: "准备" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Prepare anchor (remove windlass brake)",
+                  "Check rode (not tangled, clear to run)",
+                  "Assign crew: helm, anchor, lookout",
+                  "Brief crew on plan",
+                ],
+                ru: [
+                  "Подготовьте якорь (снимите стопор брашпиля)",
+                  "Проверьте цепь (не запутана, свободно травится)",
+                  "Распределите экипаж: рулевой, якорщик, наблюдатель",
+                  "Проинструктируйте экипаж о плане",
+                ],
+                zh: [
+                  "准备锚（解除锚机制动）",
+                  "检查锚链（无缠结、可自由放出）",
+                  "分配船员：舵手、锚手、瞭望",
+                  "向船员简述计划",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "Setting the Anchor", ru: "Установка якоря", zh: "设定锚位" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. Approach slowly into wind/current",
+                  "2. Stop over chosen spot (use GPS or bearings)",
+                  "3. Lower anchor (DON'T throw!)",
+                  "4. Let boat drift back slowly",
+                  "5. Pay out rode gradually as you drift",
+                  "6. When desired scope reached, snub rode",
+                  "7. Give short burst of reverse (engine or backing sail)",
+                  "8. Check anchor is set (bearing, GPS track)",
+                ],
+                ru: [
+                  "1. Подходите медленно против ветра/течения",
+                  "2. Остановитесь над выбранным местом (GPS или пеленги)",
+                  "3. Опустите якорь (НЕ бросайте!)",
+                  "4. Дайте яхте медленно дрейфовать назад",
+                  "5. Постепенно травите цепь при дрейфе",
+                  "6. Когда достигнута нужная длина, задержите цепь",
+                  "7. Дайте короткий импульс назад (мотор или задний ход под парусом)",
+                  "8. Проверьте, что якорь держит (пеленг, трек GPS)",
+                ],
+                zh: [
+                  "1. 缓慢迎风/流接近",
+                  "2. 在选定位置停住（使用GPS或方位）",
+                  "3. 放下锚（不要扔！）",
+                  "4. 让船缓慢向后漂移",
+                  "5. 漂移时逐渐放出锚链",
+                  "6. 达到所需长度时收紧锚链",
+                  "7. 短暂倒车（发动机或退帆）",
+                  "8. 检查锚是否抓牢（方位、GPS轨迹）",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "warning",
+              content: {
+                en: "Never drop anchor while moving forward - chain can tangle in prop!",
+                ru: "Никогда не бросайте якорь при движении вперёд - цепь может намотаться на винт!",
+                zh: "切勿在前进时抛锚 - 锚链可能缠绕螺旋桨！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Checking if Anchor Holds",
+            ru: "Проверка держит ли якорь",
+            zh: "检查锚是否抓牢",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Take compass bearings to 2-3 shore objects (90° apart)",
+                  "Mark GPS position (anchor watch alarm)",
+                  "Watch for 15-30 minutes",
+                  "Signs of dragging:",
+                  "  - Bearings change",
+                  "  - GPS shows movement (> swing radius)",
+                  "  - Chain vibrates / jerks (felt through hull)",
+                  "  - You're closer to shore/other boats",
+                ],
+                ru: [
+                  "Возьмите пеленги на 2-3 береговых объекта (разнесённых на 90°)",
+                  "Отметьте позицию GPS (сигнал якорной тревоги)",
+                  "Наблюдайте 15-30 минут",
+                  "Признаки дрейфа:",
+                  "  - Пеленги изменяются",
+                  "  - GPS показывает движение (> радиус циркуляции)",
+                  "  - Цепь вибрирует / дёргается (чувствуется через корпус)",
+                  "  - Вы ближе к берегу/другим яхтам",
+                ],
+                zh: [
+                  "用罗盘测量2-3个岸上物体的方位（相隔90°）",
+                  "标记GPS位置（锚表警报）",
+                  "观察15-30分钟",
+                  "走锚迹象：",
+                  "  - 方位改变",
+                  "  - GPS显示移动（>摆动半径）",
+                  "  - 锚链振动/抽动（通过船体感受）",
+                  "  - 您更接近岸边/其他船只",
+                ],
+              }[l] as string[],
+            },
+            { 
+              type: "heading", 
+              content: { en: "If Dragging", ru: "Если дрейфует", zh: "如果走锚" }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Let out more scope first",
+                  "If still dragging: re-anchor in new spot",
+                  "Don't drag onto rocks or other boats!",
+                ],
+                ru: [
+                  "Сначала вытравите больше цепи",
+                  "Если всё ещё дрейфует: перестаньте на якорь в новом месте",
+                  "Не дрейфуйте на скалы или другие яхты!",
+                ],
+                zh: [
+                  "首先放出更多锚链",
+                  "如仍走锚：在新位置重新抛锚",
+                  "不要漂向岩石或其他船只！",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Anchor Types",
+            ru: "Типы якорей",
+            zh: "锚的类型",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "CQR / Plow: Universal, good in most bottoms",
+                  "Bruce / Claw: Modern, strong holding",
+                  "Danforth: Excellent in sand/mud, poor in rocks",
+                  "Rocna / Manson: Premium, best all-round",
+                  "Fortress: Aluminum, lightweight, good holding-to-weight",
+                ],
+                ru: [
+                  "CQR / Плуг: Универсальный, хорош на большинстве грунтов",
+                  "Bruce / Коготь: Современный, хорошо держит",
+                  "Danforth: Отличный на песке/иле, плохой на скалах",
+                  "Rocna / Manson: Премиум, лучший универсальный",
+                  "Fortress: Алюминиевый, лёгкий, хорошее соотношение держащей силы к весу",
+                ],
+                zh: [
+                  "CQR/犁锚：通用，在大多数底质上良好",
+                  "Bruce/爪锚：现代，抓力强",
+                  "Danforth：在沙/泥中出色，在岩石中较差",
+                  "Rocna/Manson：高级，最佳全能",
+                  "Fortress：铝制，轻便，抓力重量比好",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Anchor size matters! Bigger = better holding. Check manufacturer's recommendations for your boat size.",
+                ru: "Размер якоря имеет значение! Больше = лучше держит. Проверьте рекомендации производителя для вашей яхты.",
+                zh: "锚的大小很重要！更大 = 更好抓力。查看制造商对您船只尺寸的建议。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Weighing Anchor",
+            ru: "Подъём якоря",
+            zh: "起锚",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "1. Start engine (for control)",
+                  "2. Motor forward while crew hoists chain",
+                  "3. Stop when boat is over anchor",
+                  "4. Break anchor free (may need short reverse)",
+                  "5. Hoist remaining rode",
+                  "6. Check anchor is aboard and secured",
+                  "7. Rinse chain if muddy",
+                ],
+                ru: [
+                  "1. Запустите мотор (для контроля)",
+                  "2. Двигайтесь вперёд, пока экипаж выбирает цепь",
+                  "3. Остановитесь, когда яхта над якорем",
+                  "4. Оторвите якорь (может потребоваться короткий задний ход)",
+                  "5. Выберите оставшуюся цепь",
+                  "6. Проверьте, что якорь на борту и закреплён",
+                  "7. Промойте цепь, если грязная",
+                ],
+                zh: [
+                  "1. 启动发动机（用于控制）",
+                  "2. 向前移动，同时船员收锚链",
+                  "3. 船在锚上方时停止",
+                  "4. 拉起锚（可能需要短暂倒车）",
+                  "5. 收起剩余锚链",
+                  "6. 检查锚已上船并固定",
+                  "7. 如有泥污请冲洗锚链",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Hauling anchor into wind is easier - wind helps break it free. But watch for drift onto other boats!",
+                ru: "Поднимать якорь против ветра легче - ветер помогает оторвать его. Но следите, чтобы не снесло на другие яхты!",
+                zh: "迎风起锚更容易 - 风有助于拉起锚。但注意不要漂向其他船只！",
+              }[l] as string,
+            },
+          ],
+        },
+      ];
+    },
   },
   {
     id: "docking",
