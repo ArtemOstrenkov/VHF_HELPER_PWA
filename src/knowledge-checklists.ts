@@ -513,95 +513,213 @@ export const CHECKLIST_ARTICLES: KnowledgeArticle[] = [
     descKey: "beforeDepartureDesc",
     icon: "⛵",
     order: 2,
-    content: [
-      {
-        type: "accordion",
-        title: "Weather & Route",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Forecast checked (3-5 days)",
-              "☐ Wind: direction, strength",
-              "☐ Waves: height, period",
-              "☐ Visibility adequate",
-              "☐ Tides / currents noted",
-              "☐ Waypoints in plotter",
-              "☐ Alternative harbors identified",
-              "☐ Hazards marked",
-              "☐ Distance, ETA calculated",
-              "☐ Fuel/water sufficient",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Crew",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Safety briefing completed",
-              "☐ Roles assigned",
-              "☐ Life jackets on (if offshore)",
-              "☐ Harnesses ready (if night/storm)",
-              "☐ Seasickness meds taken (if needed)",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Systems",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Engine warm-up (5 min)",
-              "☐ Navigation instruments ON",
-              "☐ VHF radio ON (Ch 16)",
-              "☐ Depth sounder ON",
-              "☐ Autopilot ready",
-              "☐ Anchor secured (windlass, stoppers)",
-              "☐ Sails ready (halyards, sheets)",
-              "☐ Fenders stowed or left (next mooring?)",
-              "☐ Dock lines released or ready",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Safety",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Hatches secured",
-              "☐ Loose items stowed",
-              "☐ Lifelines checked",
-              "☐ MOB equipment ready (life ring, dan buoy)",
-              "☐ Bilge dry",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Communication",
-        children: [
-          {
-            type: "list",
-            items: [
-              "☐ Marina departure notice (if required)",
-              "☐ Float plan left ashore (with someone)",
-              "☐ VHF radio check completed",
-            ],
-          },
-        ],
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "accordion",
+          title: {
+            en: "Weather & Route",
+            ru: "Погода и маршрут",
+            zh: "天气和航线",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Forecast checked (3-5 days)",
+                  "☐ Wind: direction, strength",
+                  "☐ Waves: height, period",
+                  "☐ Visibility adequate",
+                  "☐ Tides / currents noted",
+                  "☐ Waypoints in plotter",
+                  "☐ Alternative harbors identified",
+                  "☐ Hazards marked",
+                  "☐ Distance, ETA calculated",
+                  "☐ Fuel/water sufficient",
+                ],
+                ru: [
+                  "☐ Прогноз проверен (3-5 дней)",
+                  "☐ Ветер: направление, сила",
+                  "☐ Волны: высота, период",
+                  "☐ Видимость достаточная",
+                  "☐ Приливы/течения отмечены",
+                  "☐ Путевые точки в плоттере",
+                  "☐ Альтернативные гавани определены",
+                  "☐ Опасности отмечены",
+                  "☐ Дистанция, ETA рассчитаны",
+                  "☐ Топлива/воды достаточно",
+                ],
+                zh: [
+                  "☐ 预报已检查（3-5天）",
+                  "☐ 风：方向、强度",
+                  "☐ 浪：高度、周期",
+                  "☐ 能见度充足",
+                  "☐ 潮汐/海流已记录",
+                  "☐ 航点已输入仪器",
+                  "☐ 备选港口已确定",
+                  "☐ 危险已标记",
+                  "☐ 距离、预计到达时间已计算",
+                  "☐ 燃料/淡水充足",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Crew",
+            ru: "Экипаж",
+            zh: "船员",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Safety briefing completed",
+                  "☐ Roles assigned",
+                  "☐ Life jackets on (if offshore)",
+                  "☐ Harnesses ready (if night/storm)",
+                  "☐ Seasickness meds taken (if needed)",
+                ],
+                ru: [
+                  "☐ Инструктаж по безопасности проведён",
+                  "☐ Роли распределены",
+                  "☐ Спасжилеты надеты (если в море)",
+                  "☐ Страховочные пояса готовы (если ночь/шторм)",
+                  "☐ Лекарства от морской болезни приняты (если нужно)",
+                ],
+                zh: [
+                  "☐ 安全简报已完成",
+                  "☐ 角色已分配",
+                  "☐ 救生衣已穿（如出海）",
+                  "☐ 安全带已准备（如夜间/风暴）",
+                  "☐ 晕船药已服用（如需要）",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Systems",
+            ru: "Системы",
+            zh: "系统",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Engine warm-up (5 min)",
+                  "☐ Navigation instruments ON",
+                  "☐ VHF radio ON (Ch 16)",
+                  "☐ Depth sounder ON",
+                  "☐ Autopilot ready",
+                  "☐ Anchor secured (windlass, stoppers)",
+                  "☐ Sails ready (halyards, sheets)",
+                  "☐ Fenders stowed or left (next mooring?)",
+                  "☐ Dock lines released or ready",
+                ],
+                ru: [
+                  "☐ Прогрев двигателя (5 мин)",
+                  "☐ Навигационные приборы ВКЛ",
+                  "☐ VHF радио ВКЛ (16 канал)",
+                  "☐ Эхолот ВКЛ",
+                  "☐ Автопилот готов",
+                  "☐ Якорь закреплён (брашпиль, стопоры)",
+                  "☐ Паруса готовы (фалы, шкоты)",
+                  "☐ Кранцы убраны или оставлены (следующая швартовка?)",
+                  "☐ Швартовые концы отданы или готовы",
+                ],
+                zh: [
+                  "☐ 发动机预热（5分钟）",
+                  "☐ 导航仪器开机",
+                  "☐ VHF无线电开机（16频道）",
+                  "☐ 测深仪开机",
+                  "☐ 自动驾驶就绪",
+                  "☐ 锚已固定（锚机、制动器）",
+                  "☐ 帆已准备（升降索、帆脚索）",
+                  "☐ 护舷已收起或留下（下一停泊？）",
+                  "☐ 系泊缆已解开或准备",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Safety",
+            ru: "Безопасность",
+            zh: "安全",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Hatches secured",
+                  "☐ Loose items stowed",
+                  "☐ Lifelines checked",
+                  "☐ MOB equipment ready (life ring, dan buoy)",
+                  "☐ Bilge dry",
+                ],
+                ru: [
+                  "☐ Люки закреплены",
+                  "☐ Незакреплённые предметы убраны",
+                  "☐ Леера проверены",
+                  "☐ Оборудование MOB готово (спасательный круг, буй)",
+                  "☐ Трюм сухой",
+                ],
+                zh: [
+                  "☐ 舱口已固定",
+                  "☐ 松散物品已存放",
+                  "☐ 救生索已检查",
+                  "☐ 落水救援设备就绪（救生圈、浮标）",
+                  "☐ 舱底干燥",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Communication",
+            ru: "Связь",
+            zh: "通信",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "☐ Marina departure notice (if required)",
+                  "☐ Float plan left ashore (with someone)",
+                  "☐ VHF radio check completed",
+                ],
+                ru: [
+                  "☐ Уведомление марины об отбытии (если требуется)",
+                  "☐ План плавания оставлен на берегу (кому-то)",
+                  "☐ Проверка VHF радио выполнена",
+                ],
+                zh: [
+                  "☐ 码头离港通知（如需要）",
+                  "☐ 航行计划已留岸上（交给某人）",
+                  "☐ VHF无线电检查已完成",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+      ];
+    },
   },
   {
     id: "daily-checks",
@@ -656,38 +774,92 @@ export const CHECKLIST_ARTICLES: KnowledgeArticle[] = [
     descKey: "emergencyBagDesc",
     icon: "🆘",
     order: 4,
-    content: [
-      {
-        type: "warning",
-        content: "If you need to abandon the vessel, this waterproof bag goes with you into the life raft.",
-      },
-      {
-        type: "list",
-        items: [
-          "☐ EPIRB (if not built into life raft)",
-          "☐ Handheld VHF (charged)",
-          "☐ GPS or smartphone in waterproof case",
-          "☐ Flares",
-          "☐ Flashlights + spare batteries",
-          "☐ Water bottles (5L minimum)",
-          "☐ Energy bars / emergency rations",
-          "☐ First aid kit",
-          "☐ Thermal blankets",
-          "☐ Knife",
-          "☐ Duct tape",
-          "☐ Fishing kit (long drift)",
-          "☐ Sunscreen + chapstick",
-          "☐ Passports (laminated copies)",
-          "☐ Ship's papers",
-          "☐ Cash",
-          "☐ Essential medications",
-          "☐ Whistle",
-        ],
-      },
-      {
-        type: "tip",
-        content: "Keep this bag in an accessible location, not buried in a locker. In an emergency, you may have only minutes.",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "warning",
+          content: {
+            en: "If you need to abandon the vessel, this waterproof bag goes with you into the life raft.",
+            ru: "Если вам нужно покинуть судно, эта водонепроницаемая сумка идёт с вами в спасательный плот.",
+            zh: "如果需要弃船，这个防水包要随您进入救生筏。",
+          }[l] as string,
+        },
+        {
+          type: "list",
+          items: {
+            en: [
+              "☐ EPIRB (if not built into life raft)",
+              "☐ Handheld VHF (charged)",
+              "☐ GPS or smartphone in waterproof case",
+              "☐ Flares",
+              "☐ Flashlights + spare batteries",
+              "☐ Water bottles (5L minimum)",
+              "☐ Energy bars / emergency rations",
+              "☐ First aid kit",
+              "☐ Thermal blankets",
+              "☐ Knife",
+              "☐ Duct tape",
+              "☐ Fishing kit (long drift)",
+              "☐ Sunscreen + chapstick",
+              "☐ Passports (laminated copies)",
+              "☐ Ship's papers",
+              "☐ Cash",
+              "☐ Essential medications",
+              "☐ Whistle",
+            ],
+            ru: [
+              "☐ EPIRB (если не встроен в плот)",
+              "☐ Портативная VHF радиостанция (заряжена)",
+              "☐ GPS или смартфон в водонепроницаемом чехле",
+              "☐ Фальшфейеры",
+              "☐ Фонари + запасные батарейки",
+              "☐ Бутылки с водой (минимум 5 л)",
+              "☐ Энергетические батончики / аварийный паёк",
+              "☐ Аптечка",
+              "☐ Термоодеяла",
+              "☐ Нож",
+              "☐ Скотч",
+              "☐ Рыболовный набор (долгий дрейф)",
+              "☐ Солнцезащитный крем + бальзам для губ",
+              "☐ Паспорта (ламинированные копии)",
+              "☐ Судовые документы",
+              "☐ Наличные",
+              "☐ Необходимые лекарства",
+              "☐ Свисток",
+            ],
+            zh: [
+              "☐ EPIRB（如未内置于救生筏）",
+              "☐ 手持VHF（已充电）",
+              "☐ GPS或防水壳智能手机",
+              "☐ 信号弹",
+              "☐ 手电筒 + 备用电池",
+              "☐ 水瓶（至少5升）",
+              "☐ 能量棒/应急口粮",
+              "☐ 急救包",
+              "☐ 保温毯",
+              "☐ 刀",
+              "☐ 胶带",
+              "☐ 钓鱼套件（长期漂流）",
+              "☐ 防晒霜 + 唇膏",
+              "☐ 护照（塑封副本）",
+              "☐ 船舶文件",
+              "☐ 现金",
+              "☐ 必需药物",
+              "☐ 哨子",
+            ],
+          }[l] as string[],
+        },
+        {
+          type: "tip",
+          content: {
+            en: "Keep this bag in an accessible location, not buried in a locker. In an emergency, you may have only minutes.",
+            ru: "Храните эту сумку в доступном месте, а не зарытой в рундуке. В чрезвычайной ситуации у вас может быть только несколько минут.",
+            zh: "将此包放在易于取用的位置，而不是埋在储物柜深处。紧急情况下您可能只有几分钟。",
+          }[l] as string,
+        },
+      ];
+    },
   },
 ];
