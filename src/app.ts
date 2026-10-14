@@ -34,6 +34,9 @@ import { fetchStats, noteProcess, noteVisit, statsBody, statsPanel } from "./sta
 import { applyTheme, detectTheme, persistTheme, type Theme } from "./theme";
 import { ftToM, mToFt, parseNum } from "./units";
 import { DEFAULT_YACHT_ID, YACHTS, findYacht, yachtBuilders } from "./yachts";
+import { getCategoriesWithCounts, getArticlesByCategory, getArticleById } from "./knowledge";
+import type { KnowledgeCategory } from "./knowledge-types";
+import { renderCategoryCard, renderArticleCard, renderArticleContent } from "./knowledge-render";
 
 const DISASTERS = [
   { key: "disasterMob", value: "MAN OVERBOARD" },
@@ -120,6 +123,8 @@ export function mountApp(root: HTMLElement): void {
   let gpsAutoNote: "none" | "trying" | "ok" | "fail" = "none";
   let mapPick: { lat: number; lon: number } | null = null;
   let unmountMap: (() => void) | null = null;
+  let currentCategory: KnowledgeCategory | null = null;
+  let currentArticleId: string | null = null;
 
   function tr(key: string, vars?: Record<string, string>): string {
     return t(lang, key, vars);
@@ -416,7 +421,7 @@ export function mountApp(root: HTMLElement): void {
         </div>
       `,
       footer: `
-        ${dockBtn("manual", tr("vhfManual"), "book")}
+        ${dockBtn("knowledge", tr("skippersGuide"), "book")}
         ${dockBtn("welcome", tr("about"), "info")}
         ${dockBtn("gps", tr("gpsUpdate"), "gps")}
       `,
@@ -847,6 +852,55 @@ POSITION 'coordinates' AT 'time' UTC
     });
   }
 
+  function renderKnowledge(): string {
+    const categories = getCategoriesWithCounts();
+    return shell({
+      title: tr("skippersGuide"),
+      body: `
+        <p class="lead">${esc(tr("knowledge"))}</p>
+        <div class="knowledge-grid">
+          ${categories.map((cat) => renderCategoryCard(cat, lang)).join("")}
+        </div>
+      `,
+    });
+  }
+
+  function renderKnowledgeCategory(): string {
+    if (!currentCategory) {
+      screen = "knowledge";
+      render();
+      return "";
+    }
+    const articles = getArticlesByCategory(currentCategory);
+    const catMeta = getCategoriesWithCounts().find((c) => c.id === currentCategory);
+    return shell({
+      title: catMeta ? tr(catMeta.titleKey) : "Knowledge",
+      body: `
+        <div class="knowledge-list">
+          ${articles.map((art) => renderArticleCard(art, lang)).join("")}
+        </div>
+      `,
+    });
+  }
+
+  function renderKnowledgeArticle(): string {
+    if (!currentArticleId) {
+      screen = "knowledge";
+      render();
+      return "";
+    }
+    const article = getArticleById(currentArticleId);
+    if (!article) {
+      screen = "knowledge";
+      render();
+      return "";
+    }
+    return shell({
+      title: tr(article.titleKey),
+      body: renderArticleContent(article, lang),
+    });
+  }
+
   function readBoatPatch(): Partial<AppState> {
     const name = (root.querySelector("#boat-name") as HTMLInputElement | null)?.value.trim();
     const ft = (root.querySelector("#boat-loa-ft") as HTMLInputElement | null)?.value.trim();
@@ -944,6 +998,30 @@ POSITION 'coordinates' AT 'time' UTC
     });
     root.querySelector("[data-act=last]")?.addEventListener("click", () => go("last"));
     root.querySelector("[data-act=manual]")?.addEventListener("click", () => go("manual"));
+    root.querySelector("[data-act=knowledge]")?.addEventListener("click", () => {
+      currentCategory = null;
+      currentArticleId = null;
+      go("knowledge");
+    });
+    root.querySelectorAll("[data-act=open-category]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const cat = el.getAttribute("data-category");
+        if (cat) {
+          currentCategory = cat as KnowledgeCategory;
+          currentArticleId = null;
+          go("knowledge-category");
+        }
+      });
+    });
+    root.querySelectorAll("[data-act=open-article]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const artId = el.getAttribute("data-article");
+        if (artId) {
+          currentArticleId = artId;
+          go("knowledge-article");
+        }
+      });
+    });
     root.querySelector("[data-act=gps]")?.addEventListener("click", () => {
       void openGps("home");
     });
@@ -1236,6 +1314,9 @@ POSITION 'coordinates' AT 'time' UTC
       message: () => renderMessage(false),
       last: () => renderMessage(true),
       manual: renderManual,
+      knowledge: renderKnowledge,
+      "knowledge-category": renderKnowledgeCategory,
+      "knowledge-article": renderKnowledgeArticle,
     };
     document.documentElement.lang = htmlLang(lang);
     root.innerHTML = mapScreens[screen]();
