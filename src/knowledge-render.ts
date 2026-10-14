@@ -97,10 +97,21 @@ function renderContentBlock(block: ContentBlock, lang: Lang, level = 0): string 
 
     case "illustration":
       if (block.src) {
-        return `<figure class="content-illustration">
-          <div class="illustration-box">${block.src}</div>
-          ${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ""}
-        </figure>`;
+        // Check if src is an image path or ASCII art
+        const isImagePath = block.src.startsWith('/') || block.src.startsWith('http') || block.src.endsWith('.jpg') || block.src.endsWith('.png');
+        
+        if (isImagePath) {
+          return `<figure class="content-illustration">
+            <img src="${esc(block.src)}" alt="${esc(block.alt || block.caption || 'Illustration')}" class="illustration-image" />
+            ${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ""}
+          </figure>`;
+        } else {
+          // ASCII art
+          return `<figure class="content-illustration">
+            <div class="illustration-box">${block.src}</div>
+            ${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ""}
+          </figure>`;
+        }
       }
       return "";
 

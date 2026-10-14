@@ -11,31 +11,8 @@ const powerDrivenContent: Record<string, ContentBlock[]> = {
     { type: "heading", content: "Underway" },
     {
       type: "illustration",
-      src: `
-╔════════════════════════════════════╗
-║ POWER VESSEL (<50m) - FROM AHEAD  ║
-╚════════════════════════════════════╝
-
-         ⚪ White masthead
-            │
-    🔴  ═══╪═══  🟢
-   Port    │     Starboard
-  (Left)   │     (Right)
-          ╱│╲
-         ╱ │ ╲
-        ╱  │  ╲
-       ╱   │   ╲
-      ╱    │    ╲
-     ╱     │     ╲
-    ╱      │      ╲
-   ────────────────
-   Approaching you
-
-What you see:
-- Green → passing on YOUR left
-- Red → passing on YOUR right
-- Both → coming straight at you!
-      `,
+      src: "/knowledge/illustrations/nav-lights-power-vessel.jpg",
+      alt: "Power vessel navigation lights from ahead",
       caption: "Green = starboard (right), Red = port (left), White = forward",
     },
     {
@@ -72,31 +49,8 @@ What you see:
     { type: "heading", content: "На ходу" },
     {
       type: "illustration",
-      src: `
-╔════════════════════════════════════╗
-║ МОТОРНОЕ СУДНО (<50м) - СПЕРЕДИ    ║
-╚════════════════════════════════════╝
-
-         ⚪ Белый топовый
-            │
-    🔴  ═══╪═══  🟢
-  Порт     │     Старборд
-  (Левый)  │     (Правый)
-          ╱│╲
-         ╱ │ ╲
-        ╱  │  ╲
-       ╱   │   ╲
-      ╱    │    ╲
-     ╱     │     ╲
-    ╱      │      ╲
-   ────────────────
-   Идёт на вас
-
-Что вы видите:
-- Зелёный → проходит СЛЕВА от вас
-- Красный → проходит СПРАВА от вас
-- Оба → идёт прямо на вас!
-      `,
+      src: "/knowledge/illustrations/nav-lights-power-vessel.jpg",
+      alt: "Огни моторного судна спереди",
       caption: "Зелёный = правый борт, Красный = левый борт, Белый = впереди",
     },
     {
@@ -133,30 +87,8 @@ What you see:
     { type: "heading", content: "航行中" },
     {
       type: "illustration",
-      src: `
-╔════════════════════════════════════╗
-║ 机动船（<50米）- 从前方看          ║
-╚════════════════════════════════════╝
-
-         ⚪ 白色桁灯
-            │
-    🔴  ═══╪═══  🟢
-   左舷     │     右舷
-          ╱│╲
-         ╱ │ ╲
-        ╱  │  ╲
-       ╱   │   ╲
-      ╱    │    ╲
-     ╱     │     ╲
-    ╱      │      ╲
-   ────────────────
-   迎面驶来
-
-你看到的：
-- 绿色 → 从你左侧经过
-- 红色 → 从你右侧经过
-- 两个都有 → 直冲你而来！
-      `,
+      src: "/knowledge/illustrations/nav-lights-power-vessel.jpg",
+      alt: "机动船导航灯从前方看",
       caption: "绿色 = 右舷，红色 = 左舷，白色 = 前方",
     },
     {
@@ -196,28 +128,8 @@ const sailingContent: Record<string, ContentBlock[]> = {
     { type: "heading", content: "Under Sail Only" },
     {
       type: "illustration",
-      src: `
-╔════════════════════════════════╗
-║ SAILING VESSEL - FROM AHEAD    ║
-╚════════════════════════════════╝
-
-    🔴  ═══════  🟢
-   Port         Starboard
-        ╱│╲
-       ╱ │ ╲    ⚪ White stern
-      ╱  │  ╲      (behind)
-     ╱   │   ╲
-    ╱   ⛵️   ╲
-   ───────────────
-
-OR (boats <20m):
-      ⚪ Tricolor
-     ╱│╲  at masthead
-    ╱ │ ╲
-   ╱  │  ╲
-  ╱  ⛵️  ╲
- ────────────
-      `,
+      src: "/knowledge/illustrations/nav-lights-sailing-vessel.jpg",
+      alt: "Sailing vessel navigation lights",
       caption: "No white forward light = sailing vessel",
     },
     {
@@ -245,28 +157,8 @@ OR (boats <20m):
     { type: "heading", content: "Только под парусами" },
     {
       type: "illustration",
-      src: `
-╔════════════════════════════════╗
-║ ПАРУСНОЕ СУДНО - СПЕРЕДИ       ║
-╚════════════════════════════════╝
-
-    🔴  ═══════  🟢
-   Порт        Старборд
-        ╱│╲
-       ╱ │ ╲    ⚪ Белый кормовой
-      ╱  │  ╲      (сзади)
-     ╱   │   ╲
-    ╱   ⛵️   ╲
-   ───────────────
-
-ИЛИ (суда <20м):
-      ⚪ Трёхцветный
-     ╱│╲  на мачте
-    ╱ │ ╲
-   ╱  │  ╲
-  ╱  ⛵️  ╲
- ────────────
-      `,
+      src: "/knowledge/illustrations/nav-lights-sailing-vessel.jpg",
+      alt: "Огни парусного судна",
       caption: "Нет белого огня спереди = парусное судно",
     },
     {
@@ -294,28 +186,8 @@ OR (boats <20m):
     { type: "heading", content: "仅帆航行" },
     {
       type: "illustration",
-      src: `
-╔════════════════════════════════╗
-║ 帆船 - 从前方看                ║
-╚════════════════════════════════╝
-
-    🔴  ═══════  🟢
-   左舷        右舷
-        ╱│╲
-       ╱ │ ╲    ⚪ 白色尾灯
-      ╱  │  ╲      （后方）
-     ╱   │   ╲
-    ╱   ⛵️   ╲
-   ───────────────
-
-或（船只<20米）：
-      ⚪ 三色灯
-     ╱│╲  在桅杆顶
-    ╱ │ ╲
-   ╱  │  ╲
-  ╱  ⛵️  ╲
- ────────────
-      `,
+      src: "/knowledge/illustrations/nav-lights-sailing-vessel.jpg",
+      alt: "帆船导航灯",
       caption: "前方无白灯 = 帆船",
     },
     {
@@ -711,73 +583,11 @@ export const NAVIGATION_ARTICLES: KnowledgeArticle[] = [
             },
             {
               type: "illustration",
-              src: {
-                en: `
-╔═══════════════════════════════════════╗
-║     IALA REGION A - LATERAL MARKS     ║
-╚═══════════════════════════════════════╝
-
-    ENTERING PORT FROM SEA ⬆️
-    
-         ← TO PORT →
-    
-    🔴          ⛵️         🟢
-  Cylinder                Cone
-  (Can)                  (Nun)
-  Even #                 Odd #
-  Red                   Green
-   ║                      ║
-   ║                      ║
-  LEFT                  RIGHT
-  SIDE                   SIDE
-
-Mnemonic for Region A:
-"Red LEFT Returning from sea"
-(opposite of US!)
-                `,
-                ru: `
-╔═══════════════════════════════════════╗
-║   РЕГИОН IALA A - ЛАТЕРАЛЬНЫЕ ЗНАКИ   ║
-╚═══════════════════════════════════════╝
-
-    ЗАХОД В ПОРТ С МОРЯ ⬆️
-    
-         ← В ПОРТ →
-    
-    🔴          ⛵️         🟢
-  Цилиндр              Конус
-  Чётный №            Нечётный №
-  Красный             Зелёный
-   ║                      ║
-   ║                      ║
- ЛЕВЫЙ                 ПРАВЫЙ
-  БОРТ                  БОРТ
-
-Мнемоника для Региона A:
-"Красный СЛЕВА при возврате с моря"
-(противоположно США!)
-                `,
-                zh: `
-╔═══════════════════════════════════════╗
-║     IALA A区 - 侧面标志               ║
-╚═══════════════════════════════════════╝
-
-    从海上进港 ⬆️
-    
-         ← 到港口 →
-    
-    🔴          ⛵️         🟢
-  圆柱体                圆锥体
-  偶数                  奇数
-  红色                  绿色
-   ║                      ║
-   ║                      ║
-  左侧                  右侧
-
-A区记忆法：
-"红色在左，返港时"
-（与美国相反！）
-                `,
+              src: "/knowledge/illustrations/iala-region-a.jpg",
+              alt: {
+                en: "IALA Region A lateral marks diagram",
+                ru: "Диаграмма латеральных знаков региона IALA A",
+                zh: "IALA A区侧面标志图",
               }[l] as string,
               caption: {
                 en: "Region A: Red LEFT when returning from sea",
@@ -830,72 +640,11 @@ A区记忆法：
             },
             {
               type: "illustration",
-              src: {
-                en: `
-╔═══════════════════════════════════════╗
-║     IALA REGION B - LATERAL MARKS     ║
-╚═══════════════════════════════════════╝
-
-    ENTERING PORT FROM SEA ⬆️
-    
-         ← TO PORT →
-    
-    🟢          ⛵️         🔴
-  Cylinder                Cone
-  Odd #                  Even #
-  Green                   Red
-   ║                      ║
-   ║                      ║
-  LEFT                  RIGHT
-  SIDE                   SIDE
-
-Mnemonic for Region B:
-"Red RIGHT Returning"
-(US, Japan, Philippines)
-                `,
-                ru: `
-╔═══════════════════════════════════════╗
-║   РЕГИОН IALA B - ЛАТЕРАЛЬНЫЕ ЗНАКИ   ║
-╚═══════════════════════════════════════╝
-
-    ЗАХОД В ПОРТ С МОРЯ ⬆️
-    
-         ← В ПОРТ →
-    
-    🟢          ⛵️         🔴
-  Цилиндр              Конус
-  Нечётный №           Чётный №
-  Зелёный              Красный
-   ║                      ║
-   ║                      ║
- ЛЕВЫЙ                 ПРАВЫЙ
-  БОРТ                  БОРТ
-
-Мнемоника для Региона B:
-"Красный СПРАВА при возврате"
-(США, Япония, Филиппины)
-                `,
-                zh: `
-╔═══════════════════════════════════════╗
-║     IALA B区 - 侧面标志               ║
-╚═══════════════════════════════════════╝
-
-    从海上进港 ⬆️
-    
-         ← 到港口 →
-    
-    🟢          ⛵️         🔴
-  圆柱体                圆锥体
-  奇数                  偶数
-  绿色                  红色
-   ║                      ║
-   ║                      ║
-  左侧                  右侧
-
-B区记忆法：
-"红右返航"
-（美国、日本、菲律宾）
-                `,
+              src: "/knowledge/illustrations/iala-region-b.jpg",
+              alt: {
+                en: "IALA Region B lateral marks diagram",
+                ru: "Диаграмма латеральных знаков региона IALA B",
+                zh: "IALA B区侧面标志图",
               }[l] as string,
               caption: {
                 en: "Region B: Red RIGHT when returning from sea",
@@ -948,87 +697,11 @@ B区记忆法：
             },
             {
               type: "illustration",
-              src: {
-                en: `
-╔═══════════════════════════════════════╗
-║        CARDINAL MARKS (WORLDWIDE)      ║
-╚═══════════════════════════════════════╝
-
-         NORTH (↑↑)
-    Pass NORTH of mark
-    2 cones points UP
-         ▲▲
-         ║║
-        ┌──┐
-WEST    │  │    EAST
-(↔↔)    │⚠️│    (◄►)
-┌──┐    │  │    ┌──┐
-▼▲      └──┘      ◄►
-Point             Base
-Touch          to Base
-
-         SOUTH (↓↓)
-    Pass SOUTH of mark
-    2 cones points DOWN
-         ║║
-         ▼▼
-
-Danger is on OPPOSITE side
-of where you should pass!
-                `,
-                ru: `
-╔═══════════════════════════════════════╗
-║   КАРДИНАЛЬНЫЕ ЗНАКИ (ГЛОБАЛЬНЫЕ)     ║
-╚═══════════════════════════════════════╝
-
-        СЕВЕР (↑↑)
-  Проходите СЕВЕРНЕЕ
-    2 конуса вверх
-         ▲▲
-         ║║
-        ┌──┐
-ЗАПАД   │  │   ВОСТОК
-(↔↔)    │⚠️│    (◄►)
-┌──┐    │  │    ┌──┐
-▼▲      └──┘      ◄►
-Острие          Основание
-Касаются      к Основанию
-
-         ЮГ (↓↓)
-  Проходите ЮЖНЕЕ
-   2 конуса вниз
-         ║║
-         ▼▼
-
-Опасность на ПРОТИВОПОЛОЖНОЙ
-стороне от прохода!
-                `,
-                zh: `
-╔═══════════════════════════════════════╗
-║        基本方位标志（全球）           ║
-╚═══════════════════════════════════════╝
-
-         北 (↑↑)
-    从北侧通过
-    2锥体尖朝上
-         ▲▲
-         ║║
-        ┌──┐
-西      │  │    东
-(↔↔)    │⚠️│    (◄►)
-┌──┐    │  │    ┌──┐
-▼▲      └──┘      ◄►
-尖对尖          底对底
-
-         南 (↓↓)
-    从南侧通过
-    2锥体尖朝下
-         ║║
-         ▼▼
-
-危险在应通过侧的
-相反方向！
-                `,
+              src: "/knowledge/illustrations/cardinal-marks.jpg",
+              alt: {
+                en: "Cardinal marks diagram showing all four directions",
+                ru: "Диаграмма кардинальных знаков всех четырёх направлений",
+                zh: "基本方位标志四个方向图",
               }[l] as string,
               caption: {
                 en: "Cardinal marks show safe passage direction",

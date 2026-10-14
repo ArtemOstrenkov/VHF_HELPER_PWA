@@ -1196,6 +1196,15 @@ input.dms-in.w3 {
   display: block;
 }
 
+.illustration-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--stroke);
+  background: var(--glass);
+  padding: 0.5rem;
+}
+
 .content-illustration figcaption {
   margin-top: 0.75rem;
   font-size: 0.875rem;
