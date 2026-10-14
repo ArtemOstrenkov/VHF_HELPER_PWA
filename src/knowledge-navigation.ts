@@ -1,4 +1,345 @@
-import type { KnowledgeArticle } from "./knowledge-types";
+import type { KnowledgeArticle, ContentBlock } from "./knowledge-types";
+import type { Lang } from "./i18n";
+
+function getContent(lang: Lang, contentMap: Record<string, ContentBlock[]>): ContentBlock[] {
+  return contentMap[lang] || contentMap["en"] || [];
+}
+
+// Power-driven vessel lights with visual diagram
+const powerDrivenContent: Record<string, ContentBlock[]> = {
+  en: [
+    { type: "heading", content: "Underway" },
+    {
+      type: "illustration",
+      src: `
+╔════════════════════════════════════╗
+║ POWER VESSEL (<50m) - FROM AHEAD  ║
+╚════════════════════════════════════╝
+
+         ⚪ White masthead
+            │
+    🔴  ═══╪═══  🟢
+   Port    │     Starboard
+  (Left)   │     (Right)
+          ╱│╲
+         ╱ │ ╲
+        ╱  │  ╲
+       ╱   │   ╲
+      ╱    │    ╲
+     ╱     │     ╲
+    ╱      │      ╲
+   ────────────────
+   Approaching you
+
+What you see:
+- Green → passing on YOUR left
+- Red → passing on YOUR right
+- Both → coming straight at you!
+      `,
+      caption: "Green = starboard (right), Red = port (left), White = forward",
+    },
+    {
+      type: "list",
+      items: [
+        "Green light: starboard (right) side",
+        "Red light: port (left) side",
+        "White masthead light(s): forward",
+        "White stern light: aft",
+      ],
+    },
+    {
+      type: "list",
+      items: [
+        "Length < 50m: 2 white masthead lights",
+        "Length ≥ 50m: 3 white masthead lights (forward higher)",
+      ],
+    },
+    { type: "heading", content: "At Anchor" },
+    {
+      type: "list",
+      items: ["White all-round light visible 360°"],
+    },
+    { type: "heading", content: "Towing" },
+    {
+      type: "list",
+      items: [
+        "2 masthead lights + yellow towing light aft",
+        "If tow > 200m: 3 masthead lights",
+      ],
+    },
+  ],
+  ru: [
+    { type: "heading", content: "На ходу" },
+    {
+      type: "illustration",
+      src: `
+╔════════════════════════════════════╗
+║ МОТОРНОЕ СУДНО (<50м) - СПЕРЕДИ    ║
+╚════════════════════════════════════╝
+
+         ⚪ Белый топовый
+            │
+    🔴  ═══╪═══  🟢
+  Порт     │     Старборд
+  (Левый)  │     (Правый)
+          ╱│╲
+         ╱ │ ╲
+        ╱  │  ╲
+       ╱   │   ╲
+      ╱    │    ╲
+     ╱     │     ╲
+    ╱      │      ╲
+   ────────────────
+   Идёт на вас
+
+Что вы видите:
+- Зелёный → проходит СЛЕВА от вас
+- Красный → проходит СПРАВА от вас
+- Оба → идёт прямо на вас!
+      `,
+      caption: "Зелёный = правый борт, Красный = левый борт, Белый = впереди",
+    },
+    {
+      type: "list",
+      items: [
+        "Зелёный огонь: правый борт (старборд)",
+        "Красный огонь: левый борт (порт)",
+        "Белый топовый огонь: впереди",
+        "Белый кормовой огонь: сзади",
+      ],
+    },
+    {
+      type: "list",
+      items: [
+        "Длина < 50м: 2 белых топовых огня",
+        "Длина ≥ 50м: 3 белых топовых огня (передний выше)",
+      ],
+    },
+    { type: "heading", content: "На якоре" },
+    {
+      type: "list",
+      items: ["Белый круговой огонь видимый на 360°"],
+    },
+    { type: "heading", content: "Буксировка" },
+    {
+      type: "list",
+      items: [
+        "2 топовых огня + жёлтый буксировочный огонь на корме",
+        "Если буксир > 200м: 3 топовых огня",
+      ],
+    },
+  ],
+  zh: [
+    { type: "heading", content: "航行中" },
+    {
+      type: "illustration",
+      src: `
+╔════════════════════════════════════╗
+║ 机动船（<50米）- 从前方看          ║
+╚════════════════════════════════════╝
+
+         ⚪ 白色桁灯
+            │
+    🔴  ═══╪═══  🟢
+   左舷     │     右舷
+          ╱│╲
+         ╱ │ ╲
+        ╱  │  ╲
+       ╱   │   ╲
+      ╱    │    ╲
+     ╱     │     ╲
+    ╱      │      ╲
+   ────────────────
+   迎面驶来
+
+你看到的：
+- 绿色 → 从你左侧经过
+- 红色 → 从你右侧经过
+- 两个都有 → 直冲你而来！
+      `,
+      caption: "绿色 = 右舷，红色 = 左舷，白色 = 前方",
+    },
+    {
+      type: "list",
+      items: [
+        "绿灯：右舷",
+        "红灯：左舷",
+        "白色桁灯：前方",
+        "白色尾灯：后方",
+      ],
+    },
+    {
+      type: "list",
+      items: [
+        "长度 < 50米：2盏白色桁灯",
+        "长度 ≥ 50米：3盏白色桁灯（前面较高）",
+      ],
+    },
+    { type: "heading", content: "锚泊" },
+    {
+      type: "list",
+      items: ["白色全方位灯，360°可见"],
+    },
+    { type: "heading", content: "拖带" },
+    {
+      type: "list",
+      items: [
+        "2盏桁灯 + 黄色拖带灯（船尾）",
+        "拖带 > 200米：3盏桁灯",
+      ],
+    },
+  ],
+};
+
+const sailingContent: Record<string, ContentBlock[]> = {
+  en: [
+    { type: "heading", content: "Under Sail Only" },
+    {
+      type: "illustration",
+      src: `
+╔════════════════════════════════╗
+║ SAILING VESSEL - FROM AHEAD    ║
+╚════════════════════════════════╝
+
+    🔴  ═══════  🟢
+   Port         Starboard
+        ╱│╲
+       ╱ │ ╲    ⚪ White stern
+      ╱  │  ╲      (behind)
+     ╱   │   ╲
+    ╱   ⛵️   ╲
+   ───────────────
+
+OR (boats <20m):
+      ⚪ Tricolor
+     ╱│╲  at masthead
+    ╱ │ ╲
+   ╱  │  ╲
+  ╱  ⛵️  ╲
+ ────────────
+      `,
+      caption: "No white forward light = sailing vessel",
+    },
+    {
+      type: "list",
+      items: [
+        "Green (starboard) + Red (port) sidelights",
+        "White stern light",
+        "OR: Tricolor light at masthead (< 20m only)",
+      ],
+    },
+    { type: "heading", content: "Under Power (engine on)" },
+    {
+      type: "list",
+      items: [
+        "Show lights as power-driven vessel",
+        "Daytime: black cone point-down forward",
+      ],
+    },
+    {
+      type: "warning",
+      content: "If your engine is running, you are a POWER vessel under COLREGS, even if sails are up!",
+    },
+  ],
+  ru: [
+    { type: "heading", content: "Только под парусами" },
+    {
+      type: "illustration",
+      src: `
+╔════════════════════════════════╗
+║ ПАРУСНОЕ СУДНО - СПЕРЕДИ       ║
+╚════════════════════════════════╝
+
+    🔴  ═══════  🟢
+   Порт        Старборд
+        ╱│╲
+       ╱ │ ╲    ⚪ Белый кормовой
+      ╱  │  ╲      (сзади)
+     ╱   │   ╲
+    ╱   ⛵️   ╲
+   ───────────────
+
+ИЛИ (суда <20м):
+      ⚪ Трёхцветный
+     ╱│╲  на мачте
+    ╱ │ ╲
+   ╱  │  ╲
+  ╱  ⛵️  ╲
+ ────────────
+      `,
+      caption: "Нет белого огня спереди = парусное судно",
+    },
+    {
+      type: "list",
+      items: [
+        "Зелёный (старборд) + Красный (порт) бортовые огни",
+        "Белый кормовой огонь",
+        "ИЛИ: Трёхцветный огонь на мачте (только < 20м)",
+      ],
+    },
+    { type: "heading", content: "Под мотором (двигатель включён)" },
+    {
+      type: "list",
+      items: [
+        "Показывать огни как моторное судно",
+        "Днём: чёрный конус вершиной вниз впереди",
+      ],
+    },
+    {
+      type: "warning",
+      content: "Если двигатель работает, вы - МОТОРНОЕ судно по МППСС, даже если паруса подняты!",
+    },
+  ],
+  zh: [
+    { type: "heading", content: "仅帆航行" },
+    {
+      type: "illustration",
+      src: `
+╔════════════════════════════════╗
+║ 帆船 - 从前方看                ║
+╚════════════════════════════════╝
+
+    🔴  ═══════  🟢
+   左舷        右舷
+        ╱│╲
+       ╱ │ ╲    ⚪ 白色尾灯
+      ╱  │  ╲      （后方）
+     ╱   │   ╲
+    ╱   ⛵️   ╲
+   ───────────────
+
+或（船只<20米）：
+      ⚪ 三色灯
+     ╱│╲  在桅杆顶
+    ╱ │ ╲
+   ╱  │  ╲
+  ╱  ⛵️  ╲
+ ────────────
+      `,
+      caption: "前方无白灯 = 帆船",
+    },
+    {
+      type: "list",
+      items: [
+        "绿灯（右舷）+ 红灯（左舷）舷灯",
+        "白色尾灯",
+        "或：桅顶三色灯（仅限< 20米）",
+      ],
+    },
+    { type: "heading", content: "机动（发动机开启）" },
+    {
+      type: "list",
+      items: [
+        "显示机动船灯光",
+        "白天：前方黑色圆锥体尖端向下",
+      ],
+    },
+    {
+      type: "warning",
+      content: "如果发动机运转，根据COLREGS你是机动船，即使帆升起！",
+    },
+  ],
+};
 
 export const NAVIGATION_ARTICLES: KnowledgeArticle[] = [
   {
@@ -8,142 +349,183 @@ export const NAVIGATION_ARTICLES: KnowledgeArticle[] = [
     descKey: "navLightsDesc",
     icon: "🔦",
     order: 1,
-    content: [
-      {
-        type: "text",
-        content: "Navigation lights help identify vessel type, direction, and activity at night or in poor visibility.",
-      },
-      {
-        type: "accordion",
-        title: "Power-Driven Vessels (Motor)",
-        children: [
-          { type: "heading", content: "Underway" },
-          {
-            type: "list",
-            items: [
-              "Green light: starboard (right) side",
-              "Red light: port (left) side",
-              "White masthead light(s): forward",
-              "White stern light: aft",
-            ],
-          },
-          {
-            type: "list",
-            items: [
-              "Length < 50m: 2 white masthead lights",
-              "Length ≥ 50m: 3 white masthead lights (forward higher)",
-            ],
-          },
-          { type: "heading", content: "At Anchor" },
-          {
-            type: "list",
-            items: ["White all-round light visible 360°"],
-          },
-          { type: "heading", content: "Towing" },
-          {
-            type: "list",
-            items: [
-              "2 masthead lights + yellow towing light aft",
-              "If tow > 200m: 3 masthead lights",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Sailing Vessels",
-        children: [
-          { type: "heading", content: "Under Sail Only" },
-          {
-            type: "list",
-            items: [
-              "Green (starboard) + Red (port) sidelights",
-              "White stern light",
-              "OR: Tricolor light at masthead (< 20m only)",
-            ],
-          },
-          { type: "heading", content: "Under Power (engine on)" },
-          {
-            type: "list",
-            items: [
-              "Show lights as power-driven vessel",
-              "Daytime: black cone point-down forward",
-            ],
-          },
-          {
-            type: "warning",
-            content: "If your engine is running, you are a POWER vessel under COLREGS, even if sails are up!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Vessels Restricted in Ability to Maneuver",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Red-White-Red lights vertical + normal navigation lights",
-              "Examples: dredging, cable laying, survey work",
-              "Green side = safe to pass, Red side = obstruction",
-            ],
-          },
-          {
-            type: "tip",
-            content: "Stay clear of these vessels - they CANNOT maneuver to avoid you!",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Fishing Vessels",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Trawling: Red over White vertical",
-              "Other fishing: Green over White vertical",
-              "+ normal sidelights & stern light",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Vessel Not Under Command",
-        children: [
-          {
-            type: "list",
-            items: [
-              "2 Red all-round lights vertical",
-              "Example: engine failure, steering loss",
-              "Cannot maneuver - stay clear!",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Day Shapes",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Black ball: At anchor",
-              "Black cone point-down: Sailing vessel under power",
-              "Black cylinder: Restricted in ability to maneuver",
-              "Black diamond: Vessel towing (+ tow shows diamond)",
-              "2 black cones base-to-base: Fishing vessel",
-              "2 black balls: Not under command",
-            ],
-          },
-        ],
-      },
-      {
-        type: "note",
-        content: "Memorization tip: Red = Port (both 4 letters). Green = Starboard. White = All-round visibility.",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "text",
+          content: {
+            en: "Navigation lights help identify vessel type, direction, and activity at night or in poor visibility.",
+            ru: "Навигационные огни помогают определить тип судна, направление и деятельность ночью или при плохой видимости.",
+            zh: "导航灯有助于在夜间或能见度差时识别船只类型、方向和活动。",
+          }[l] as string,
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Power-Driven Vessels (Motor)",
+            ru: "Моторные суда",
+            zh: "机动船",
+          }[l] as string,
+          children: getContent(lang, powerDrivenContent),
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Sailing Vessels",
+            ru: "Парусные суда",
+            zh: "帆船",
+          }[l] as string,
+          children: getContent(lang, sailingContent),
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Vessels Restricted in Ability to Maneuver",
+            ru: "Суда с ограниченной манёвренностью",
+            zh: "操纵受限船只",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Red-White-Red lights vertical + normal navigation lights",
+                  "Examples: dredging, cable laying, survey work",
+                  "Green side = safe to pass, Red side = obstruction",
+                ],
+                ru: [
+                  "Красный-Белый-Красный огни вертикально + обычные навигационные огни",
+                  "Примеры: дноуглубление, прокладка кабелей, изыскательские работы",
+                  "Зелёная сторона = можно пройти, Красная сторона = препятствие",
+                ],
+                zh: [
+                  "红-白-红垂直灯 + 正常导航灯",
+                  "示例：挖泥、铺设电缆、测量作业",
+                  "绿色侧 = 可通过，红色侧 = 障碍物",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "tip",
+              content: {
+                en: "Stay clear of these vessels - they CANNOT maneuver to avoid you!",
+                ru: "Держитесь подальше от этих судов - они НЕ МОГУТ маневрировать, чтобы избежать вас!",
+                zh: "远离这些船只 - 它们无法机动避让你！",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Fishing Vessels",
+            ru: "Рыболовные суда",
+            zh: "渔船",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Trawling: Red over White vertical",
+                  "Other fishing: Green over White vertical",
+                  "+ normal sidelights & stern light",
+                ],
+                ru: [
+                  "Траление: Красный над Белым вертикально",
+                  "Другой промысел: Зелёный над Белым вертикально",
+                  "+ обычные бортовые и кормовой огни",
+                ],
+                zh: [
+                  "拖网：红色在白色上方",
+                  "其他捕鱼：绿色在白色上方",
+                  "+ 正常舷灯和尾灯",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Vessel Not Under Command",
+            ru: "Судно лишённое возможности управляться",
+            zh: "失控船只",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "2 Red all-round lights vertical",
+                  "Example: engine failure, steering loss",
+                  "Cannot maneuver - stay clear!",
+                ],
+                ru: [
+                  "2 Красных круговых огня вертикально",
+                  "Пример: отказ двигателя, потеря управления",
+                  "Не может маневрировать - держитесь в стороне!",
+                ],
+                zh: [
+                  "2盏红色全方位灯垂直",
+                  "示例：发动机故障、失去转向",
+                  "无法机动 - 保持距离！",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Day Shapes",
+            ru: "Дневные знаки",
+            zh: "日间标志",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Black ball: At anchor",
+                  "Black cone point-down: Sailing vessel under power",
+                  "Black cylinder: Restricted in ability to maneuver",
+                  "Black diamond: Vessel towing (+ tow shows diamond)",
+                  "2 black cones base-to-base: Fishing vessel",
+                  "2 black balls: Not under command",
+                ],
+                ru: [
+                  "Чёрный шар: На якоре",
+                  "Чёрный конус вершиной вниз: Парусное судно под мотором",
+                  "Чёрный цилиндр: Ограниченная манёвренность",
+                  "Чёрный ромб: Судно на буксире (+ буксируемое показывает ромб)",
+                  "2 чёрных конуса основаниями вместе: Рыболовное судно",
+                  "2 чёрных шара: Лишено возможности управляться",
+                ],
+                zh: [
+                  "黑球：锚泊",
+                  "黑色圆锥尖端向下：机动中的帆船",
+                  "黑色圆柱：操纵受限",
+                  "黑色菱形：拖带船只（+ 被拖船显示菱形）",
+                  "2个黑色圆锥底对底：渔船",
+                  "2个黑球：失控",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "note",
+          content: {
+            en: "Memorization tip: Red = Port (both 4 letters). Green = Starboard. White = All-round visibility.",
+            ru: "Мнемоника: Красный = Левый борт (оба 'ый'). Зелёный = Правый/Старборд.",
+            zh: "记忆提示：红色 = 左舷（红左都简单）。绿色 = 右舷。",
+          }[l] as string,
+        },
+      ];
+    },
   },
   {
     id: "colregs",
