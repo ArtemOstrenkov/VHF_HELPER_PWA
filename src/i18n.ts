@@ -42,11 +42,11 @@ const LOCALE: Record<Lang, string> = {
 type Dict = Record<string, { en: string; ru: string; zh: string }>;
 
 const dict: Dict = {
-  appName: { en: "VHF Panic", ru: "VHF Panic", zh: "VHF Panic" },
+  appName: { en: "Skipper's Companion", ru: "Справочник Шкипера", zh: "船长指南" },
   tagline: {
-    en: "Compose a Seaspeak call, then read it on the radio.",
-    ru: "Соберите сообщение Seaspeak и прочитайте его по рации.",
-    zh: "编写 Seaspeak 呼叫，然后在电台上读出。",
+    en: "Your complete guide to safe sailing: VHF radio, navigation, safety, and practical seamanship.",
+    ru: "Полный справочник безопасного плавания: VHF радио, навигация, безопасность и морское дело.",
+    zh: "安全航行完整指南：VHF 无线电、导航、安全和实用航海技术。",
   },
   continue: { en: "Continue", ru: "Продолжить", zh: "继续" },
   next: { en: "Next", ru: "Далее", zh: "下一步" },
@@ -292,6 +292,213 @@ const dict: Dict = {
     ru: "Если в лоции не указано иначе — каналы 09, 72, 71",
     zh: "如航海指南无特别规定，使用 09、72、71 频道",
   },
+
+  // Knowledge Base
+  skippersGuide: { en: "Skipper's Guide", ru: "Справочник шкипера", zh: "船长指南" },
+  knowledge: { en: "Knowledge", ru: "Знания", zh: "知识库" },
+
+  // Categories
+  catNavigation: { en: "Navigation & Safety", ru: "Навигация и безопасность", zh: "导航与安全" },
+  catNavigationDesc: {
+    en: "Lights, COLREGS, buoys, emergencies",
+    ru: "Огни, МППСС, буи, аварии",
+    zh: "灯光、避碰规则、浮标、紧急情况",
+  },
+  catSeamanship: { en: "Seamanship", ru: "Морское дело", zh: "航海技能" },
+  catSeamanshipDesc: {
+    en: "Knots, anchoring, docking",
+    ru: "Узлы, якорная стоянка, швартовка",
+    zh: "绳结、抛锚、停靠",
+  },
+  catVhf: { en: "VHF Radio Guide", ru: "Справочник VHF", zh: "VHF 无线电指南" },
+  catVhfDesc: {
+    en: "Channels, procedures, DSC",
+    ru: "Каналы, процедуры, DSC",
+    zh: "频道、程序、DSC",
+  },
+  catMedical: { en: "Medical & Comfort", ru: "Медицина и комфорт", zh: "医疗与舒适" },
+  catMedicalDesc: {
+    en: "Seasickness, first aid",
+    ru: "Укачивание, первая помощь",
+    zh: "晕船、急救",
+  },
+  catChecklists: { en: "Checklists", ru: "Чеклисты", zh: "检查清单" },
+  catChecklistsDesc: {
+    en: "Pre-charter, departure, daily",
+    ru: "Приёмка, выход, ежедневные",
+    zh: "租船前、出发、每日",
+  },
+  catWeather: { en: "Weather", ru: "Погода", zh: "天气" },
+  catWeatherDesc: {
+    en: "Reading forecasts, barometer",
+    ru: "Чтение прогнозов, барометр",
+    zh: "预报解读、气压计",
+  },
+  catNavBasics: { en: "Navigation Basics", ru: "Основы навигации", zh: "导航基础" },
+  catNavBasicsDesc: {
+    en: "Charts, bearings, dead reckoning",
+    ru: "Карты, пеленги, счисление",
+    zh: "海图、方位、推算定位",
+  },
+  catTroubleshooting: { en: "Troubleshooting", ru: "Неисправности", zh: "故障排除" },
+  catTroubleshootingDesc: {
+    en: "Engine, electrical problems",
+    ru: "Двигатель, электрика",
+    zh: "发动机、电气问题",
+  },
+
+  // VHF Articles
+  vhfChannelsTitle: { en: "VHF Channels Reference", ru: "Справочник каналов VHF", zh: "VHF 频道参考" },
+  vhfChannelsDesc: {
+    en: "What each channel is for",
+    ru: "Для чего каждый канал",
+    zh: "各频道用途",
+  },
+  vhfDscTitle: { en: "DSC (Digital Selective Calling)", ru: "DSC (цифровой избирательный вызов)", zh: "DSC（数字选择呼叫）" },
+  vhfDscDesc: {
+    en: "Automatic MAYDAY and MMSI registration",
+    ru: "Автоматический MAYDAY и регистрация MMSI",
+    zh: "自动 MAYDAY 和 MMSI 注册",
+  },
+  vhfEtiquetteTitle: { en: "Radio Etiquette & Procedures", ru: "Этикет и процедуры", zh: "无线电礼仪与程序" },
+  vhfEtiquetteDesc: {
+    en: "How to speak on VHF, radio check",
+    ru: "Как говорить по VHF, проверка связи",
+    zh: "如何使用 VHF、通信检查",
+  },
+
+  // Checklist Articles
+  preCharterTitle: { en: "Pre-Charter Inspection", ru: "Приёмка яхты", zh: "租船前检查" },
+  preCharterDesc: {
+    en: "Complete checklist before leaving",
+    ru: "Полный чеклист перед выходом",
+    zh: "离港前完整清单",
+  },
+  beforeDepartureTitle: { en: "Before Departure", ru: "Перед выходом", zh: "出发前" },
+  beforeDepartureDesc: {
+    en: "Weather, route, crew, systems",
+    ru: "Погода, маршрут, экипаж, системы",
+    zh: "天气、航线、船员、系统",
+  },
+  dailyChecksTitle: { en: "Daily Checks", ru: "Ежедневные проверки", zh: "每日检查" },
+  dailyChecksDesc: {
+    en: "Morning and evening routine",
+    ru: "Утренний и вечерний осмотр",
+    zh: "早晚常规检查",
+  },
+  emergencyBagTitle: { en: "Emergency Grab Bag", ru: "Аварийная сумка", zh: "应急包" },
+  emergencyBagDesc: {
+    en: "What to take if abandoning vessel",
+    ru: "Что взять при покидании судна",
+    zh: "弃船时携带物品",
+  },
+
+  // Navigation Articles
+  navLightsTitle: { en: "Navigation Lights & Shapes", ru: "Навигационные огни и знаки", zh: "导航灯与标识" },
+  navLightsDesc: {
+    en: "Identify vessels at night",
+    ru: "Опознавание судов ночью",
+    zh: "夜间识别船舶",
+  },
+  colregsTitle: { en: "COLREGS Rules", ru: "Правила МППСС", zh: "避碰规则" },
+  colregsDesc: {
+    en: "Who gives way, right of way",
+    ru: "Кто уступает, право пути",
+    zh: "让路、优先通行权",
+  },
+  buoysTitle: { en: "Buoys & Marks", ru: "Буи и знаки", zh: "浮标与标志" },
+  buoysDesc: {
+    en: "IALA A/B, lateral, cardinal",
+    ru: "IALA A/B, латеральные, кардинальные",
+    zh: "IALA A/B、侧面、基点",
+  },
+  emergenciesTitle: { en: "Emergency Procedures", ru: "Аварийные процедуры", zh: "紧急程序" },
+  emergenciesDesc: {
+    en: "MOB, grounding, fire, flooding",
+    ru: "ЧЗБ, посадка, пожар, затопление",
+    zh: "落水、搁浅、火灾、进水",
+  },
+
+  // Seamanship Articles
+  knotsTitle: { en: "Essential Knots", ru: "Основные узлы", zh: "基本绳结" },
+  knotsDesc: {
+    en: "Bowline, cleat hitch, figure eight",
+    ru: "Булинь, кнехт, восьмёрка",
+    zh: "单套结、系缆桩、八字结",
+  },
+  anchoringTitle: { en: "Anchoring", ru: "Якорная стоянка", zh: "抛锚" },
+  anchoringDesc: {
+    en: "Choosing spot, setting, scope",
+    ru: "Выбор места, постановка, вытравливание",
+    zh: "选址、下锚、锚链长度",
+  },
+  dockingTitle: { en: "Docking & Mooring", ru: "Швартовка", zh: "停靠与系泊" },
+  dockingDesc: {
+    en: "Alongside, Mediterranean mooring",
+    ru: "Лагом, средиземноморская",
+    zh: "靠泊、地中海式",
+  },
+
+  // Medical Articles
+  seasicknessTitle: { en: "Seasickness", ru: "Укачивание", zh: "晕船" },
+  seasicknessDesc: {
+    en: "Prevention and treatment",
+    ru: "Профилактика и лечение",
+    zh: "预防与治疗",
+  },
+  firstAidTitle: { en: "First Aid Essentials", ru: "Основы первой помощи", zh: "急救要点" },
+  firstAidDesc: {
+    en: "Medical kit, common injuries",
+    ru: "Аптечка, типичные травмы",
+    zh: "医疗包、常见伤害",
+  },
+
+  // Weather Articles
+  weatherReadingTitle: { en: "Weather Interpretation", ru: "Понимание погоды", zh: "天气解读" },
+  weatherReadingDesc: {
+    en: "Clouds, barometer, Beaufort",
+    ru: "Облака, барометр, Бофорт",
+    zh: "云层、气压计、蒲福风级",
+  },
+  weatherSourcesTitle: { en: "Weather Sources", ru: "Источники прогнозов", zh: "天气来源" },
+  weatherSourcesDesc: {
+    en: "VHF, apps, GRIB files",
+    ru: "VHF, приложения, GRIB",
+    zh: "VHF、应用、GRIB",
+  },
+
+  // Nav Basics Articles
+  chartReadingTitle: { en: "Chart Reading", ru: "Чтение карт", zh: "海图阅读" },
+  chartReadingDesc: {
+    en: "Symbols, magnetic vs true",
+    ru: "Символы, магн./ист. курс",
+    zh: "符号、磁北与真北",
+  },
+  deadReckoningTitle: { en: "Dead Reckoning", ru: "Счисление пути", zh: "推算定位" },
+  deadReckoningDesc: {
+    en: "Position without GPS",
+    ru: "Позиция без GPS",
+    zh: "无 GPS 定位",
+  },
+
+  // Troubleshooting Articles
+  engineProblemsTitle: { en: "Engine Troubleshooting", ru: "Неисправности двигателя", zh: "发动机故障" },
+  engineProblemsDesc: {
+    en: "Won't start, overheating",
+    ru: "Не заводится, перегрев",
+    zh: "无法启动、过热",
+  },
+  electricalProblemsTitle: { en: "Electrical Problems", ru: "Электрика", zh: "电气问题" },
+  electricalProblemsDesc: {
+    en: "Battery, charging, circuits",
+    ru: "Аккумулятор, зарядка, цепи",
+    zh: "电池、充电、电路",
+  },
+
+  // UI elements
+  searchKnowledge: { en: "Search...", ru: "Поиск...", zh: "搜索..." },
+  noResults: { en: "No results found", ru: "Ничего не найдено", zh: "未找到结果" },
+  articles: { en: "articles", ru: "статей", zh: "篇" },
 };
 
 export function isLang(value: string | undefined | null): value is Lang {

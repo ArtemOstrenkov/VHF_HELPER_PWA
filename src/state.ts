@@ -20,7 +20,10 @@ export type Screen =
   | "relay"
   | "message"
   | "last"
-  | "manual";
+  | "manual"
+  | "knowledge"
+  | "knowledge-category"
+  | "knowledge-article";
 
 export interface AppState {
   profile: number;

@@ -16,10 +16,10 @@ export default defineConfig({
         "icons/icon-512.png",
       ],
       manifest: {
-        name: "VHF Panic",
-        short_name: "VHF Panic",
+        name: "Skipper's Companion",
+        short_name: "Skipper's Companion",
         description:
-          "Seaspeak helper for new skippers: compose MAYDAY, PAN-PAN and routine VHF calls",
+          "Complete guide for new yacht skippers: VHF radio, navigation, safety, seamanship, and checklists",
         theme_color: "#eef3fa",
         background_color: "#eef3fa",
         display: "standalone",
