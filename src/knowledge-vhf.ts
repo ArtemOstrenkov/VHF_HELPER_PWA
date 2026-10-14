@@ -138,6 +138,100 @@ const vhfChannelsContent: Record<string, ContentBlock[]> = {
   ],
 };
 
+// DSC Functions multilingual content
+const dscContent: Record<string, ContentBlock[]> = {
+  en: [
+    {
+      type: "text",
+      content: "DSC (Digital Selective Calling) automatically sends MAYDAY with GPS coordinates. Requires MMSI registration.",
+    },
+    { type: "heading", content: "Functions" },
+    {
+      type: "list",
+      items: [
+        "DISTRESS: Red button under cover - auto sends MAYDAY + GPS",
+        "All Ships Call: Like voice call on Ch 16",
+        "Individual Call: Direct call to vessel by MMSI",
+        "Position Request: Ask another vessel for GPS coordinates",
+      ],
+    },
+    { type: "heading", content: "MMSI Registration" },
+    {
+      type: "list",
+      items: [
+        "USA: BoatUS, Sea Tow, or FCC",
+        "Europe: National regulators",
+        "FREE registration!",
+        "9-digit number unique to your vessel",
+      ],
+    },
+    {
+      type: "warning",
+      content: "Without MMSI, your DSC emergency call won't include vessel identification!",
+    },
+  ],
+  ru: [
+    {
+      type: "text",
+      content: "DSC (Цифровой Избирательный Вызов) автоматически отправляет MAYDAY с GPS координатами. Требует регистрацию MMSI.",
+    },
+    { type: "heading", content: "Функции" },
+    {
+      type: "list",
+      items: [
+        "БЕДСТВИЕ: Красная кнопка под крышкой - автоматически отправляет MAYDAY + GPS",
+        "Вызов всех судов: Как голосовой вызов на канале 16",
+        "Индивидуальный вызов: Прямой вызов судна по MMSI",
+        "Запрос позиции: Запросить у другого судна GPS координаты",
+      ],
+    },
+    { type: "heading", content: "Регистрация MMSI" },
+    {
+      type: "list",
+      items: [
+        "США: BoatUS, Sea Tow, или FCC",
+        "Европа: Национальные регуляторы",
+        "БЕСПЛАТНАЯ регистрация!",
+        "9-значный номер уникальный для вашего судна",
+      ],
+    },
+    {
+      type: "warning",
+      content: "Без MMSI ваш аварийный вызов DSC не будет содержать идентификацию судна!",
+    },
+  ],
+  zh: [
+    {
+      type: "text",
+      content: "DSC（数字选择性呼叫）自动发送MAYDAY和GPS坐标。需要MMSI注册。",
+    },
+    { type: "heading", content: "功能" },
+    {
+      type: "list",
+      items: [
+        "遇险：红色按钮在盖板下 - 自动发送MAYDAY + GPS",
+        "全船呼叫：类似16频道的语音呼叫",
+        "单独呼叫：通过MMSI直接呼叫船只",
+        "位置请求：向其他船只询问GPS坐标",
+      ],
+    },
+    { type: "heading", content: "MMSI注册" },
+    {
+      type: "list",
+      items: [
+        "美国：BoatUS、Sea Tow或FCC",
+        "欧洲：国家监管机构",
+        "免费注册！",
+        "船只唯一的9位数字",
+      ],
+    },
+    {
+      type: "warning",
+      content: "没有MMSI，您的DSC紧急呼叫将不包含船只识别信息！",
+    },
+  ],
+};
+
 export const VHF_ARTICLES: KnowledgeArticle[] = [
   {
     id: "vhf-channels",
@@ -146,7 +240,7 @@ export const VHF_ARTICLES: KnowledgeArticle[] = [
     descKey: "vhfChannelsDesc",
     icon: "📻",
     order: 1,
-    content: [], // Will be populated dynamically
+    content: [],
     getContent: (lang: Lang) => getContent(lang, vhfChannelsContent),
   },
   {
@@ -156,36 +250,8 @@ export const VHF_ARTICLES: KnowledgeArticle[] = [
     descKey: "vhfDscDesc",
     icon: "🔴",
     order: 2,
-    content: [
-      {
-        type: "text",
-        content: "DSC (Digital Selective Calling) automatically sends MAYDAY with GPS coordinates. Requires MMSI registration.",
-      },
-      { type: "heading", content: "Functions" },
-      {
-        type: "list",
-        items: [
-          "DISTRESS: Red button under cover - auto sends MAYDAY + GPS",
-          "All Ships Call: Like voice call on Ch 16",
-          "Individual Call: Direct call to vessel by MMSI",
-          "Position Request: Ask another vessel for GPS coordinates",
-        ],
-      },
-      { type: "heading", content: "MMSI Registration" },
-      {
-        type: "list",
-        items: [
-          "USA: BoatUS, Sea Tow, or FCC",
-          "Europe: National regulators",
-          "FREE registration!",
-          "9-digit number unique to your vessel",
-        ],
-      },
-      {
-        type: "warning",
-        content: "Without MMSI, your DSC emergency call won't include vessel identification!",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => getContent(lang, dscContent),
   },
   {
     id: "vhf-etiquette",
@@ -194,46 +260,60 @@ export const VHF_ARTICLES: KnowledgeArticle[] = [
     descKey: "vhfEtiquetteDesc",
     icon: "🎙️",
     order: 3,
-    content: [
-      { type: "heading", content: "Radio Procedures" },
-      {
-        type: "list",
-        items: [
-          "LISTEN before transmit (check channel is free)",
-          "Think before speaking (prepare your message)",
-          "Press PTT → wait 0.5s → speak → release",
-          "Speak clearly, slowly, near microphone",
-          "Use Seaspeak / Plain Language (avoid slang)",
-          'Say "OVER" when done, "OUT" to end conversation',
-          "Don't hog the channel (be brief)",
-        ],
-      },
-      { type: "heading", content: "Radio Check" },
-      {
-        type: "code",
-        content: `"ANY STATION, ANY STATION, ANY STATION
-This is sailing yacht ANEMELIA
-Radio check on channel one-six
-Over"`,
-      },
-      {
-        type: "text",
-        content: 'Response: "ANEMELIA, this is BLUE HORIZON. Receiving you loud and clear. Over"',
-      },
-      { type: "heading", content: "Power Settings" },
-      {
-        type: "list",
-        items: [
-          "1W: 5-10 miles (ship-to-ship, harbor)",
-          "25W: 50+ miles (coast guard, offshore)",
-          "Don't blast 25W in busy harbor!",
-        ],
-      },
-      {
-        type: "tip",
-        content: "Channel 16 is for emergency and initial contact only. After establishing contact, say 'Switch to channel zero-six' and continue conversation there.",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        { 
+          type: "heading", 
+          content: {
+            en: "Radio Procedures",
+            ru: "Процедуры радиосвязи",
+            zh: "无线电程序",
+          }[l] as string,
+        },
+        {
+          type: "list",
+          items: {
+            en: [
+              "LISTEN before transmit (check channel is free)",
+              "Think before speaking (prepare your message)",
+              "Press PTT → wait 0.5s → speak → release",
+              "Speak clearly, slowly, near microphone",
+              "Use Seaspeak / Plain Language (avoid slang)",
+              'Say "OVER" when done, "OUT" to end conversation',
+              "Don't hog the channel (be brief)",
+            ],
+            ru: [
+              "СЛУШАЙТЕ перед передачей (проверьте, что канал свободен)",
+              "Думайте перед тем как говорить (подготовьте сообщение)",
+              "Нажмите PTT → подождите 0.5с → говорите → отпустите",
+              "Говорите чётко, медленно, возле микрофона",
+              "Используйте морской язык / простой язык (без сленга)",
+              'Говорите "ПРИЁМ" когда закончили, "КОНЕЦ" для завершения',
+              "Не занимайте канал (будьте кратки)",
+            ],
+            zh: [
+              "发送前先收听（检查频道是否空闲）",
+              "说话前先思考（准备好信息）",
+              "按PTT → 等0.5秒 → 说话 → 松开",
+              "靠近麦克风清晰缓慢地说话",
+              "使用海事英语/简明语言（避免俚语）",
+              '完成时说"OVER"，结束对话说"OUT"',
+              "不要霸占频道（简短）",
+            ],
+          }[l] as string[],
+        },
+        {
+          type: "tip",
+          content: {
+            en: "Professional = brief, clear, polite. You're on a party line - everyone hears you!",
+            ru: "Профессионализм = краткость, чёткость, вежливость. Вы на общей линии - все вас слышат!",
+            zh: "专业 = 简短、清晰、礼貌。这是公共频道 - 所有人都听得到！",
+          }[l] as string,
+        },
+      ];
+    },
   },
   {
     id: "vhf-phonetic",
