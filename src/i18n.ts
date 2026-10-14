@@ -504,6 +504,12 @@ const dict: Dict = {
   searchKnowledge: { en: "Search...", ru: "Поиск...", zh: "搜索..." },
   noResults: { en: "No results found", ru: "Ничего не найдено", zh: "未找到结果" },
   articles: { en: "articles", ru: "статей", zh: "篇" },
+  tableColLetter: { en: "Letter", ru: "Буква", zh: "字母" },
+  tableColWord: { en: "Word", ru: "Слово", zh: "单词" },
+  tableColForce: { en: "Force", ru: "Сила", zh: "风力" },
+  tableColWind: { en: "Wind", ru: "Ветер", zh: "风速" },
+  tableColDesc: { en: "Description", ru: "Описание", zh: "描述" },
+  illustrationAlt: { en: "Illustration", ru: "Иллюстрация", zh: "插图" },
 };
 
 export function isLang(value: string | undefined | null): value is Lang {

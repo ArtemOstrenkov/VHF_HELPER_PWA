@@ -79,10 +79,20 @@ function renderContentBlock(block: ContentBlock, lang: Lang, level = 0): string 
     case "table":
       if (!block.rows || block.rows.length === 0) return "";
       const keys = Object.keys(block.rows[0]);
+      const headerLabel = (key: string): string => {
+        const map: Record<string, string> = {
+          letter: "tableColLetter",
+          word: "tableColWord",
+          force: "tableColForce",
+          wind: "tableColWind",
+          desc: "tableColDesc",
+        };
+        return map[key] ? t(lang, map[key]) : key;
+      };
       return `
         <table class="content-table">
           <thead>
-            <tr>${keys.map((key) => `<th>${esc(key)}</th>`).join("")}</tr>
+            <tr>${keys.map((key) => `<th>${esc(headerLabel(key))}</th>`).join("")}</tr>
           </thead>
           <tbody>
             ${block.rows
@@ -102,7 +112,7 @@ function renderContentBlock(block: ContentBlock, lang: Lang, level = 0): string 
         
         if (isImagePath) {
           return `<figure class="content-illustration">
-            <img src="${esc(block.src)}" alt="${esc(block.alt || block.caption || 'Illustration')}" class="illustration-image" />
+            <img src="${esc(block.src)}" alt="${esc(block.alt || block.caption || t(lang, "illustrationAlt"))}" class="illustration-image" />
             ${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ""}
           </figure>`;
         } else {
