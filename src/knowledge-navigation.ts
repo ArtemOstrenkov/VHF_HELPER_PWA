@@ -681,85 +681,426 @@ export const NAVIGATION_ARTICLES: KnowledgeArticle[] = [
     descKey: "buoysDesc",
     icon: "🟢",
     order: 3,
-    content: [
-      {
-        type: "text",
-        content: "IALA (International Association of Lighthouse Authorities) system has two regions: A (most of world) and B (Americas, Japan, Philippines).",
-      },
-      {
-        type: "accordion",
-        title: "IALA Region A (Europe, Asia, Africa, Australia)",
-        children: [
-          { type: "heading", content: "Lateral Marks (entering port from sea)" },
-          {
-            type: "list",
-            items: [
-              "Port (left): RED cylinders, even numbers, red light",
-              "Starboard (right): GREEN cones, odd numbers, green light",
-            ],
-          },
-          {
-            type: "note",
-            content: "Mnemonic: 'Red Right Returning' DOES NOT apply to IALA A! Red is LEFT when returning from sea.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "IALA Region B (Americas)",
-        children: [
-          { type: "heading", content: "Lateral Marks (entering port from sea)" },
-          {
-            type: "list",
-            items: [
-              "Port (left): GREEN cylinders, odd numbers, green light",
-              "Starboard (right): RED cones, even numbers, red light",
-            ],
-          },
-          {
-            type: "note",
-            content: "Mnemonic: 'Red Right Returning' - red on starboard when returning from sea.",
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Cardinal Marks (same worldwide)",
-        children: [
-          {
-            type: "text",
-            content: "Indicate safe water relative to mark. Pass on the named side:",
-          },
-          {
-            type: "list",
-            items: [
-              "North: 2 black cones points UP (like N points up). Pass NORTH of mark.",
-              "South: 2 black cones points DOWN. Pass SOUTH of mark.",
-              "East: 2 black cones base-to-base (like E points outward). Pass EAST.",
-              "West: 2 black cones point-to-point (like W points inward). Pass WEST.",
-            ],
-          },
-        ],
-      },
-      {
-        type: "accordion",
-        title: "Special Marks",
-        children: [
-          {
-            type: "list",
-            items: [
-              "Isolated Danger: Red-Black-Red horizontal bands, 2 black balls. Danger beneath, but navigable water around.",
-              "Safe Water: Red-White vertical stripes, red sphere on top. Safe water all around (mid-channel, landfall).",
-              "Special Purpose: Yellow (X-shape topmark). Indicates: traffic separation, pipelines, recreation zones, cables, etc.",
-            ],
-          },
-        ],
-      },
-      {
-        type: "tip",
-        content: "Always check which IALA region you're in! App or chart will indicate. Getting it wrong can put you on rocks!",
-      },
-    ],
+    content: [],
+    getContent: (lang: Lang) => {
+      const l = lang === "en" ? "en" : lang === "ru" ? "ru" : lang === "zh" ? "zh" : "en";
+      return [
+        {
+          type: "text",
+          content: {
+            en: "IALA (International Association of Lighthouse Authorities) system has two regions: A (most of world) and B (Americas, Japan, Philippines).",
+            ru: "Система IALA (Международная ассоциация маячных служб) имеет два региона: A (большая часть мира) и B (Америки, Япония, Филиппины).",
+            zh: "IALA（国际航标协会）系统分为两个区域：A（世界大部分地区）和B（美洲、日本、菲律宾）。",
+          }[l] as string,
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "IALA Region A (Europe, Asia, Africa, Australia)",
+            ru: "Регион IALA A (Европа, Азия, Африка, Австралия)",
+            zh: "IALA A区（欧洲、亚洲、非洲、澳大利亚）",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: {
+                en: "Lateral Marks (entering port from sea)",
+                ru: "Латеральные знаки (заход в порт с моря)",
+                zh: "侧面标志（从海上进港）",
+              }[l] as string,
+            },
+            {
+              type: "illustration",
+              src: {
+                en: `
+╔═══════════════════════════════════════╗
+║     IALA REGION A - LATERAL MARKS     ║
+╚═══════════════════════════════════════╝
+
+    ENTERING PORT FROM SEA ⬆️
+    
+         ← TO PORT →
+    
+    🔴          ⛵️         🟢
+  Cylinder                Cone
+  (Can)                  (Nun)
+  Even #                 Odd #
+  Red                   Green
+   ║                      ║
+   ║                      ║
+  LEFT                  RIGHT
+  SIDE                   SIDE
+
+Mnemonic for Region A:
+"Red LEFT Returning from sea"
+(opposite of US!)
+                `,
+                ru: `
+╔═══════════════════════════════════════╗
+║   РЕГИОН IALA A - ЛАТЕРАЛЬНЫЕ ЗНАКИ   ║
+╚═══════════════════════════════════════╝
+
+    ЗАХОД В ПОРТ С МОРЯ ⬆️
+    
+         ← В ПОРТ →
+    
+    🔴          ⛵️         🟢
+  Цилиндр              Конус
+  Чётный №            Нечётный №
+  Красный             Зелёный
+   ║                      ║
+   ║                      ║
+ ЛЕВЫЙ                 ПРАВЫЙ
+  БОРТ                  БОРТ
+
+Мнемоника для Региона A:
+"Красный СЛЕВА при возврате с моря"
+(противоположно США!)
+                `,
+                zh: `
+╔═══════════════════════════════════════╗
+║     IALA A区 - 侧面标志               ║
+╚═══════════════════════════════════════╝
+
+    从海上进港 ⬆️
+    
+         ← 到港口 →
+    
+    🔴          ⛵️         🟢
+  圆柱体                圆锥体
+  偶数                  奇数
+  红色                  绿色
+   ║                      ║
+   ║                      ║
+  左侧                  右侧
+
+A区记忆法：
+"红色在左，返港时"
+（与美国相反！）
+                `,
+              }[l] as string,
+              caption: {
+                en: "Region A: Red LEFT when returning from sea",
+                ru: "Регион A: Красный СЛЕВА при заходе с моря",
+                zh: "A区：返港时红色在左",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Port (left): RED cylinders, even numbers, red light",
+                  "Starboard (right): GREEN cones, odd numbers, green light",
+                ],
+                ru: [
+                  "Левый борт: КРАСНЫЕ цилиндры, чётные номера, красный огонь",
+                  "Правый борт: ЗЕЛЁНЫЕ конусы, нечётные номера, зелёный огонь",
+                ],
+                zh: [
+                  "左舷：红色圆柱体，偶数，红灯",
+                  "右舷：绿色圆锥体，奇数，绿灯",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Mnemonic: 'Red Right Returning' DOES NOT apply to IALA A! Red is LEFT when returning from sea.",
+                ru: "Мнемоника: 'Red Right Returning' НЕ действует в регионе IALA A! Красный СЛЕВА при возврате с моря.",
+                zh: "记忆法：'Red Right Returning'（红右返航）不适用于IALA A！红色在左侧返港。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "IALA Region B (Americas)",
+            ru: "Регион IALA B (Америки)",
+            zh: "IALA B区（美洲）",
+          }[l] as string,
+          children: [
+            { 
+              type: "heading", 
+              content: {
+                en: "Lateral Marks (entering port from sea)",
+                ru: "Латеральные знаки (заход в порт с моря)",
+                zh: "侧面标志（从海上进港）",
+              }[l] as string,
+            },
+            {
+              type: "illustration",
+              src: {
+                en: `
+╔═══════════════════════════════════════╗
+║     IALA REGION B - LATERAL MARKS     ║
+╚═══════════════════════════════════════╝
+
+    ENTERING PORT FROM SEA ⬆️
+    
+         ← TO PORT →
+    
+    🟢          ⛵️         🔴
+  Cylinder                Cone
+  Odd #                  Even #
+  Green                   Red
+   ║                      ║
+   ║                      ║
+  LEFT                  RIGHT
+  SIDE                   SIDE
+
+Mnemonic for Region B:
+"Red RIGHT Returning"
+(US, Japan, Philippines)
+                `,
+                ru: `
+╔═══════════════════════════════════════╗
+║   РЕГИОН IALA B - ЛАТЕРАЛЬНЫЕ ЗНАКИ   ║
+╚═══════════════════════════════════════╝
+
+    ЗАХОД В ПОРТ С МОРЯ ⬆️
+    
+         ← В ПОРТ →
+    
+    🟢          ⛵️         🔴
+  Цилиндр              Конус
+  Нечётный №           Чётный №
+  Зелёный              Красный
+   ║                      ║
+   ║                      ║
+ ЛЕВЫЙ                 ПРАВЫЙ
+  БОРТ                  БОРТ
+
+Мнемоника для Региона B:
+"Красный СПРАВА при возврате"
+(США, Япония, Филиппины)
+                `,
+                zh: `
+╔═══════════════════════════════════════╗
+║     IALA B区 - 侧面标志               ║
+╚═══════════════════════════════════════╝
+
+    从海上进港 ⬆️
+    
+         ← 到港口 →
+    
+    🟢          ⛵️         🔴
+  圆柱体                圆锥体
+  奇数                  偶数
+  绿色                  红色
+   ║                      ║
+   ║                      ║
+  左侧                  右侧
+
+B区记忆法：
+"红右返航"
+（美国、日本、菲律宾）
+                `,
+              }[l] as string,
+              caption: {
+                en: "Region B: Red RIGHT when returning from sea",
+                ru: "Регион B: Красный СПРАВА при заходе с моря",
+                zh: "B区：返港时红色在右",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Port (left): GREEN cylinders, odd numbers, green light",
+                  "Starboard (right): RED cones, even numbers, red light",
+                ],
+                ru: [
+                  "Левый борт: ЗЕЛЁНЫЕ цилиндры, нечётные номера, зелёный огонь",
+                  "Правый борт: КРАСНЫЕ конусы, чётные номера, красный огонь",
+                ],
+                zh: [
+                  "左舷：绿色圆柱体，奇数，绿灯",
+                  "右舷：红色圆锥体，偶数，红灯",
+                ],
+              }[l] as string[],
+            },
+            {
+              type: "note",
+              content: {
+                en: "Mnemonic: 'Red Right Returning' - red on starboard when returning from sea.",
+                ru: "Мнемоника: 'Red Right Returning' - красный справа при возврате с моря.",
+                zh: "记忆法：'红右返航' - 返港时红色在右舷。",
+              }[l] as string,
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Cardinal Marks (same worldwide)",
+            ru: "Кардинальные знаки (одинаковые во всём мире)",
+            zh: "基本方位标志（全球通用）",
+          }[l] as string,
+          children: [
+            {
+              type: "text",
+              content: {
+                en: "Indicate safe water relative to mark. Pass on the named side:",
+                ru: "Указывают безопасную воду относительно знака. Проходите с указанной стороны:",
+                zh: "指示相对标志的安全水域。从指定侧通过：",
+              }[l] as string,
+            },
+            {
+              type: "illustration",
+              src: {
+                en: `
+╔═══════════════════════════════════════╗
+║        CARDINAL MARKS (WORLDWIDE)      ║
+╚═══════════════════════════════════════╝
+
+         NORTH (↑↑)
+    Pass NORTH of mark
+    2 cones points UP
+         ▲▲
+         ║║
+        ┌──┐
+WEST    │  │    EAST
+(↔↔)    │⚠️│    (◄►)
+┌──┐    │  │    ┌──┐
+▼▲      └──┘      ◄►
+Point             Base
+Touch          to Base
+
+         SOUTH (↓↓)
+    Pass SOUTH of mark
+    2 cones points DOWN
+         ║║
+         ▼▼
+
+Danger is on OPPOSITE side
+of where you should pass!
+                `,
+                ru: `
+╔═══════════════════════════════════════╗
+║   КАРДИНАЛЬНЫЕ ЗНАКИ (ГЛОБАЛЬНЫЕ)     ║
+╚═══════════════════════════════════════╝
+
+        СЕВЕР (↑↑)
+  Проходите СЕВЕРНЕЕ
+    2 конуса вверх
+         ▲▲
+         ║║
+        ┌──┐
+ЗАПАД   │  │   ВОСТОК
+(↔↔)    │⚠️│    (◄►)
+┌──┐    │  │    ┌──┐
+▼▲      └──┘      ◄►
+Острие          Основание
+Касаются      к Основанию
+
+         ЮГ (↓↓)
+  Проходите ЮЖНЕЕ
+   2 конуса вниз
+         ║║
+         ▼▼
+
+Опасность на ПРОТИВОПОЛОЖНОЙ
+стороне от прохода!
+                `,
+                zh: `
+╔═══════════════════════════════════════╗
+║        基本方位标志（全球）           ║
+╚═══════════════════════════════════════╝
+
+         北 (↑↑)
+    从北侧通过
+    2锥体尖朝上
+         ▲▲
+         ║║
+        ┌──┐
+西      │  │    东
+(↔↔)    │⚠️│    (◄►)
+┌──┐    │  │    ┌──┐
+▼▲      └──┘      ◄►
+尖对尖          底对底
+
+         南 (↓↓)
+    从南侧通过
+    2锥体尖朝下
+         ║║
+         ▼▼
+
+危险在应通过侧的
+相反方向！
+                `,
+              }[l] as string,
+              caption: {
+                en: "Cardinal marks show safe passage direction",
+                ru: "Кардинальные знаки показывают направление безопасного прохода",
+                zh: "基本方位标志显示安全通过方向",
+              }[l] as string,
+            },
+            {
+              type: "list",
+              items: {
+                en: [
+                  "North: 2 black cones points UP (like N points up). Pass NORTH of mark.",
+                  "South: 2 black cones points DOWN. Pass SOUTH of mark.",
+                  "East: 2 black cones base-to-base (like E points outward). Pass EAST.",
+                  "West: 2 black cones point-to-point (like W points inward). Pass WEST.",
+                ],
+                ru: [
+                  "Север: 2 чёрных конуса вершинами ВВЕРХ (как N указывает вверх). Проходите СЕВЕРНЕЕ.",
+                  "Юг: 2 чёрных конуса вершинами ВНИЗ. Проходите ЮЖНЕЕ.",
+                  "Восток: 2 чёрных конуса основаниями друг к другу (как E указывает наружу). Проходите ВОСТОЧНЕЕ.",
+                  "Запад: 2 чёрных конуса вершинами друг к другу (как W указывает внутрь). Проходите ЗАПАДНЕЕ.",
+                ],
+                zh: [
+                  "北：2个黑色锥体尖端向上（如N指向上）。从北侧通过。",
+                  "南：2个黑色锥体尖端向下。从南侧通过。",
+                  "东：2个黑色锥体底对底（如E指向外）。从东侧通过。",
+                  "西：2个黑色锥体尖对尖（如W指向内）。从西侧通过。",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "accordion",
+          title: {
+            en: "Special Marks",
+            ru: "Специальные знаки",
+            zh: "特殊标志",
+          }[l] as string,
+          children: [
+            {
+              type: "list",
+              items: {
+                en: [
+                  "Isolated Danger: Red-Black-Red horizontal bands, 2 black balls. Danger beneath, but navigable water around.",
+                  "Safe Water: Red-White vertical stripes, red sphere on top. Safe water all around (mid-channel, landfall).",
+                  "Special Purpose: Yellow (X-shape topmark). Indicates: traffic separation, pipelines, recreation zones, cables, etc.",
+                ],
+                ru: [
+                  "Отдельная опасность: Красно-Чёрно-Красные горизонтальные полосы, 2 чёрных шара. Опасность под знаком, но вокруг судоходно.",
+                  "Чистая вода: Красно-Белые вертикальные полосы, красная сфера сверху. Чистая вода вокруг (середина фарватера, приход к берегу).",
+                  "Специального назначения: Жёлтый (крестообразный верхний знак). Означает: разделение движения, трубопроводы, зоны отдыха, кабели и т.д.",
+                ],
+                zh: [
+                  "孤立危险：红-黑-红水平条纹，2个黑球。下方有危险，但周围可航行。",
+                  "安全水域：红白垂直条纹，顶部红球。周围全是安全水域（航道中央、登陆点）。",
+                  "特殊用途：黄色（X形顶标）。表示：交通分隔、管道、娱乐区、电缆等。",
+                ],
+              }[l] as string[],
+            },
+          ],
+        },
+        {
+          type: "tip",
+          content: {
+            en: "Always check which IALA region you're in! App or chart will indicate. Getting it wrong can put you on rocks!",
+            ru: "Всегда проверяйте, в каком регионе IALA вы находитесь! Приложение или карта укажут. Ошибка может посадить вас на камни!",
+            zh: "务必检查你在哪个IALA区域！应用或海图会显示。搞错可能会让你触礁！",
+          }[l] as string,
+        },
+      ];
+    },
   },
   {
     id: "emergencies",
