@@ -7,42 +7,83 @@ REMOTE_ROOT="/var/www/skippers-companion"
 DOMAIN="skipper.p4e1.ru"
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT_DIR/dist"
+SSH_DIR="${HOME}/.ssh"
+IDENTITY_FILE="${SSH_DIR}/id_ed25519_deploy"
+SSH_OPTS=(-o BatchMode=yes -o StrictHostKeyChecking=accept-new)
 
 echo "🚀 Deploying Skipper's Companion to $DOMAIN"
 
-# Check if dist exists
+# Prefer Cursor / CI secret SSH_PRIVATE_KEY, else existing deploy key / default id
+setup_ssh_identity() {
+  mkdir -p "$SSH_DIR"
+  chmod 700 "$SSH_DIR"
+
+  if [[ -n "${SSH_PRIVATE_KEY:-}" ]]; then
+    # Support both literal newlines and \n-escaped secrets
+    printf '%s\n' "${SSH_PRIVATE_KEY//\\n/$'\n'}" >"$IDENTITY_FILE"
+    chmod 600 "$IDENTITY_FILE"
+    echo "🔑 Using SSH_PRIVATE_KEY from environment"
+  elif [[ -f "$IDENTITY_FILE" ]]; then
+    echo "🔑 Using existing $IDENTITY_FILE"
+  elif [[ -f "${SSH_DIR}/id_ed25519" ]]; then
+    IDENTITY_FILE="${SSH_DIR}/id_ed25519"
+    echo "🔑 Using ${IDENTITY_FILE}"
+  else
+    echo "❌ No SSH key found." >&2
+    echo "   Set Cloud Agent secret SSH_PRIVATE_KEY, or place a key at ~/.ssh/id_ed25519_deploy" >&2
+    exit 1
+  fi
+
+  SSH_OPTS+=(-i "$IDENTITY_FILE" -o IdentitiesOnly=yes)
+}
+
+run_ssh() {
+  ssh "${SSH_OPTS[@]}" "$HOST" "$@"
+}
+
+run_rsync() {
+  rsync -avz --delete -e "ssh ${SSH_OPTS[*]}" "$@"
+}
+
+run_scp() {
+  scp "${SSH_OPTS[@]}" "$@"
+}
+
 if [[ ! -d "$DIST" ]]; then
   echo "❌ dist/ is missing. Run 'npm run build' first." >&2
   exit 1
 fi
 
-# Create directories on server
+setup_ssh_identity
+
+echo "🔌 Testing SSH..."
+run_ssh "echo 'SSH OK'"
+
 echo "📁 Creating directories on server..."
-ssh "$HOST" "mkdir -p '$REMOTE_ROOT' && chown -R www-data:www-data '$REMOTE_ROOT'"
+run_ssh "mkdir -p '$REMOTE_ROOT' && chown -R www-data:www-data '$REMOTE_ROOT'"
 
-# Upload files
 echo "📤 Uploading files..."
-rsync -avz --delete "$DIST/" "$HOST:$REMOTE_ROOT/"
+if ! run_rsync "$DIST/" "$HOST:$REMOTE_ROOT/"; then
+  echo "⚠️  rsync failed, falling back to tar+scp..."
+  tar -czf /tmp/skipper-dist.tar.gz -C "$DIST" .
+  run_scp /tmp/skipper-dist.tar.gz "$HOST:/tmp/skipper-dist.tar.gz"
+  run_ssh "tar -xzf /tmp/skipper-dist.tar.gz -C '$REMOTE_ROOT' && rm /tmp/skipper-dist.tar.gz && chown -R www-data:www-data '$REMOTE_ROOT'"
+fi
 
-# Upload nginx configuration
 echo "⚙️  Uploading Nginx configuration..."
-scp "$ROOT_DIR/deploy/skipper.nginx.conf" "$HOST:/etc/nginx/sites-available/skipper.p4e1.ru"
+run_scp "$ROOT_DIR/deploy/skipper.nginx.conf" "$HOST:/etc/nginx/sites-available/skipper.p4e1.ru"
 
-# Enable site
 echo "🔗 Enabling site in Nginx..."
-ssh "$HOST" "ln -sf /etc/nginx/sites-available/skipper.p4e1.ru /etc/nginx/sites-enabled/skipper.p4e1.ru"
+run_ssh "ln -sfn /etc/nginx/sites-available/skipper.p4e1.ru /etc/nginx/sites-enabled/skipper.p4e1.ru"
 
-# Test nginx configuration
 echo "✅ Testing Nginx configuration..."
-ssh "$HOST" "nginx -t"
+run_ssh "nginx -t"
 
-# Reload nginx
 echo "🔄 Reloading Nginx..."
-ssh "$HOST" "systemctl reload nginx"
+run_ssh "systemctl reload nginx"
 
-# Get SSL certificate if not exists
 echo "🔒 Checking SSL certificate..."
-ssh "$HOST" "if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
+run_ssh "if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
   echo '📜 Obtaining SSL certificate...'
   certbot --nginx -d $DOMAIN --non-interactive --agree-tos --email admin@p4e1.ru || true
 else
