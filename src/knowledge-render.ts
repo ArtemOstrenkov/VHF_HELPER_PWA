@@ -125,7 +125,7 @@ export function renderArticleContent(article: KnowledgeArticle, lang: Lang): str
   const contentBlocks = article.getContent ? article.getContent(lang) : article.content;
   
   return `
-    <article class="knowledge-content">
+    <article class="knowledge-content" data-v="1.1.0">
       ${contentBlocks.map((block) => renderContentBlock(block, lang)).join("")}
     </article>
   `;

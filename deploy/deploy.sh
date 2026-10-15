@@ -2,7 +2,7 @@
 set -euo pipefail
 
 HOST="${DEPLOY_HOST:-deploy-server}"
-REMOTE_ROOT="/var/www/vhf-helper"
+REMOTE_ROOT="/var/www/skippers-companion"
 DOMAIN="skipper.p4e1.ru"
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT_DIR/dist"
