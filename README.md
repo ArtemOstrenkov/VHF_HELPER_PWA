@@ -100,61 +100,28 @@ Output will be in `dist/` directory.
 
 ---
 
-## 🌍 Deployment to skipper.p4e1.ru
+## 🌍 Deployment
 
-### Option 1: Manual Deployment (Nginx)
+**📖 See [DEPLOY.md](./DEPLOY.md) for detailed deployment instructions**
 
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Upload `dist/` contents to server:
-```bash
-rsync -avz --delete dist/ user@your-server:/var/www/skipper.p4e1.ru/
-```
-
-3. Configure Nginx:
-```nginx
-server {
-    listen 80;
-    server_name skipper.p4e1.ru;
-    
-    root /var/www/skipper.p4e1.ru;
-    index index.html;
-    
-    # PWA service worker
-    location /sw.js {
-        add_header Cache-Control "no-cache";
-        proxy_cache_bypass $http_pragma;
-    }
-    
-    # SPA routing
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-    
-    # Assets caching
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-}
-```
-
-4. Enable HTTPS (recommended):
-```bash
-sudo certbot --nginx -d skipper.p4e1.ru
-```
-
-### Option 2: Deploy Script
-
-Use the included deploy script:
+### Quick Deploy to Production
 
 ```bash
-# Edit deploy/deploy.sh with your server details
-# Then run:
 npm run deploy
+```
+
+This automatically:
+1. Builds production bundle
+2. Uploads to https://skipper.p4e1.ru
+3. Reloads nginx
+
+**Note**: Requires SSH access to production server. See [DEPLOY.md](./DEPLOY.md) for setup.
+
+### Manual Build
+
+```bash
+npm run build    # Creates dist/ folder
+npm run preview  # Test production build locally
 ```
 
 ---

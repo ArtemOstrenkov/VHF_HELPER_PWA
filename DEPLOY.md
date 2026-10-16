@@ -1,146 +1,105 @@
-# 🚀 Инструкция по деплою Skipper's Companion
+# Deployment Guide for Skipper's Companion PWA
 
-## Быстрый деплой
+## Production Server
 
-### Шаг 1: Добавьте SSH ключ на сервер
+**Domain**: https://skipper.p4e1.ru  
+**Server IP**: 155.212.141.54  
+**Deploy Directory**: `/var/www/skippers-companion`  
+**Nginx Config**: `/etc/nginx/sites-available/skipper.p4e1.ru`
 
-На вашем локальном компьютере:
-
-```bash
-# Добавьте этот публичный ключ на сервер
-ssh root@155.212.141.54
-echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDuif1TREhbjEmZ9aHLWTstk40IGjtDpWkfyhE0dM+A4 cursor-deploy@skippers-companion" >> ~/.ssh/authorized_keys
-exit
-```
-
-### Шаг 2: Разверните приложение
-
-Из этой директории:
+## Quick Deploy
 
 ```bash
-# Уже собрано! Просто запустите деплой:
-./deploy/deploy-skipper.sh
+npm run deploy
 ```
 
----
+This will:
+1. Build production bundle (`npm run build`)
+2. Upload to server via rsync
+3. Reload nginx
 
-## Альтернатива: Ручной деплой
+## SSH Configuration
 
-Если автоматический скрипт не работает:
+### For Local Development
 
-### 1. Загрузите файлы на сервер
+If deploying from your local machine, add to `~/.ssh/config`:
+
+```
+Host deploy-server
+    HostName 155.212.141.54
+    User root
+    IdentityFile ~/.ssh/id_ed25519_deploy
+    StrictHostKeyChecking no
+```
+
+Then place your SSH key in `~/.ssh/id_ed25519_deploy`.
+
+### For Cloud Agents
+
+Cloud Agents already have SSH configured. The key is stored in:
+- **Config**: `/home/ubuntu/.ssh/config`
+- **Key**: `/home/ubuntu/.ssh/id_ed25519_deploy`
+
+Just run `npm run deploy` directly.
+
+## Deploy Script Details
+
+Location: `deploy/deploy.sh`
+
+Key variables:
+- `HOST`: `deploy-server` (SSH alias)
+- `REMOTE_ROOT`: `/var/www/skippers-companion`
+- `DOMAIN`: `skipper.p4e1.ru`
+
+## Manual Deploy (if needed)
+
+If automatic deploy fails:
 
 ```bash
-# Скопируйте dist/ на сервер
-scp -r dist/* root@155.212.141.54:/var/www/skippers-companion/
-```
-
-### 2. Настройте Nginx
-
-```bash
-# Скопируйте конфиг
-scp deploy/skipper.nginx.conf root@155.212.141.54:/etc/nginx/sites-available/skipper.p4e1.ru
-
-# На сервере:
-ssh root@155.212.141.54
-
-# Включите сайт
-ln -sf /etc/nginx/sites-available/skipper.p4e1.ru /etc/nginx/sites-enabled/
-
-# Проверьте конфигурацию
-nginx -t
-
-# Перезагрузите Nginx
-systemctl reload nginx
-```
-
-### 3. Получите SSL сертификат
-
-```bash
-# На сервере
-certbot --nginx -d skipper.p4e1.ru --non-interactive --agree-tos --email admin@p4e1.ru
-```
-
-### 4. Проверьте сайт
-
-Откройте https://skipper.p4e1.ru
-
----
-
-## Структура на сервере
-
-```
-/var/www/skippers-companion/    # Файлы приложения
-/etc/nginx/sites-available/skipper.p4e1.ru    # Nginx конфиг
-/etc/nginx/sites-enabled/skipper.p4e1.ru      # Симлинк
-/etc/letsencrypt/live/skipper.p4e1.ru/        # SSL сертификаты
-```
-
----
-
-## Обновление приложения
-
-```bash
-# Пересобрать
+# 1. Build
 npm run build
 
-# Загрузить
-./deploy/deploy-skipper.sh
+# 2. Upload to server
+rsync -avz --delete dist/ deploy-server:/var/www/skippers-companion/
+
+# 3. Reload nginx
+ssh deploy-server "nginx -t && systemctl reload nginx"
 ```
 
-Или вручную:
-```bash
-rsync -avz --delete dist/ root@155.212.141.54:/var/www/skippers-companion/
-```
+## Verification
 
----
+After deploy, verify:
 
-## Проверка статуса
+1. Open https://skipper.p4e1.ru
+2. Check Network tab - should load `index-*.js` with today's date
+3. Test language switching (EN/RU/ZH)
+4. Verify translations work in articles
 
-```bash
-# Nginx
-ssh root@155.212.141.54 "systemctl status nginx"
+## Common Issues
 
-# Логи
-ssh root@155.212.141.54 "tail -f /var/log/nginx/skipper.p4e1.ru.access.log"
+### 1. SSH Permission Denied
+- Ensure SSH key is in place: `~/.ssh/id_ed25519_deploy`
+- Check SSH config: `~/.ssh/config`
+- Test connection: `ssh deploy-server "echo OK"`
 
-# SSL сертификат
-ssh root@155.212.141.54 "certbot certificates | grep skipper"
-```
+### 2. Translations Not Updating
+- **Cause**: PWA Service Worker caching
+- **Solution**: Users need to hard refresh (`Ctrl+Shift+R`) or clear site data
+- **Note**: SW will auto-update within 24h
 
----
+### 3. Wrong Directory
+- ⚠️ Deploy to `/var/www/skippers-companion` NOT `/var/www/vhf-helper`
+- `skipper.p4e1.ru` → `/var/www/skippers-companion`
+- `vhf.p4e1.ru` → `/var/www/vhf-helper`
 
-## Troubleshooting
+## Build Details
 
-### Nginx ошибки
-```bash
-# Проверить синтаксис
-ssh root@155.212.141.54 "nginx -t"
+- **Framework**: Vite + TypeScript
+- **Bundle**: ~451 KB (156 KB gzipped)
+- **Languages**: EN, RU, ZH (dynamic content)
+- **PWA**: Service Worker with precaching
 
-# Посмотреть логи ошибок
-ssh root@155.212.141.54 "tail -50 /var/log/nginx/error.log"
-```
+## Related Domains
 
-### SSL проблемы
-```bash
-# Обновить сертификат вручную
-ssh root@155.212.141.54 "certbot renew --force-renewal"
-```
-
-### Права доступа
-```bash
-# Установить правильные права
-ssh root@155.212.141.54 "chown -R www-data:www-data /var/www/skippers-companion"
-```
-
----
-
-## DNS настройки
-
-Убедитесь, что A-запись для skipper.p4e1.ru указывает на 155.212.141.54
-
-Проверка:
-```bash
-dig skipper.p4e1.ru +short
-# Должно вывести: 155.212.141.54
-```
+This project serves **skipper.p4e1.ru**.  
+Different project serves **vhf.p4e1.ru** (same server, different directory).
