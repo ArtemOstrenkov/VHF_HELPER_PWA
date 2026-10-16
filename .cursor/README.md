@@ -1,5 +1,33 @@
 # Cloud Agent Instructions
 
+## Quick Start: Deployment via Cursor Secrets
+
+### If SSH is already configured via Secrets ✅
+
+Just run:
+```bash
+npm run deploy
+```
+
+The script will automatically set up SSH from the `DEPLOY_SSH_KEY` secret.
+
+### First Time Setup: Add SSH Key to Cursor Secrets
+
+1. **Go to Cursor Dashboard**: https://cursor.com/settings/cloud-agents
+2. **Add Secret**:
+   - Name: `DEPLOY_SSH_KEY`
+   - Value: Copy SSH key from existing session (see below)
+   - Scope: This repo or "All repositories"
+3. **Done!** All future Cloud Agents will have automatic SSH access
+
+#### Get SSH Key from Current Session:
+```bash
+cat /home/ubuntu/.ssh/id_ed25519_deploy
+```
+Copy entire output including `-----BEGIN` and `-----END`.
+
+---
+
 ## Deployment to Production
 
 ### SSH is Pre-Configured

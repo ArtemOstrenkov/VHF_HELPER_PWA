@@ -20,6 +20,32 @@ This will:
 
 ## SSH Configuration
 
+### For Cloud Agents (Recommended)
+
+**Use Cursor Secrets** for automatic SSH setup:
+
+1. Go to https://cursor.com/settings/cloud-agents
+2. Add new Secret:
+   - **Name**: `DEPLOY_SSH_KEY`
+   - **Value**: Your SSH private key (see below)
+   - **Scope**: `ArtemOstrenkov/VHF_HELPER_PWA` or "All repositories"
+
+The deploy script will automatically:
+- Create `~/.ssh/id_ed25519_deploy` from the secret
+- Create `~/.ssh/config` with deploy-server alias
+- Set correct permissions
+
+Then just run: `npm run deploy`
+
+#### Getting the SSH Key
+
+If you need the current SSH key, run in an existing Cloud Agent session:
+```bash
+cat /home/ubuntu/.ssh/id_ed25519_deploy
+```
+
+Copy the entire output (including `-----BEGIN` and `-----END` lines) into the Secret value.
+
 ### For Local Development
 
 If deploying from your local machine, add to `~/.ssh/config`:

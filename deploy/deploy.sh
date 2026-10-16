@@ -1,6 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Setup SSH from Cursor Secrets if available
+if [ -n "${DEPLOY_SSH_KEY:-}" ]; then
+  echo "Setting up SSH from Cursor Secrets..."
+  mkdir -p ~/.ssh
+  echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519_deploy
+  chmod 600 ~/.ssh/id_ed25519_deploy
+  
+  # Create SSH config if it doesn't exist
+  if [ ! -f ~/.ssh/config ]; then
+    cat > ~/.ssh/config << 'EOF'
+Host deploy-server
+    HostName 155.212.141.54
+    User root
+    IdentityFile ~/.ssh/id_ed25519_deploy
+    StrictHostKeyChecking no
+EOF
+    chmod 600 ~/.ssh/config
+  fi
+  echo "SSH configured successfully"
+fi
+
 HOST="${DEPLOY_HOST:-deploy-server}"
 REMOTE_ROOT="/var/www/skippers-companion"
 DOMAIN="skipper.p4e1.ru"
